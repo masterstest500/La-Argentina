@@ -8,3 +8,35 @@ body {
     font-family: 'Montserrat', sans-serif;
     padding-top: 70px;
 }
+
+/* ========== BOTÓN FLOTANTE WHATSAPP ========== */
+#whatsapp-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999;
+}
+
+.ws-flotante {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+    transition: all 0.3s ease;
+}
+
+.ws-flotante:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.7);
+}
+
+.ws-flotante img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
