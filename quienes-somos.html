@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conoce la Misión y Visión de Helados La Argentina">
+    <title>¿Quiénes Somos? — Helados La Argentina</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/quienes-somos.css">
+</head>
+<body>
+
+    <!-- ========== NAVBAR ========== -->
+    <header id="navbar">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="img/logos/logo.png" alt="Helados La Argentina">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="productos.html" class="nav-link">Productos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-redes">
+                <a href="#" class="red-social proximamente" data-red="Instagram">
+                    <img src="img/logos/instagram.png" alt="Instagram">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="Facebook">
+                    <img src="img/logos/facebook.png" alt="Facebook">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="YouTube">
+                    <img src="img/logos/youtube.png" alt="YouTube">
+                </a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
+    <main id="quienes-somos">
+
+        <!-- Títulos selector -->
+        <div class="qs-selector">
+            <button class="qs-btn activo" data-target="mision">Misión</button>
+            <button class="qs-btn" data-target="vision">Visión</button>
+        </div>
+
+        <!-- Panel Misión -->
+        <div class="qs-panel activo" id="mision">
+
+        <!-- Imágenes de fondo -->
+         <img src="img/mision-vision-iconos/blanco.png" alt="" class="qs-img qs-img-izq-arriba">
+        <img src="img/mision-vision-iconos/equipo.png" alt="" class="qs-img qs-img-izq-abajo">
+        <img src="img/mision-vision-iconos/montaña.png" alt="" class="qs-img qs-img-der-abajo">
+
+            <div class="qs-contenido">
+                <h2 class="qs-titulo">Misión</h2>
+                <p class="qs-texto">
+                    En Helados La Argentina nos dedicamos a elaborar helados artesanales 
+                    de la más alta calidad, utilizando ingredientes frescos y naturales que 
+                    garantizan una experiencia única en cada bocado. Nuestro compromiso es 
+                    brindar a cada cliente un momento de felicidad, frescura y sabor 
+                    auténtico venezolano, manteniendo los más altos estándares de higiene, 
+                    innovación y atención al cliente en cada uno de nuestros productos.
+                </p>
+            </div>
+        </div>
+
+
+<!-- Panel Visión -->
+<div class="qs-panel" id="vision">
+
+    <!-- Imágenes de fondo -->
+    <img src="img/mision-vision-iconos/canoa.png" alt="" class="qs-img vision-izq-abajo">
+    <img src="img/mision-vision-iconos/bombilla.png" alt="" class="qs-img vision-der-abajo">
+
+    <div class="qs-contenido">
+        <h2 class="qs-titulo">Visión</h2>
+        <p class="qs-texto">
+            Ser reconocidos como la heladería venezolana de referencia nacional, 
+            distinguiéndonos por la calidad inigualable de nuestros productos, 
+            la calidez de nuestro servicio y el compromiso con nuestras comunidades. 
+            Aspiramos a crecer de manera sostenible, llevando el sabor y la alegría 
+            de Heladerías La Argentina a cada rincón del país, siendo sinónimo de 
+            confianza, tradición e innovación en la industria heladera venezolana.
+        </p>
+    </div>
+
+</div>
+
+            
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="footer">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <img src="img/logos/logo.png" alt="Helados La Argentina" class="footer-logo">
+                <p class="footer-slogan">"El sabor que te conquista"</p>
+                <div class="footer-redes">
+                    <a href="#" class="footer-red proximamente" data-red="Instagram">
+                        <img src="img/logos/instagram.png" alt="Instagram">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="Facebook">
+                        <img src="img/logos/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="YouTube">
+                        <img src="img/logos/youtube.png" alt="YouTube">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Navegación</h4>
+                <ul class="footer-nav">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Contacto</h4>
+                <ul class="footer-contacto">
+                    <li>📍 Calle 61 entre calles 114A y 114, Galpon Numero 28, Zona Industrial Los Robles</li>
+                    <li>📞 +58 414-6147918</li>
+                    <li>📧 eliezer.05le4l@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-barra">
+            <footer style = "text-align: center; width: 100%">
+            <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
+            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+        </div>
+    </footer>
+
+    <!-- Botón WhatsApp -->
+    <div id="whatsapp-btn"></div>
+
+    <script src="js/whatsapp.js"></script>
+    <script src="js/quienes-somos.js"></script>
+
+</body>
+</html>
