@@ -11,8 +11,12 @@
 /* ── Selector Misión / Visión ── */
 .qs-selector {
     display: flex;
-    gap: 160px;
+    gap: 60px;
     margin-bottom: 60px;
+}
+
+.qs-btn:not(.activo) {
+    display: none;
 }
 
 .qs-btn {
@@ -140,7 +144,7 @@
 }
 
 .qs-img-der-abajo {
-    bottom: -90px;
+    bottom: -50px;
     right: -140px;
 }
 
@@ -197,3 +201,404 @@
         transform: translateX(0);
     }
 }
+
+/*========== HISTORIA ========== */
+
+#historia {
+
+    width: 100%;
+
+    padding: 0;
+
+    margin-top: -60px;
+
+}
+
+
+/* ── Header ── */
+
+.historia-header {
+
+    text-align: center;
+
+    padding: 60px 40px 40px;
+
+}
+
+
+.historia-titulo-principal {
+
+    font-family: 'Bebas Neue', sans-serif;
+
+    font-size: 4rem;
+
+    letter-spacing: 4px;
+
+    color: #f5f5f5;
+
+    margin-bottom: 10px;
+
+}
+
+
+.historia-titulo-principal span {
+
+    color: #cc0000;
+
+}
+
+
+.historia-subtitulo {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 0.85rem;
+
+    font-weight: 300;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    color: #888;
+
+}
+
+
+/* ── Carrusel ── */
+
+.historia-carrusel {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+}
+
+
+/* ── Track ── */
+
+.historia-track {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100vh;
+
+}
+
+
+/* ── Slide ── */
+
+.historia-slide {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    opacity: 0;
+
+    transform: translateX(100%);
+
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1),
+
+                opacity 0.8s ease;
+
+    pointer-events: none;
+
+}
+
+
+.historia-slide.activo {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+    pointer-events: all;
+
+}
+
+
+.historia-slide.saliendo-izquierda {
+
+    opacity: 1;
+
+    transform: translateX(-100%);
+
+    pointer-events: none;
+
+}
+
+
+.historia-slide.saliendo-derecha {
+
+    opacity: 1;
+
+    transform: translateX(100%);
+
+    pointer-events: none;
+
+}
+
+
+/* ── Imagen ── */
+
+.historia-imagen {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 0;
+
+}
+
+
+.historia-imagen img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: brightness(0.35);
+
+}
+
+
+/* ── Contenido sobre imagen ── */
+
+.historia-contenido {
+
+    position: absolute;
+
+    bottom: 100px;
+
+    left: 0;
+
+    right: 0;
+
+    z-index: 1;
+
+    text-align: center;
+
+    padding: 0 200px;
+
+}
+
+
+.historia-anio {
+
+    font-family: 'Bebas Neue', sans-serif;
+
+    font-size: 8rem;
+
+    letter-spacing: 6px;
+
+    color: #cc0000;
+
+    display: block;
+
+    line-height: 1;
+
+    margin-bottom: 10px;
+
+}
+
+
+.historia-evento {
+
+    font-family: 'Bebas Neue', sans-serif;
+
+    font-size: 2.5rem;
+
+    letter-spacing: 3px;
+
+    color: #f5f5f5;
+
+    margin-bottom: 20px;
+
+}
+
+
+.historia-texto {
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 300;
+
+    color: rgba(255,255,255,0.8);
+
+    line-height: 1.9;
+
+    letter-spacing: 0.5px;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+}
+
+
+/* ── Flechas ── */
+
+.historia-flecha {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 10;
+
+    background: rgba(255,255,255,0.1);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    color: #f5f5f5;
+
+    font-size: 1.5rem;
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.historia-flecha:hover {
+
+    background: #cc0000;
+
+    border-color: #cc0000;
+
+}
+
+
+.historia-flecha-izq {
+
+    left: 30px;
+
+}
+
+
+.historia-flecha-der {
+
+    right: 30px;
+
+}
+
+
+/* ── Puntos ── */
+
+.historia-puntos {
+
+    position: absolute;
+
+    bottom: 40px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 10px;
+
+    z-index: 10;
+
+}
+
+
+.historia-punto {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.3);
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.historia-punto.activo {
+
+    background: #cc0000;
+
+    transform: scale(1.3);
+
+}
+
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+
+    .historia-track {
+
+        height: 100vh;
+
+    }
+
+
+    .historia-contenido {
+
+        padding: 0 40px;
+
+        bottom: 80px;
+
+    }
+
+
+    .historia-anio {
+
+        font-size: 5rem;
+
+    }
+
+
+    .historia-evento {
+
+        font-size: 1.8rem;
+
+    }
+
+} 

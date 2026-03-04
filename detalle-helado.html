@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalle del producto - Helados La Argentina">
+    <title>Detalle — Helados La Argentina</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/detalle.css">
+</head>
+<body>
+
+    <!-- ========== NAVBAR ========== -->
+    <header id="navbar">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="img/logos/logo.png" alt="Helados La Argentina">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="productos.html" class="nav-link">Productos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
+                    <ul class="dropdown-menu">
+                    <li>
+                      <a href="quienes-somos.html?seccion=mision" class="dropdown-link">Misión</a>
+                    </li>
+                    <li>
+                      <a href="quienes-somos.html?seccion=vision" class="dropdown-link">Visión</a>
+                    </li>
+                    <li>
+                        <a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a>
+                    </li>
+                </ul>
+            </li>
+                <li class="nav-item">
+                    <a href="index.html#contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-redes">
+                <a href="#" class="red-social proximamente" data-red="Instagram">
+                    <img src="img/logos/instagram.png" alt="Instagram">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="Facebook">
+                    <img src="img/logos/facebook.png" alt="Facebook">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="YouTube">
+                    <img src="img/logos/youtube.png" alt="YouTube">
+                </a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== DETALLE DEL HELADO ========== -->
+    <main id="detalle">
+
+        <!-- Sección principal -->
+        <div class="detalle-hero" id="detalle-hero">
+            <div class="detalle-galeria">
+                <div class="detalle-imagen-principal">
+                    <img id="imagen-principal" src="" alt="">
+                </div>
+                <div class="detalle-miniaturas" id="miniaturas">
+                    <!-- Miniaturas generadas por JS -->
+                </div>
+            </div>
+            <div class="detalle-info">
+                <a href="productos.html" class="detalle-volver">← Volver a Productos</a>
+                <span class="detalle-categoria">Helados La Argentina</span>
+                <h1 class="detalle-nombre" id="detalle-nombre"></h1>
+                <div class="detalle-separador"></div>
+                <p class="detalle-descripcion" id="detalle-descripcion"></p>
+            </div>
+        </div>
+
+        <!-- Sección Podría interesarte -->
+        <div class="detalle-relacionados">
+            <h2 class="relacionados-titulo">Podría interesarte</h2>
+            <div class="relacionados-grid" id="relacionados-grid">
+                <!-- Generado por JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="footer">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <img src="img/logos/logo.png" alt="Helados La Argentina" class="footer-logo">
+                <p class="footer-slogan">"El sabor que te conquista"</p>
+                <div class="footer-redes">
+                    <a href="#" class="footer-red proximamente" data-red="Instagram">
+                        <img src="img/logos/instagram.png" alt="Instagram">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="Facebook">
+                        <img src="img/logos/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="YouTube">
+                        <img src="img/logos/youtube.png" alt="YouTube">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Navegación</h4>
+                <ul class="footer-nav">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Contacto</h4>
+                <ul class="footer-contacto">
+                    <li>📍 Calle 61 entre calles 114A y 114, Galpon Numero 28, Zona Industrial Los Robles</li>
+                    <li>📞 +58 414-6147918</li>
+                    <li>📧 eliezer.05le4l@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-barra">
+            <footer style = "text-align: center; width: 100%">   
+            <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
+            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+        </div>
+    </footer>
+
+    <div id="whatsapp-btn"></div>
+    <script src="js/whatsapp.js"></script>
+    <script src="js/detalle.js"></script>
+
+</body>
+</html>

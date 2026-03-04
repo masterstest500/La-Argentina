@@ -30,11 +30,17 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                      <a href="quienes-somos.html?seccion=mision" class="dropdown-link">Misión</a>
+                    </li>
+                    <li>
+                      <a href="quienes-somos.html?seccion=vision" class="dropdown-link">Visión</a>
+                    </li>
+                    <li>
+                        <a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a>
+                    </li>
+                </ul>
+            </li>
                 <li class="nav-item">
                     <a href="index.html#contacto" class="nav-link">Contacto</a>
                 </li>
@@ -110,7 +116,106 @@
 
 </div>
 
-            
+      
+<!-- Panel Historia -->
+<div class="qs-panel" id="historia">
+    <div class="historia-header">
+        <h2 class="historia-titulo-principal">Nuestra <span>Historia</span></h2>
+        <p class="historia-subtitulo">Cuatro décadas construyendo el sabor venezolano</p>
+    </div>
+
+    <div class="historia-carrusel">
+        <button class="historia-flecha historia-flecha-izq" id="historia-prev">←</button>
+        <button class="historia-flecha historia-flecha-der" id="historia-next">→</button>
+
+        <div class="historia-track" id="historia-track">
+
+            <!-- 1985 -->
+            <div class="historia-slide activo">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-1985.png" alt="1985">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">1985</span>
+                    <h3 class="historia-evento">El Comienzo</h3>
+                    <p class="historia-texto">Fundada en asociación por los señores Francisco Parente, Daniel Mansilla y Julio Abdeljelik. Comienzan las operaciones con la producción artesanal de helados y alimentos semi-preparados para la comercialización en el restaurante Heladería y Pizzería La Argentina SRL.</p>
+                </div>
+            </div>
+
+            <!-- 1991 -->
+            <div class="historia-slide">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-1991.png" alt="1991">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">1991</span>
+                    <h3 class="historia-evento">Industrias Lácteas La Argentina</h3>
+                    <p class="historia-texto">Fundación de Industrias Lácteas La Argentina. Inician las operaciones a nivel industrial de fabricación de helados y alimentos semi-preparados a gran escala, marcando el inicio de una nueva era para la empresa.</p>
+                </div>
+            </div>
+
+            <!-- 1997 -->
+            <div class="historia-slide">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-1997.png" alt="1997">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">1997</span>
+                    <h3 class="historia-evento">Expansión Regional</h3>
+                    <p class="historia-texto">Especialización en la fabricación y distribución de helados. Ampliación de la franquicia de heladerías para la distribución y comercialización de los productos en el estado Zulia, ganando la simpatía de los consumidores.</p>
+                </div>
+            </div>
+
+            <!-- 2003 -->
+            <div class="historia-slide">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-2003.png" alt="2003">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">2003</span>
+                    <h3 class="historia-evento">Nueva Dirección</h3>
+                    <p class="historia-texto">Incorporación como accionistas del sr. Víctor Salas y la sra. Mary Santeliz de Salas. Generación de cambios en la organización con la incorporación de nuevas tecnologías y ampliación del portafolio de productos.</p>
+                </div>
+            </div>
+
+            <!-- 2006 -->
+            <div class="historia-slide">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-2006.jpg" alt="2006">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">2006</span>
+                    <h3 class="historia-evento">Expansión Nacional</h3>
+                    <p class="historia-texto">El matrimonio Salas Santeliz se convierte en los accionistas mayoritarios. Las operaciones se centran en la producción masiva de helados, ampliando la red de canales de distribución a nivel nacional y firmando acuerdos para la producción terciarizada de otras marcas.</p>
+                </div>
+            </div>
+
+            <!-- Hoy -->
+            <div class="historia-slide">
+                <div class="historia-imagen">
+                    <img src="img/historia/historia-hoy.png" alt="Hoy">
+                </div>
+                <div class="historia-contenido">
+                    <span class="historia-anio">Hoy</span>
+                    <h3 class="historia-evento">El Helado Preferido de Venezuela</h3>
+                    <p class="historia-texto">Empresa familiar con capital 100% venezolano y uno de los crecimientos más acelerados de la región occidental del país. Nuestros productos tienen presencia en varios estados, convirtiéndose en el helado preferido de una creciente cantidad de venezolanos, con estándares internacionales de certificación en inocuidad alimentaria.</p>
+                </div>
+            </div>
+
+        </div><!-- /historia-track -->
+
+        <!-- Puntos indicadores -->
+        <div class="historia-puntos">
+            <span class="historia-punto activo" data-index="0"></span>
+            <span class="historia-punto" data-index="1"></span>
+            <span class="historia-punto" data-index="2"></span>
+            <span class="historia-punto" data-index="3"></span>
+            <span class="historia-punto" data-index="4"></span>
+            <span class="historia-punto" data-index="5"></span>
+        </div>
+
+    </div><!-- /historia-carrusel -->
+</div>
 
     </main>
 
