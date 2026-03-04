@@ -74,9 +74,9 @@
     animation: flotar 8s ease-in-out infinite;
 }
 
-.h-izq-1 { width: 130px; margin-top: 40px; }
-.h-izq-2 { width: 190px; margin-top: 20px; }
-.h-izq-3 { width: 190px; margin-top: -10px; }
+.h-izq-1 { width: 190px; margin-top: 40px; }
+.h-izq-2 { width: 170px; margin-top: 20px; }
+.h-izq-3 { width: 190px; margin-top: 10px; }
 
 .h-der-1 { width: 150px; margin-top: 40px; }
 .h-der-2 { width: 170px; margin-top: 20px; }

@@ -1,0 +1,221 @@
+/* ========== PÁGINA PRODUCTOS ========== */
+#productos {
+    min-height: 80vh;
+    padding: 60px 40px;
+    background-color: #0a0a0a;
+}
+
+/* ── Header ── */
+.productos-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.productos-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 4px;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+}
+
+.productos-titulo span {
+    color: #cc0000;
+}
+
+.productos-subtitulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+/* ── Grid ── */
+.productos-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* ── Tarjeta ── */
+.producto-card {
+    background-color: var(--color-sabor);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 320px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* ── Imagen izquierda ── */
+.producto-img-wrapper {
+    width: 400px;
+    min-width: 400px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    overflow: hidden;
+}
+
+.producto-img-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+}
+
+.producto-card:hover .producto-img-wrapper img {
+    transform: scale(1.06) translateY(-6px);
+}
+
+/* ── Texto derecha ── */
+.producto-info {
+    flex: 1;
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(0,0,0,0.25);
+    height: 100%;
+    justify-content: center;
+}
+
+/* ── Scroll Reveal ── */
+.producto-card .producto-img-wrapper {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.producto-card .producto-info {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.producto-card.visible .producto-img-wrapper {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.producto-card.visible .producto-info {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.producto-card:nth-child(1) .producto-img-wrapper,
+.producto-card:nth-child(1) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(2) .producto-img-wrapper,
+.producto-card:nth-child(2) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(3) .producto-img-wrapper,
+.producto-card:nth-child(3) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(4) .producto-img-wrapper,
+.producto-card:nth-child(4) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(5) .producto-img-wrapper,
+.producto-card:nth-child(5) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(6) .producto-img-wrapper,
+.producto-card:nth-child(6) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(7) .producto-img-wrapper,
+.producto-card:nth-child(7) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(8) .producto-img-wrapper,
+.producto-card:nth-child(8) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(9) .producto-img-wrapper,
+.producto-card:nth-child(9) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(10) .producto-img-wrapper,
+.producto-card:nth-child(10) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(11) .producto-img-wrapper,
+.producto-card:nth-child(11) .producto-info { transition-delay: 0.1s; }
+
+.producto-card:nth-child(12) .producto-img-wrapper,
+.producto-card:nth-child(12) .producto-info { transition-delay: 0.1s; }
+
+
+
+.producto-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    color: #f5f5f5;
+}
+
+.producto-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+}
+
+.producto-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.producto-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+
+.producto-card:hover .producto-btn::after {
+    width: 100%;
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    #productos {
+        padding: 40px 20px;
+    }
+    .productos-titulo {
+        font-size: 2.5rem;
+    }
+    .producto-card {
+        flex-direction: column;
+    }
+    .producto-img-wrapper {
+        width: 100%;
+        min-width: 100%;
+        height: 260px;
+    }
+}

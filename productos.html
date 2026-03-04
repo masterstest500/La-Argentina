@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conoce todos los productos de Heladerías La Argentina">
+    <title>Productos — Heladerías La Argentina</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+
+    <!-- ========== NAVBAR ========== -->
+    <header id="navbar">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="img/logos/logo.png" alt="Heladerías La Argentina">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="productos.html" class="nav-link">Productos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-redes">
+                <a href="#" class="red-social proximamente" data-red="Instagram">
+                    <img src="img/logos/instagram.png" alt="Instagram">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="Facebook">
+                    <img src="img/logos/facebook.png" alt="Facebook">
+                </a>
+                <a href="#" class="red-social proximamente" data-red="YouTube">
+                    <img src="img/logos/youtube.png" alt="YouTube">
+                </a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
+    <main id="productos">
+
+        <!-- Título -->
+        <div class="productos-header">
+            <h1 class="productos-titulo">Nuestros <span>Productos</span></h1>
+            <p class="productos-subtitulo">Descubre todos nuestros sabores</p>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="productos-grid">
+
+            <!-- Chocolate -->
+            <a href="detalle-helado.html?id=chocolate" class="producto-card" style="--color-sabor: #2c1506;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/chocolate3.png" alt="Chocolate">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Chocolate</h3>
+                    <p class="producto-desc">"Para esos días en que solo el chocolate puede salvarte"</p>
+                    <span class="producto-btn">Ver Más →</span>
+                </div>
+            </a>
+
+            <!-- Cookies and Cream -->
+            <a href="detalle-helado.html?id=cookies-and-cream" class="producto-card" style="--color-sabor: #1a1a1a;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/ckies-and-cream.png" alt="Cookies and Cream">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Cookies & Cream</h3>
+                    <p class="producto-desc">"Para los que no pueden resistirse a las galletas con helado"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Fantasía -->
+            <a href="detalle-helado.html?id=fantasia" class="producto-card" style="--color-sabor: #4a0a6b;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/fantasy.png" alt="Fantasía">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Fantasía</h3>
+                    <p class="producto-desc">"La combinación perfecta de merengue, cola y mantecado"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Fantoche -->
+            <a href="detalle-helado.html?id=fantoche" class="producto-card" style="--color-sabor: #8a6e00;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/fantoche2.png" alt="Fantoche">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Fantoche</h3>
+                    <p class="producto-desc">"Vainilla, maní y chocolate... porque un solo sabor no era suficiente"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Fantoche Fresa -->
+            <a href="detalle-helado.html?id=fantoche-fresa" class="producto-card" style="--color-sabor: #6b1a3a;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/fantofresa.png" alt="Fantoche Fresa">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Fantoche Fresa</h3>
+                    <p class="producto-desc">"Todo el Fantoche que amas, ahora con un toque irresistible de fresa"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Fantoche Chocolate -->
+            <a href="detalle-helado.html?id=fantoche-chocolate" class="producto-card" style="--color-sabor: #1a0a00;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/fantoche-chocolate.png" alt="Fantoche Chocolate">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Fantoche Chocolate</h3>
+                    <p class="producto-desc">"La versión más chocolatosa del Fantoche. Explosión de sabor en cada bocado"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Fresa -->
+            <a href="detalle-helado.html?id=fresa" class="producto-card" style="--color-sabor: #7a1040;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/fresa2.png" alt="Fresa">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Fresa</h3>
+                    <p class="producto-desc">"Fresita, cremosa y con ese color que enamora desde el primer vistazo"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Mantecado -->
+            <a href="detalle-helado.html?id=mantecado" class="producto-card" style="--color-sabor: #1a5a8a;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/manteca3.png" alt="Mantecado">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Mantecado</h3>
+                    <p class="producto-desc">"El clásico de siempre, ese sabor que nunca falla"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Pistacho -->
+            <a href="detalle-helado.html?id=pistacho" class="producto-card" style="--color-sabor: #2d4a1e;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/pistacho.png" alt="Pistacho">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Pistacho</h3>
+                    <p class="producto-desc">"Cremoso y sofisticado, con el inconfundible sabor del pistacho"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Ron con Pasas -->
+            <a href="detalle-helado.html?id=ron-con-pasas" class="producto-card" style="--color-sabor: #4a3000;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/ron-pasas.png" alt="Ron con Pasas">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Ron Pasas</h3>
+                    <p class="producto-desc">"Ron y pasas... una combinación exótica y atrevida"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Tramontana -->
+            <a href="detalle-helado.html?id=tramontana" class="producto-card" style="--color-sabor: #3d2800;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/tramontana2.png" alt="Tramontana">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Tramontana</h3>
+                    <p class="producto-desc">"Dulce de leche y galletas en cada cucharada, pura felicidad"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+            <!-- Trisabor -->
+            <a href="detalle-helado.html?id=trisabor" class="producto-card" style="--color-sabor: #5a1a3a;">
+                <div class="producto-img-wrapper">
+                    <img src="img/helados/trisabor2.png" alt="Trisabor">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Trisabor</h3>
+                    <p class="producto-desc">"Tres sabores, un momento perfecto para compartir"</p>
+                    <span class="producto-btn">Ver más →</span>
+                </div>
+            </a>
+
+        </div><!-- /productos-grid -->
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="footer">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <img src="img/logos/logo.png" alt="Heladerías La Argentina" class="footer-logo">
+                <p class="footer-slogan">"El sabor que te conquista"</p>
+                <div class="footer-redes">
+                    <a href="#" class="footer-red proximamente" data-red="Instagram">
+                        <img src="img/logos/instagram.png" alt="Instagram">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="Facebook">
+                        <img src="img/logos/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="#" class="footer-red proximamente" data-red="YouTube">
+                        <img src="img/logos/youtube.png" alt="YouTube">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Navegación</h4>
+                <ul class="footer-nav">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-titulo">Contacto</h4>
+                <ul class="footer-contacto">
+                    <li>📍 Calle 61 entre calles 114A y 114, Galpon Numero 28, Zona Industrial Los Robles</li>
+                    <li>📞 +58 414-6147918</li>
+                    <li>📧 eliezer.05le4l@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-barra">
+            <footer style = "text-align: center; width: 100%">
+            <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
+            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+        </div>
+
+    </footer>
+
+    <div id="whatsapp-btn"></div>
+    <script src="js/whatsapp.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
