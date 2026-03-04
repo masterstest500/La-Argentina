@@ -35,13 +35,13 @@ const productos = {
         nombre: 'Fantoche Chocolate',
         color: '#1a0a00',
         descripcion: 'La versión más chocolatosa del Fantoche. Vainilla, maní y una explosión de chocolate en cada cucharada.',
-        imagenes: ['img/helados/fantoche-chocolate.png']
+        imagenes: ['img/helados/fantoche-chocolate.png', 'img/helados/fantoche-chocolate3.png']
     },
     'fresa': {
         nombre: 'Fresa',
         color: '#7a1040',
         descripcion: 'Cremoso, rosado y con ese sabor a fresa que enamora desde el primer bocado. Fresco, natural y delicioso en cada cucharada.',
-        imagenes: ['img/helados/fresa2.png']
+        imagenes: ['img/helados/fresa.png', 'img/helados/fresa2.png']
     },
     'mantecado': {
         nombre: 'Mantecado',
