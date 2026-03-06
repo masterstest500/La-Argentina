@@ -21,7 +21,7 @@ const productos = {
     },
     'fantoche': {
         nombre: 'Fantoche',
-        color: '#635419',
+        color: '#9A7548',
         descripcion: 'Vainilla cremosa bañada en sirope de chocolate, lluvia de maní y chocolate. Para los que creen que un solo sabor nunca es suficiente.',
         imagenes: ['img/helados/fantoche2.png', 'img/helados/fantoche3.png']
     },
@@ -57,7 +57,7 @@ const productos = {
     },
     'ron-con-pasas': {
         nombre: 'Ron Pasas',
-        color: '#b37b15',
+        color: '#D29514',
         descripcion: 'Una combinación exótica y sofisticada de helado cremoso con ron y pasas. Para los que buscan una experiencia diferente y atrevida.',
         imagenes: ['img/helados/ron-pasas.png', 'img/helados/ron-pasas-2.png']
     },
@@ -69,10 +69,65 @@ const productos = {
     },
     'trisabor': {
         nombre: 'Trisabor',
-        color: '#5a1a3a',
+        color: '#936B12',
         descripcion: 'Fresa, mantecado y chocolate unidos en un solo pote. Tres sabores, un momento perfecto para compartir con quienes más quieres.',
         imagenes: ['img/helados/trisabor2.png', 'img/helados/trisabor3.png']
-    }
+    },
+
+    'sunny-cream': {
+    nombre: 'Sunny Cream',
+    color: '#e98f08',
+    descripcion: 'Cremoso, suave y radiante como un día de sol. Un helado de vainilla con un toque dulce que alegra cada momento.',
+    imagenes: ['img/helados/sunny-cream.png']
+},
+'fruty-top': {
+    nombre: 'Fruty Top',
+    color: '#99C267',
+    descripcion: 'Una explosión de frutas tropicales en cada mordida. Fresco, colorido y lleno de sabor natural que conquista desde el primer bocado.',
+    imagenes: ['img/helados/fruty-top.png']
+},
+'sandwich': {
+    nombre: 'Sandwich',
+    color: '#3B2314',
+    descripcion: 'Dos galletas crujientes abrazando un corazón cremoso de helado. El clásico irresistible que nunca pasa de moda.',
+    imagenes: ['img/helados/sandwich.png']
+},
+'nevadito': {
+    nombre: 'Nevadito',
+    color: '#5B8DB8',
+    descripcion: 'Suave como la nieve, dulce como un sueño. Un helado recubierto que derrite el corazón con su textura única.',
+    imagenes: ['img/helados/nevadito.png']
+},
+'pinta-lengua': {
+    nombre: 'Pinta Lengua',
+    color: '#910187',
+    descripcion: 'El favorito de los más pequeños. Colorido, divertido y con ese sabor intenso que deja huella... y color en la lengua.',
+    imagenes: ['img/helados/pinta-lengua.png']
+},
+'maxi-cream': {
+    nombre: 'Maxi Cream',
+    color: '#B8860B',
+    descripcion: 'Para los que quieren más. Una porción generosa de cremosidad pura con el sabor que tanto te gusta.',
+    imagenes: ['img/helados/maxi-cream.png']
+},
+'maximus': {
+    nombre: 'Maximus',
+    color: '#C47A2B',
+    descripcion: 'Grande en tamaño, inmenso en sabor. El helado para quienes no se conforman con poco.',
+    imagenes: ['img/helados/maximus.png']
+},
+'trompo-loco': {
+    nombre: 'Trompo Loco',
+    color: '#d45dd8',
+    descripcion: 'Gira de sabor en sabor en cada mordida. Una combinación loca y deliciosa que te sorprenderá siempre.',
+    imagenes: ['img/helados/trompo-loco.png']
+},
+'choco-mini': {
+    nombre: 'Choco Mini',
+    color: '#bb7a4f',
+    descripcion: 'Pequeño pero poderoso. Intenso chocolate en formato mini para disfrutar sin culpa en cualquier momento.',
+    imagenes: ['img/helados/choco-mini.png']
+}
 };
 
 // ========== CARGAR DETALLE ==========
