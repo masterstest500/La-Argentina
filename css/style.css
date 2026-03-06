@@ -1,11 +1,11 @@
 /* ========== FUENTE GLOBAL ========== */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com');
 
 /* ========== BODY ========== */
 body {
-    background-color: #0a0a0a;
-    color: #f5f5f5;
-    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    color: #ffffff;
+    font-family: 'Yellowtail', cursive;
     padding-top: 70px;
 }
 
@@ -43,7 +43,7 @@ body {
 
 /* ========== FOOTER ========== */
 #footer {
-    background-color: #0a0a0a;
+    background-color: #ffffff;
     border-top: 2px solid #cc0000;
     padding: 60px 40px 0;
     margin-top: 0;
@@ -67,7 +67,7 @@ body {
 
 /* ── Logo ── */
 .footer-logo {
-    height: 70px;
+    height: 120px;
     width: auto;
     object-fit: contain;
     margin-bottom: 16px;
@@ -225,5 +225,421 @@ body {
     .footer-barra {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/* ========== CONTACTO ========== */
+#contacto {
+    padding: 100px 40px;
+    background-color: #ffffff;
+}
+
+.contacto-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+/* ── Columna izquierda ── */
+.contacto-info {
+    flex: 1;
+}
+
+.contacto-etiqueta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #cc0000;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.contacto-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 3px;
+    color: #0a0a0a;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.contacto-titulo span {
+    color: #cc0000;
+}
+
+.contacto-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 380px;
+}
+
+.contacto-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.contacto-dato {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.contacto-icono {
+    font-size: 1.4rem;
+    width: 44px;
+    height: 44px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+
+.contacto-dato:hover .contacto-icono {
+    border-color: #cc0000;
+    box-shadow: 0 4px 16px rgba(204,0,0,0.15);
+}
+
+.contacto-dato-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.contacto-dato-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.contacto-dato-valor {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: #0a0a0a;
+    line-height: 1.5;
+}
+
+/* ── Columna derecha ── */
+.contacto-formulario {
+    flex: 1;
+}
+
+.contacto-form-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.form-grupo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.form-grupo:focus-within .form-label {
+    color: #cc0000;
+}
+
+.form-input {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #0a0a0a;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.form-input::placeholder {
+    color: #bbb;
+    font-weight: 300;
+}
+
+.form-input:focus {
+    border-bottom-color: #cc0000;
+}
+
+.form-textarea {
+    resize: none;
+    height: 100px;
+    line-height: 1.6;
+}
+
+.form-linea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #cc0000;
+    transition: width 0.4s ease;
+}
+
+.form-grupo:focus-within .form-linea {
+    width: 100%;
+}
+
+.form-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #cc0000;
+    border: none;
+    padding: 16px 40px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.form-btn:hover {
+    background: #0a0a0a;
+    transform: translateX(4px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .contacto-contenedor {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .contacto-titulo {
+        font-size: 2.5rem;
+    }
+}
+
+/* ========== TÉRMINOS Y CONDICIONES ========== */
+#terminos {
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* ── Hero ── */
+.terminos-hero {
+    background-color: #0a0a0a;
+    padding: 80px 40px;
+    text-align: center;
+    border-bottom: 4px solid #cc0000;
+}
+
+.terminos-etiqueta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #cc0000;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.terminos-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 4px;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.terminos-titulo span {
+    color: #cc0000;
+}
+
+.terminos-subtitulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+/* ── Contenedor principal ── */
+.terminos-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* ── Índice ── */
+.terminos-indice {
+    width: 240px;
+    min-width: 240px;
+    position: sticky;
+    top: 90px;
+    background: #ffffff;
+    border-left: 3px solid #cc0000;
+    padding: 24px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    border-radius: 0 8px 8px 0;
+}
+
+.indice-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    margin-bottom: 16px;
+}
+
+.indice-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.indice-lista a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    color: #888;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 4px 0;
+}
+
+.indice-lista a:hover {
+    color: #cc0000;
+    padding-left: 6px;
+}
+
+/* ── Secciones ── */
+.terminos-secciones {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.terminos-seccion {
+    position: relative;
+    padding-top: 10px;
+}
+
+.seccion-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(204,0,0,0.08);
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.seccion-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: #0a0a0a;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.seccion-linea {
+    width: 50px;
+    height: 3px;
+    background-color: #cc0000;
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+.seccion-texto {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: #555;
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+}
+
+/* ── Datos de contacto en términos ── */
+.terminos-contacto-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.terminos-dato {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.terminos-dato-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #cc0000;
+    min-width: 80px;
+}
+
+.terminos-dato-valor {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .terminos-contenedor {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .terminos-indice {
+        width: 100%;
+        min-width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+    .terminos-titulo {
+        font-size: 3rem;
     }
 }

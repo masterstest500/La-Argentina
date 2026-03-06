@@ -15,13 +15,13 @@ const productos = {
     },
     'fantasia': {
         nombre: 'Fantasía',
-        color: '#4a0a6b',
+        color: '#25adb3',
         descripcion: 'La combinación perfecta de merengue, cola y mantecado. Un helado único y especial que despierta la fantasía en cada bocado.',
         imagenes: ['img/helados/fantasy.png', 'img/helados/fantasy2.png']
     },
     'fantoche': {
         nombre: 'Fantoche',
-        color: '#8a6e00',
+        color: '#635419',
         descripcion: 'Vainilla cremosa bañada en sirope de chocolate, lluvia de maní y chocolate. Para los que creen que un solo sabor nunca es suficiente.',
         imagenes: ['img/helados/fantoche2.png', 'img/helados/fantoche3.png']
     },
@@ -39,7 +39,7 @@ const productos = {
     },
     'fresa': {
         nombre: 'Fresa',
-        color: '#7a1040',
+        color: '#b1306a',
         descripcion: 'Cremoso, rosado y con ese sabor a fresa que enamora desde el primer bocado. Fresco, natural y delicioso en cada cucharada.',
         imagenes: ['img/helados/fresa.png', 'img/helados/fresa2.png']
     },
@@ -51,19 +51,19 @@ const productos = {
     },
     'pistacho': {
         nombre: 'Pistacho',
-        color: '#2d4a1e',
+        color: '#55bb21',
         descripcion: 'Cremoso y sofisticado, con el inconfundible sabor del pistacho en cada cucharada. Para los paladares más exigentes.',
         imagenes: ['img/helados/pistacho.png', 'img/helados/pistacho2.png']
     },
     'ron-con-pasas': {
         nombre: 'Ron Pasas',
-        color: '#4a3000',
+        color: '#b37b15',
         descripcion: 'Una combinación exótica y sofisticada de helado cremoso con ron y pasas. Para los que buscan una experiencia diferente y atrevida.',
         imagenes: ['img/helados/ron-pasas.png', 'img/helados/ron-pasas-2.png']
     },
     'tramontana': {
         nombre: 'Tramontana',
-        color: '#3d2800',
+        color: '#FF8C00',
         descripcion: 'Vainilla con sirope de dulce de leche y trozos de galletas de chocolate. Una combinación irresistible que te transporta al cielo.',
         imagenes: ['img/helados/tramontana2.png', 'img/helados/tramontana3.png']
     },

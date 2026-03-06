@@ -2,7 +2,7 @@
 #productos {
     min-height: 80vh;
     padding: 60px 40px;
-    background-color: #0a0a0a;
+    background-color: #ffffff;
 }
 
 /* ── Header ── */
@@ -15,7 +15,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 4rem;
     letter-spacing: 4px;
-    color: #f5f5f5;
+    color: #000000;
     margin-bottom: 10px;
 }
 
@@ -29,7 +29,7 @@
     font-weight: 300;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #888;
+    color: #353535;
 }
 
 /* ── Grid ── */

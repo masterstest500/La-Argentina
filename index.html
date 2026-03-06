@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <style>body { background-color: #ffffff; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" href="img/logos/logo.png">
     <meta name=" description" content="Helados La Argentina - Los mejores helados de Venezuela.">
     <title>Helados La Argentina</title>
 
@@ -44,10 +46,16 @@
                     <li>
                         <a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a>
                     </li>
+                    <li>
+                        <a href="quienes-somos.html?seccion=valores" class="dropdown-link">Valores</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a href="#contacto" class="nav-link">Contacto</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.html#ubicanos" class="nav-link">Ubícanos</a>
             </li>
         </ul>
 
@@ -266,20 +274,80 @@
     </section>    
 
 <!-- ========== CONTACTO ========== -->
-    <section id="contacto">
+<section id="contacto">
+    <div class="contacto-contenedor">
 
-    </section>
+        <!-- Columna izquierda: info -->
+        <div class="contacto-info">
+            <span class="contacto-etiqueta">Contáctanos</span>
+            <h2 class="contacto-titulo">¿Tienes alguna <span>pregunta?</span></h2>
+            <p class="contacto-desc">Estamos aquí para atenderte. Escríbenos o llámanos y con gusto te ayudamos.</p>
 
-    <!-- ========== FOOTER ========== -->
-    <footer id="footer">
+            <div class="contacto-datos">
+                <div class="contacto-dato">
+                    <div class="contacto-icono">📞</div>
+                    <div class="contacto-dato-info">
+                        <span class="contacto-dato-titulo">Teléfono</span>
+                        <span class="contacto-dato-valor">+58 414-6147918</span>
+                    </div>
+                </div>
+                <div class="contacto-dato">
+                    <div class="contacto-icono">✉️</div>
+                    <div class="contacto-dato-info">
+                        <span class="contacto-dato-titulo">Correo</span>
+                        <span class="contacto-dato-valor">ecarrascal@helar.com</span>
+                    </div>
+                </div>
+                <div class="contacto-dato">
+                    <div class="contacto-icono">📍</div>
+                    <div class="contacto-dato-info">
+                        <span class="contacto-dato-titulo">Dirección</span>
+                        <span class="contacto-dato-valor">Calle 61 entre calles 114A y 114, Galpón 28, Zona Industrial Los Robles, Maracaibo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha: formulario -->
+        <div class="contacto-formulario">
+            <div class="contacto-form-inner">
+                <div class="form-grupo">
+                    <label class="form-label">Nombre completo</label>
+                    <input type="text" class="form-input" placeholder="¿Cómo te llamas?">
+                    <span class="form-linea"></span>
+                </div>
+                <div class="form-grupo">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-input" placeholder="tu@correo.com">
+                    <span class="form-linea"></span>
+                </div>
+                <div class="form-grupo">
+                    <label class="form-label">Mensaje</label>
+                    <textarea class="form-input form-textarea" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    <span class="form-linea"></span>
+                </div>
+                <button class="form-btn" onclick="enviarWhatsApp()">
+                    Enviar mensaje →
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ========== UBÍCANOS ========== -->
+    <section id="ubicanos">
+
+    </section> 
+
 <!-- ========== FOOTER ========== -->
 <footer id="footer">
     <div class="footer-contenido">
 
         <!-- Columna 1: Logo y slogan -->
         <div class="footer-col">
-            <img src="img/logos/logo.png" alt="Helados La Argentina" class="footer-logo">
-            <p class="footer-slogan">"Demasiados Buenos"</p>
+            <img src="img/logos/logo2.png" alt="Helados La Argentina" class="footer-logo">
+            <p class="footer-slogan">"Demasiado Buenos"</p>
             <div class="footer-redes">
                 <a href="#" class="footer-red proximamente" data-red="Instagram">
                     <img src="img/logos/instagram.png" alt="Instagram">

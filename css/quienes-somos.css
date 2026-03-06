@@ -1,11 +1,11 @@
 /* ========== QUIÉNES SOMOS ========== */
 #quienes-somos {
-    min-height: 80vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 60px 40px;
-    background-color: #0a0a0a;
+    padding: 20px 40px;
+    background-color: #ffffff;
 }
 
 /* ── Selector Misión / Visión ── */
@@ -59,7 +59,11 @@
 .qs-panel {
     display: none;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
+}
+
+#valores {
+    max-width: 1300px;
 }
 
 .qs-panel.activo {
@@ -84,7 +88,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 300;
-    color: #ccc;
+    color: #333;
     line-height: 1.9;
     letter-spacing: 0.5px;
 }
@@ -124,7 +128,7 @@
     object-fit: contain;
     opacity: 0;
     z-index: 0;
-    filter: brightness(0) invert(1);
+    filter: grayscale(100%);
 }
 
 .qs-contenido {
@@ -221,7 +225,7 @@
 
     text-align: center;
 
-    padding: 60px 40px 40px;
+    padding: 10px 40px 30px;
 
 }
 
@@ -234,7 +238,7 @@
 
     letter-spacing: 4px;
 
-    color: #f5f5f5;
+    color: #000000;
 
     margin-bottom: 10px;
 
@@ -389,7 +393,7 @@
 
     position: absolute;
 
-    bottom: 100px;
+    top: 30px;
 
     left: 0;
 
@@ -408,7 +412,7 @@
 
     font-family: 'Bebas Neue', sans-serif;
 
-    font-size: 8rem;
+    font-size: 5rem;
 
     letter-spacing: 6px;
 
@@ -418,7 +422,7 @@
 
     line-height: 1;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
 }
 
@@ -427,13 +431,13 @@
 
     font-family: 'Bebas Neue', sans-serif;
 
-    font-size: 2.5rem;
+    font-size: 1.8rem;
 
     letter-spacing: 3px;
 
     color: #f5f5f5;
 
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
 }
 
@@ -442,9 +446,9 @@
 
     font-family: 'Montserrat', sans-serif;
 
-    font-size: 0.9rem;
+    font-size: 1.0rem;
 
-    font-weight: 300;
+    font-weight: 600;
 
     color: rgba(255,255,255,0.8);
 
@@ -455,6 +459,8 @@
     max-width: 700px;
 
     margin: 0 auto;
+
+    margin-top: 90px;
 
 }
 
@@ -602,3 +608,118 @@
     }
 
 } 
+
+/* ========== VALORES ========== */
+#valores {
+    width: 100%;
+    padding: 60px 40px;
+}
+
+.valores-header {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: -100px;
+}
+
+.valores-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 4px;
+    color: #0a0a0a;
+    margin-bottom: 10px;
+}
+
+.valores-titulo span {
+    color: #cc0000;
+}
+
+.valores-subtitulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.valores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.valor-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.valor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #cc0000;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.valor-card:hover::before {
+    transform: scaleX(1);
+}
+
+.valor-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(204,0,0,0.12);
+    border-color: #cc0000;
+}
+
+.valor-icono {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.valor-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    margin-bottom: 12px;
+}
+
+.valor-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .valores-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .valores-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .valores-titulo {
+        font-size: 2.5rem;
+    }
+}
