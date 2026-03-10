@@ -11,7 +11,7 @@ const productos = {
         nombre: 'Cookies & Cream',
         color: '#1a1a1a',
         descripcion: 'El encuentro perfecto entre el helado cremoso de vainilla y los crujientes trozos de galleta de chocolate. Simplemente irresistible.',
-        imagenes: ['img/helados/ckies-and-cream.png', 'img/helados/ckies-and-cream2.png']
+        imagenes: ['img/helados/cookies-and-cream.png', 'img/helados/ckies-and-cream2.png']
     },
     'fantasia': {
         nombre: 'Fantasía',
