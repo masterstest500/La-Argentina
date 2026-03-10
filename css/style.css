@@ -643,3 +643,172 @@ body {
         font-size: 3rem;
     }
 }
+
+/* ========== UBÍCANOS ========== */
+#ubicanos {
+    padding: 100px 40px;
+    background-color: #000000;
+}
+
+.ubicanos-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ── Header ── */
+.ubicanos-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.ubicanos-etiqueta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #cc0000;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.ubicanos-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    letter-spacing: 3px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.ubicanos-titulo span {
+    color: #cc0000;
+}
+
+.ubicanos-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.8;
+}
+
+/* ── Filtros ── */
+.ubicanos-filtros {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.filtro-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filtro-btn:hover {
+    border-color: #cc0000;
+    color: #cc0000;
+}
+
+.filtro-btn.activo {
+    background: #7e7b7b;
+    border-color: #0a0a0a;
+    color: #ffffff;
+}
+
+.filtro-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ── Mapa ── */
+#mapa-leaflet {
+    width: 100%;
+    height: 520px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid #eee;
+}
+
+/* ── Popup personalizado ── */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    border-top: 3px solid #cc0000;
+}
+
+.popup-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+    margin-bottom: 6px;
+}
+
+.popup-tipo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.popup-tipo.mayor {
+    background: #fce4e4;
+    color: #cc0000;
+}
+
+.popup-tipo.detal {
+    background: #e4eeff;
+    color: #0066cc;
+}
+
+.popup-direccion {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    color: #666;
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    #mapa-leaflet {
+        height: 380px;
+    }
+
+    .ubicanos-titulo {
+        font-size: 2.5rem;
+    }
+
+    .ubicanos-filtros {
+        flex-wrap: wrap;
+    }
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-control {
+    z-index: 1 !important;
+}

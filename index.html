@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logos/logo2.png">
     <meta name=" description" content="Helados La Argentina - Los mejores helados de Venezuela.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <title>Helados La Argentina</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -328,8 +330,33 @@
 
 <!-- ========== UBÍCANOS ========== -->
     <section id="ubicanos">
+    <div class="ubicanos-contenedor">
 
-    </section> 
+        <!-- Header -->
+        <div class="ubicanos-header">
+            <span class="ubicanos-etiqueta">Helados La Argentina</span>
+            <h2 class="ubicanos-titulo">Encuéntranos <span>cerca de ti</span></h2>
+            <p class="ubicanos-desc">Encuentra nuestros distribuidores Al Mayor y Al detal autorizados en Maracaibo y el estado Zulia.</p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="ubicanos-filtros">
+            <button class="filtro-btn activo" data-filtro="todos">Todos</button>
+            <button class="filtro-btn" data-filtro="mayor">
+                <span class="filtro-punto" style="background:#cc0000;"></span>
+                Al Mayor
+            </button>
+            <button class="filtro-btn" data-filtro="detal">
+                <span class="filtro-punto" style="background:#0066cc;"></span>
+                Al Detal
+            </button>
+        </div>
+
+        <!-- Mapa -->
+        <div id="mapa-leaflet"></div>
+
+    </div>
+</section> 
 
 <!-- ========== FOOTER ========== -->
 <footer id="footer">
@@ -396,7 +423,7 @@
     <script src="js/main.js"></script>
     <script src="js/carrusel.js"></script>
     <script src="js/whatsapp.js"></script>
-
+    <script src="js/mapa.js"></script>
 
 </body>
 </html>
