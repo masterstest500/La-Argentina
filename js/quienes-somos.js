@@ -115,6 +115,8 @@ if (panelTarget) {
     panelesQS.forEach(p => p.classList.remove('activo'));
     botonesQS.forEach(b => b.classList.remove('activo'));
     panelTarget.classList.add('activo');
+    const btnActivo = document.querySelector(`.qs-btn[data-target="${seccion}"]`);
+    if (btnActivo) btnActivo.classList.add('activo');
     if (seccion === 'historia' || seccion === 'valores') {
         selectorMV.style.visibility = 'hidden';
         selectorMV.style.marginBottom = '0';
