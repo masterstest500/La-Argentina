@@ -1,0 +1,9 @@
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://helar.ve/sitemap.xml
+
+Disallow: /img/
+Disallow: /css/
+Disallow: /js/
