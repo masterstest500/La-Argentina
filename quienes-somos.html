@@ -84,7 +84,12 @@
 
     <!-- ========== CONTENIDO PRINCIPAL ========== -->
     <main id="quienes-somos">
-
+    <script>
+        const p = new URLSearchParams(window.location.search).get('seccion') || 'mision';
+        if (p === 'historia' || p === 'valores') {
+            document.write('<style>#selector-mv{display:none!important;height:0!important;margin:0!important;overflow:hidden!important;}</style>');
+          }
+    </script>
     <!-- Selector solo para Misión y Visión -->
     <div class="qs-selector" id="selector-mv">
         <button class="qs-btn activo" data-target="mision">Misión</button>
@@ -230,7 +235,7 @@
     </div><!-- /historia-carrusel -->
 </div>
 
-    </main>
+
 
 <!-- Panel Valores -->
 <div class="qs-panel" id="valores">
@@ -281,7 +286,8 @@
         </div>
     </div>
 </div>
-
+    </main>
+    
     <!-- ========== FOOTER ========== -->
     <footer id="footer">
         <div class="footer-contenido">

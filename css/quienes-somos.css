@@ -62,7 +62,8 @@
 }
 
 #valores {
-    max-width: 1300px;
+    max-width: 100%;
+    padding: 60px 40px;
 }
 
 .qs-panel.activo {
