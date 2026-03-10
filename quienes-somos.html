@@ -83,54 +83,37 @@
     </header>
 
     <!-- ========== CONTENIDO PRINCIPAL ========== -->
-    <main id="quienes-somos">
-    <script>
-        const p = new URLSearchParams(window.location.search).get('seccion') || 'mision';
-        if (p === 'historia' || p === 'valores') {
-            document.write('<style>#selector-mv{display:none!important;height:0!important;margin:0!important;overflow:hidden!important;}</style>');
-          }
-    </script>
-    <!-- Selector solo para Misión y Visión -->
-    <div class="qs-selector" id="selector-mv">
-        <button class="qs-btn activo" data-target="mision">Misión</button>
-        <button class="qs-btn" data-target="vision">Visión</button>
-    </div>
+   <main id="quienes-somos">
+<script>
+    const p = new URLSearchParams(window.location.search).get('seccion') || 'mision';
+    if (p === 'historia' || p === 'valores') {
+        document.write('<style>#selector-mv{display:none!important;height:0!important;margin:0!important;overflow:hidden!important;}</style>');
+    }
+</script>
 
-    <!-- Panel Misión -->
-    <div class="qs-panel" id="mision">
-        <!-- Imágenes de fondo -->
-        <img src="img/mision-vision-iconos/blanco.png" alt="Icono decorativo misión" class="qs-img qs-img-izq-arriba">
-        <img src="img/mision-vision-iconos/equipo.png" alt="Icono equipo de trabajo" class="qs-img qs-img-izq-abajo">
-        <img src="img/mision-vision-iconos/montaña.png" alt="Icono montaña superación" class="qs-img qs-img-der-abajo">
+    <!-- Panel Misión y Visión -->
+    <div class="qs-panel activo" id="mision">
+        <div class="mv-contenedor">
 
-        <div class="qs-contenido">
-            <h2 class="qs-titulo">Misión</h2>
-            <p class="qs-texto">
-                En Helados La Argentina nos dedicamos a elaborar helados artesanales 
-                de la más alta calidad, utilizando ingredientes frescos y naturales que 
-                garantizan una experiencia única en cada bocado. Nuestro compromiso es 
-                brindar a cada cliente un momento de felicidad, frescura y sabor 
-                auténtico venezolano, manteniendo los más altos estándares de higiene, 
-                innovación y atención al cliente en cada uno de nuestros productos.
-            </p>
-        </div>
-    </div>
+            <!-- Misión -->
+            <div class="mv-columna">
+                <span class="mv-etiqueta">01</span>
+                <h2 class="mv-titulo">Misión</h2>
+                <div class="mv-linea"></div>
+                <p class="mv-texto">Proveer helados de excelente calidad e inocuidad.</p>
+            </div>
 
-    <!-- Panel Visión -->
-    <div class="qs-panel" id="vision">
-        <!-- Imágenes de fondo -->
-        <img src="img/mision-vision-iconos/canoa.png" alt="Icono navegación visión" class="qs-img vision-izq-abajo">
-        <img src="img/mision-vision-iconos/bombilla.png" alt="Icono ideas innovación" class="qs-img vision-der-abajo">
-        <div class="qs-contenido">
-            <h2 class="qs-titulo">Visión</h2>
-            <p class="qs-texto">
-                Ser reconocidos como la heladería venezolana de referencia nacional, 
-                distinguiéndonos por la calidad inigualable de nuestros productos, 
-                la calidez de nuestro servicio y el compromiso con nuestras comunidades. 
-                Aspiramos a crecer de manera sostenible, llevando el sabor y la alegría 
-                de Heladerías La Argentina a cada rincón del país, siendo sinónimo de 
-                confianza, tradición e innovación en la industria heladera venezolano.
-            </p>
+            <!-- Divisor -->
+            <div class="mv-divisor"></div>
+
+            <!-- Visión -->
+            <div class="mv-columna">
+                <span class="mv-etiqueta">02</span>
+                <h2 class="mv-titulo">Visión</h2>
+                <div class="mv-linea"></div>
+                <p class="mv-texto">Ser la marca preferida y de mayor venta en Venezuela.</p>
+            </div>
+
         </div>
     </div>
 
