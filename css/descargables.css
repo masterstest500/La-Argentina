@@ -1,0 +1,228 @@
+/* ========== DESCARGABLES ========== */
+#descargables {
+    min-height: 100vh;
+    background-image: url('../img/banner/arte\ rotulado\ La\ Argentina.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+#descargables::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.90);
+    z-index: 0;
+    pointer-events: none;
+}
+
+#descargables > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Hero ── */
+.descargables-hero {
+    background-color: #0a0a0a;
+    padding: 80px 40px;
+    text-align: center;
+    border-bottom: 4px solid #cc0000;
+    position: relative;
+    z-index: 1;
+}
+
+.descargables-etiqueta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #cc0000;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.descargables-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 4px;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.descargables-titulo span {
+    color: #cc0000;
+}
+
+.descargables-subtitulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+/* ── Contenedor ── */
+.descargables-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+/* ── Grid ── */
+.descargables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+/* ── Tarjeta ── */
+.descargable-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.descargable-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(204,0,0,0.12);
+    border-color: #cc0000;
+}
+
+/* ── Preview ── */
+.descargable-preview {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+}
+
+.descargable-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.descargable-card:hover .descargable-preview img {
+    transform: scale(1.05);
+}
+
+.descargable-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.descargable-card:hover .descargable-overlay {
+    opacity: 1;
+}
+
+.descargable-btn-overlay {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #cc0000;
+    padding: 12px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.descargable-btn-overlay:hover {
+    background: #ffffff;
+    color: #cc0000;
+}
+
+/* ── Info ── */
+.descargable-info {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.descargable-tipo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #cc0000;
+}
+
+.descargable-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: #0a0a0a;
+}
+
+.descargable-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #0a0a0a;
+    padding: 10px 20px;
+    border-radius: 2px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.descargable-btn:hover {
+    background: #cc0000;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .descargables-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .descargables-titulo {
+        font-size: 3rem;
+    }
+
+    .descargables-hero {
+        padding: 100px 20px 40px;
+    }
+
+    .descargables-contenedor {
+        padding: 40px 20px;
+    }
+
+    .descargables-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .descargable-preview {
+        height: 200px;
+    }
+}

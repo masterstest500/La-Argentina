@@ -863,20 +863,20 @@
 /* ========== MISIÓN Y VISIÓN DOS COLUMNAS ========== */
 .mv-contenedor {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 0;
     width: 100%;
     max-width: 1000px;
-    min-height: 60vh;
-    margin: 0 auto;
-    padding: 60px 0;
+    min-height: auto;
+    margin-top: -80px;
+    padding: 20px 0;
 }
 
 .mv-columna {
     flex: 1;
     text-align: center;
-    padding: 40px 60px;
+    padding: 60px 60px;
 }
 
 .mv-etiqueta {
@@ -893,7 +893,7 @@
     font-size: 3rem;
     letter-spacing: 4px;
     color: #0a0a0a;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     position: relative;
     z-index: 1;
 }
@@ -902,15 +902,15 @@
     width: 40px;
     height: 3px;
     background-color: #cc0000;
-    margin: 0 auto 24px;
+    margin: 0 auto 30px;
     border-radius: 2px;
 }
 
 .mv-texto {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 300;
-    color: #444;
+    color: #000000;
     line-height: 1.9;
     letter-spacing: 0.5px;
 }
