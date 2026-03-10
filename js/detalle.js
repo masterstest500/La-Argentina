@@ -100,7 +100,7 @@ const productos = {
 },
 'pinta-lengua': {
     nombre: 'Pinta Lengua',
-    color: '#910187',
+    color: '#0073df',
     descripcion: 'El favorito de los más pequeños. Colorido, divertido y con ese sabor intenso que deja huella... y color en la lengua.',
     imagenes: ['img/helados/pinta-lengua.png']
 },
@@ -112,7 +112,7 @@ const productos = {
 },
 'maximus': {
     nombre: 'Maximus',
-    color: '#C47A2B',
+    color: '#1A3A5C',
     descripcion: 'Grande en tamaño, inmenso en sabor. El helado para quienes no se conforman con poco.',
     imagenes: ['img/helados/maximus.png']
 },
@@ -126,7 +126,7 @@ const productos = {
     nombre: 'Choco Mini',
     color: '#bb7a4f',
     descripcion: 'Pequeño pero poderoso. Intenso chocolate en formato mini para disfrutar sin culpa en cualquier momento.',
-    imagenes: ['img/helados/choco-mini.png']
+    imagenes: ['img/helados/choco-mini2.png']
 }
 };
 

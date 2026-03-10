@@ -3,16 +3,26 @@
 const botonesQS = document.querySelectorAll('.qs-btn');
 const panelesQS = document.querySelectorAll('.qs-panel');
 
+const selectorMV = document.getElementById('selector-mv');
+
 botonesQS.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Quitar activo de todos
         botonesQS.forEach(b => b.classList.remove('activo'));
         panelesQS.forEach(p => p.classList.remove('activo'));
-
-        // Activar el seleccionado
         btn.classList.add('activo');
         const target = btn.getAttribute('data-target');
         document.getElementById(target).classList.add('activo');
+        if (target === 'mision' || target === 'vision') {
+            selectorMV.style.visibility = 'visible';
+            selectorMV.style.marginBottom = '60px';
+            selectorMV.style.height = 'auto';
+            selectorMV.style.overflow = 'visible';
+        } else {
+            selectorMV.style.visibility = 'hidden';
+            selectorMV.style.marginBottom = '0';
+            selectorMV.style.height = '0';
+            selectorMV.style.overflow = 'hidden';
+        }
     });
 });
 
@@ -105,5 +115,16 @@ if (panelTarget) {
     panelesQS.forEach(p => p.classList.remove('activo'));
     botonesQS.forEach(b => b.classList.remove('activo'));
     panelTarget.classList.add('activo');
+    if (seccion === 'historia' || seccion === 'valores') {
+        selectorMV.style.visibility = 'hidden';
+        selectorMV.style.marginBottom = '0';
+        selectorMV.style.height = '0';
+        selectorMV.style.overflow = 'hidden';
+    } else {
+        selectorMV.style.visibility = 'visible';
+        selectorMV.style.marginBottom = '60px';
+        selectorMV.style.height = 'auto';
+        selectorMV.style.overflow = 'visible';
+    }
     if (seccion === 'historia') iniciarHistoria();
 }
