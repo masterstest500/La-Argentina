@@ -18,7 +18,7 @@ const distribuidoresMayor = [
         nombre: "Distribuidora Industrial Los Robles",
         direccion: "Zona Industrial Los Robles, Galpón 28, Calle 61, Maracaibo",
         lat: 10.6201,
-        lng: -71.5987
+        lng: -71.6305
     },
     {
         nombre: "Distribuidora Sur del Lago",

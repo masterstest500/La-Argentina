@@ -241,3 +241,17 @@
         display: block;
     }
 }
+
+@media (max-width: 768px) {
+    .dropdown.activo .dropdown-menu {
+        display: block;
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        border-top: none;
+        border-left: 2px solid var(--rojo);
+        margin-top: 8px;
+        background-color: var(--negro);
+    }
+}

@@ -812,3 +812,106 @@ body {
 .leaflet-control {
     z-index: 1 !important;
 }
+
+@media (max-width: 768px) {
+    /* ── Contacto ── */
+    #contacto {
+        padding: 60px 20px;
+    }
+
+    .contacto-contenedor {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .contacto-titulo {
+        font-size: 2.5rem;
+    }
+
+    .contacto-desc {
+        max-width: 100%;
+    }
+
+    .form-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* ── Ubícanos ── */
+    #ubicanos {
+        padding: 60px 20px;
+    }
+
+    .ubicanos-titulo {
+        font-size: 2.5rem;
+    }
+
+    .ubicanos-filtros {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .filtro-btn {
+        padding: 8px 16px;
+        font-size: 0.72rem;
+    }
+
+    #mapa-leaflet {
+        height: 380px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-titulo {
+        font-size: 2rem;
+    }
+
+    .ubicanos-titulo {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* ── Términos ── */
+    .terminos-hero {
+        padding: 100px 20px 40px;
+    }
+
+    .terminos-titulo {
+        font-size: 3rem;
+    }
+
+    .terminos-contenedor {
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 30px;
+    }
+
+    .terminos-indice {
+        width: 100%;
+        min-width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+    .seccion-titulo {
+        font-size: 1.4rem;
+    }
+
+    .seccion-num {
+        font-size: 3rem;
+    }
+
+    .terminos-dato {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminos-titulo {
+        font-size: 2.5rem;
+    }
+}
