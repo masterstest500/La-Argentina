@@ -34,11 +34,11 @@
 }
 
 .hero-titulo {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'MontserratThin', sans-serif;
     font-size: 6rem;
     line-height: 1;
     color: #0a0a0a;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .hero-titulo span {
@@ -260,7 +260,7 @@
 
 .slide-nombre {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 7rem;
+    font-size: 5rem;
     line-height: 1;
     color: #ffffff;
     margin-bottom: 24px;

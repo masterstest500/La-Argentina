@@ -28,32 +28,51 @@
 
 /* ── Hero ── */
 .descargables-hero {
-    background-color: #0a0a0a;
-    padding: 80px 40px;
+    background-image: url('../img/banner/arte\ rotulado\ La\ Argentina.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 40px;
     text-align: center;
     border-bottom: 4px solid #cc0000;
     position: relative;
     z-index: 1;
 }
 
+.descargables-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 0;
+}
+
+.descargables-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
 .descargables-etiqueta {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.60rem;
     font-weight: 600;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #cc0000;
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .descargables-titulo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    letter-spacing: 4px;
+    font-size: 2rem;
+    letter-spacing: 3px;
     color: #ffffff;
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .descargables-titulo span {
@@ -62,10 +81,11 @@
 
 .descargables-subtitulo {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 300;
     letter-spacing: 2px;
     color: #888;
+    margin-bottom: 10px;
 }
 
 /* ── Contenedor ── */

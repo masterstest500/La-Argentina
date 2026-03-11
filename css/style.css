@@ -1,11 +1,25 @@
 /* ========== FUENTE GLOBAL ========== */
-@import url('https://fonts.googleapis.com');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600&display=swap');
+
+@font-face {
+    font-family: 'MontserratThin';
+    src: url('../fonts/MontserratThin-Black_3.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ArgentumSans';
+    src: url('../fonts/ArgentumSans-Black.ttf') format('truetype');
+}
+
+* {
+    font-family: 'ArgentumSans', sans-serif !important;
+}
 
 /* ========== BODY ========== */
 body {
     background-color: #ffffff;
     color: #0a0a0a;
-    font-family: 'Yellowtail', cursive;
+    font-family: 'ArgentumSans', sans-serif;
     padding-top: 70px;
     background-image: url('../img/banner/arte-rotulado-La-Argentina.jpg');
     background-size: cover;
@@ -282,7 +296,7 @@ main, header, footer, section, div {
 
 .contacto-titulo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     letter-spacing: 3px;
     color: #0a0a0a;
     line-height: 1.1;
@@ -473,30 +487,49 @@ main, header, footer, section, div {
 
 /* ── Hero ── */
 .terminos-hero {
-    background-color: #0a0a0a;
-    padding: 80px 40px;
+    background-image: url('../img/banner/arte\ rotulado\ La\ Argentina.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 40px;
     text-align: center;
     border-bottom: 4px solid #cc0000;
 }
 
+.terminos-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 0;
+}
+
+.terminos-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
 .terminos-etiqueta {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.60rem;
     font-weight: 600;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #cc0000;
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .terminos-titulo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    letter-spacing: 4px;
+    font-size: 2rem;
+    letter-spacing: 3px;
     color: #ffffff;
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .terminos-titulo span {
@@ -505,9 +538,10 @@ main, header, footer, section, div {
 
 .terminos-subtitulo {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 300;
     letter-spacing: 2px;
+    margin-bottom: 10px;
     color: #888;
 }
 
