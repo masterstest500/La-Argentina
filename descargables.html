@@ -203,6 +203,40 @@
                         </button>
                     </div>
                 </div>
+				<div class="descargable-card">
+                    <div class="descargable-preview">
+                        <img src="img/Descargables/AQUI SE VENDE MEDIO PLIEGO.jpg" alt="Arte Promocional Afiche Grande">
+                        <div class="descargable-overlay">
+                            <button class="descargable-btn-overlay" onclick="verPrevia('img/Descargables/AQUI SE VENDE MEDIO PLIEGO.jpg')">
+                                🔍 Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                    <div class="descargable-info">
+                        <span class="descargable-tipo">Arte Promocional</span>
+                        <h3 class="descargable-nombre">Afiche Grande</h3>
+                        <button class="descargable-btn" onclick="descargar('img/Descargables/AQUI SE VENDE MEDIO PLIEGO.jpg', 'AQUI SE VENDE MEDIO PLIEGO.jpg')">
+                            Descargar
+                        </button>
+                     </div>
+					</div> 
+					<div class="descargable-card">
+                    <div class="descargable-preview">
+                        <img src="img/Descargables/AQUI SE VENDE TABLOIDE.jpg" alt="Arte Promocional Afiche">
+                        <div class="descargable-overlay">
+                            <button class="descargable-btn-overlay" onclick="verPrevia('img/Descargables/AQUI SE VENDE TABLOIDE.jpg')">
+                                🔍 Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                    <div class="descargable-info">
+                        <span class="descargable-tipo">Arte Promocional</span>
+                        <h3 class="descargable-nombre">Afiche</h3>
+                        <button class="descargable-btn" onclick="descargar('img/Descargables/AQUI SE VENDE TABLOIDE.jpg', 'AQUI SE VENDE TABLOIDE.jpg')">
+                            Descargar
+                        </button>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -213,7 +247,7 @@
         <div class="footer-contenido">
             <div class="footer-col">
                 <img src="img/logos/logo2.png" alt="La Argentina" class="footer-logo">
-                <p class="footer-slogan">Demasiado Buenos</p>
+                <p class="footer-slogan">"Demasiado Buenos"</p>
                 <div class="footer-redes">
                     <a href="#" class="footer-red proximamente" data-red="Instagram">
                         <img src="img/logos/instagram.png" alt="Instagram">
@@ -239,9 +273,9 @@
             <div class="footer-col">
                 <h4 class="footer-titulo">Contacto</h4>
                 <ul class="footer-contacto">
-                    <li>+58 414-6147918</li>
-                    <li>ecarrascal@helar.com</li>
-                    <li>Calle 61 entre calles 114A y 114, Galpón 28, Zona Industrial Los Robles, Maracaibo</li>
+                    <li>📍 Calle 61 entre calles 114A y 114B, Galpon Numero 28, Zona Industrial Los Robles, Maracaibo - Estado Zulia</li>
+                    <li>📞 +58 414-6147918</li>
+                    <li>📧 ecarrascal@helar.com</li>
                 </ul>
             </div>
         </div>
@@ -258,8 +292,7 @@
         <img id="previa-img" src="" alt="Vista Previa" style="max-width:90%; max-height:90vh; object-fit:contain; border-radius:8px;">
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/whatsapp.js"></script>
+
     <script>
         function verPrevia(src) {
             const modal = document.getElementById('previa-modal');
@@ -276,21 +309,24 @@
             if (e.target === this) cerrarPrevia();
         });
 
-        async function descargar(url, nombre) {
-            try {
-                const response = await fetch(url);
-                const blob = await response.blob();
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = nombre;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(link.href);
-            } catch(e) {
-                window.open(url, '_blank');
-            }
-        }
+        function descargar(url, nombre) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = nombre;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
     </script>
+
+    
+<!-- Botón WhatsApp -->
+    <div id="whatsapp-btn"></div>
+
+    <script src="js/whatsapp.js"></script>
+    <script src="js/main.js"></script>
+
 </body>
 </html>
