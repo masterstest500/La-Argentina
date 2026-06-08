@@ -1,9 +1,8 @@
-```
 User-agent: *
 Allow: /
+Allow: /img/
 
 Sitemap: https://helar.ve/sitemap.xml
 
-Disallow: /img/
 Disallow: /css/
 Disallow: /js/
