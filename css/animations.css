@@ -1,3 +1,47 @@
+/* ========== PANTALLA DE BIENVENIDA (SPLASH SCREEN) ========== */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff; /* El fondo blanco que definimos */
+    z-index: 9999; /* Asegura que tape el navbar (que tiene z-index 1000) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Preparamos la transición suave de transparencia para cuando JS actúe */
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out; 
+}
+
+/* Esta es la clase que inyectaremos con JavaScript para desvanecer la pantalla */
+#splash-screen.oculto {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.splash-logo-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.splash-logo {
+    width: 280px; /* Puedes ajustar este tamaño si lo ves muy grande o pequeño */
+    height: auto;
+    object-fit: contain;
+    /* Aplicamos la animación de latido continuo */
+    animation: latidoLogo 2s ease-in-out infinite;
+}
+
+/* Animación: El logo hace un sutil zoom in y zoom out */
+@keyframes latidoLogo {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); } /* Crece un 5% a la mitad del tiempo */
+    100% { transform: scale(1); }
+}
+
+
 /* ========== HERO BIENVENIDA ========== */
 #hero {
     min-height: 90vh;

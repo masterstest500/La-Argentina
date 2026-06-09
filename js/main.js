@@ -1,3 +1,35 @@
+// ========== PANTALLA DE BIENVENIDA (SPLASH SCREEN) ==========
+document.addEventListener("DOMContentLoaded", () => {
+    const splashScreen = document.getElementById('splash-screen');
+
+    if (splashScreen) {
+        // Verificamos si el usuario ya vio el splash en esta sesión de navegación
+        const yaVisitado = sessionStorage.getItem('splashMostrado');
+
+        if (yaVisitado) {
+            // Si ya lo vio (ej. recargó la página o cambió de pestaña), lo quitamos de golpe sin estorbar
+            splashScreen.style.display = 'none';
+        } else {
+            // Si es su primera vez hoy, esperamos a que carguen las imágenes y el mapa
+            window.addEventListener('load', () => {
+                // Agregamos un pequeño retraso de 1 segundo para que el logo alcance a hacer su "latido"
+                setTimeout(() => {
+                    // Agregamos la clase que hace la transición de desvanecimiento
+                    splashScreen.classList.add('oculto');
+                    
+                    // Guardamos el registro en la memoria temporal del navegador
+                    sessionStorage.setItem('splashMostrado', 'true');
+                    
+                    // Retiramos el contenedor del código después de la animación para que no bloquee clics
+                    setTimeout(() => {
+                        splashScreen.style.display = 'none';
+                    }, 800); // 800ms coincide con el tiempo que le pusimos al CSS
+                }, 1000); 
+            });
+        }
+    }
+});
+
 // ========== SCROLL REVEAL PRODUCTOS ==========
 
 const tarjetas = document.querySelectorAll('.producto-card');
