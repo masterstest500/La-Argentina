@@ -103,45 +103,31 @@
     </nav>
 </header>    
 
-    <!-- ========== HERO / CARRUSEL ========== -->
-     <section id="hero">
-<!-- Helados lado izquierdo -->
-    <div class="hero-helados-izquierda">
-    <div class="helado-contenedor h-izq-1">
-        <img src="img/helados/fantofresa.png" alt="Fantoche Fresa" class="helado-flotante">
-    </div>
-    <div class="helado-contenedor h-izq-2">
-        <img src="img/helados/chocolate2.png" alt="Chocolate" class="helado-flotante">
-    </div>
-    <div class="helado-contenedor h-izq-3">
-        <img src="img/helados/pistacho.png" alt="Pistache" class="helado-flotante">
-    </div>
-</div>
+    <!-- ========== HERO / CARRUSEL (Estructura Base Limpia) ========== -->
+<section id="hero">
+    <div class="hero-carrusel-track">
+        
+        <!-- Slides de imágenes -->
+        <div class="hero-slide active" style="background-image: url('img/banner/promo1.png');"></div>
+        <div class="hero-slide" style="background-image: url('img/banner/promo2.png');"></div>
+        <div class="hero-slide" style="background-image: url('img/banner/promo3.png');"></div>
+        <div class="hero-slide" style="background-image: url('img/banner/promo4.png');"></div>
 
-    <!-- Contenido central -->
-    <div class="hero-contenido">
-        <h1 class="hero-titulo">Helados<br><span>La Argentina</span></h1>
-        <p class="hero-slogan">"Demasiado Buenos"</p>
-    </div>
 
-    <!-- Helados lado derecho -->
-    <div class="hero-helados-derecha">
 
-        <div class="helado-contenedor h-der-1">
-            <img src="img/helados/mantecado.png" alt="Manteca" class="helado-flotante">
+        <!-- Controles del carrusel -->
+        <button class="hero-flecha hero-flecha-izq" id="hero-btn-izq">&#10094;</button>
+        <button class="hero-flecha hero-flecha-der" id="hero-btn-der">&#10095;</button>
+
+        <div class="hero-carrusel-puntos">
+            <span class="hero-punto active" data-hero-slide="0"></span>
+            <span class="hero-punto" data-hero-slide="1"></span>
+            <span class="hero-punto" data-hero-slide="2"></span>
+            <span class="hero-punto" data-hero-slide="3"></span>
         </div>
-
-        <div class="helado-contenedor h-der-2">
-            <img src="img/helados/fantasia.png" alt="Fantasía" class="helado-flotante">
-        </div>
-
-        <div class="helado-contenedor h-der-3">
-            <img src="img/helados/ron-pasa.png" alt="Ron Pasas" class="helado-flotante">
-        </div> 
-
+        
     </div>
-    
-     </section>
+</section>
 
     <!-- ========== CARRUSEL DE PRODUCTOS ========== -->
 <section id="carrusel">

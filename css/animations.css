@@ -42,160 +42,22 @@
 }
 
 
-/* ========== HERO BIENVENIDA ========== */
+/* ========== HERO BIENVENIDA (LIMPIO) ========== */
 #hero {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: relative;
-    background-color: #ffffff;
-    background-image: url('../img/banner/arte\ rotulado\ La\ Argentina.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 0 40px;
-    overflow: visible;
+    width: 100vw;
+    height: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000; /* Fondo negro sólido */
+    background-image: none;    /* ¡Adiós al arte rotulado! */
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
     z-index: 2;
 }
 
-/* ========== CONTENIDO CENTRAL ========== */
-.hero-contenido {
-    text-align: center;
-    z-index: 2;
-    flex: 1;
-    animation: fadeInUp 1s ease forwards;
-}
 
-.hero-subtitulo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #000000;
-    margin-bottom: 12px;
-}
-
-.hero-titulo {
-    font-family: 'MontserratThin', sans-serif;
-    font-size: 6rem;
-    line-height: 1;
-    color: #0a0a0a;
-    margin-bottom: 50px;
-}
-
-.hero-titulo span {
-    color: #cc0000;
-}
-
-.hero-slogan {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 300;
-    font-style: italic;
-    color: #000000;
-    letter-spacing: 2px;
-}
-
-/* ========== HELADOS LATERALES ========== */
-.hero-helados-izquierda,
-.hero-helados-derecha {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    flex: 1;
-    position: relative;
-}
-
-.helado-contenedor {
-    display: inline-block;
-    transform: translateZ(0);
-}
-
-.helado-flotante {
-    width: 160px;
-    height: auto;
-    object-fit: contain;
-    position: relative;
-    filter: drop-shadow(0 8px 24px rgba(204, 0, 0, 0.3));
-    animation: flotar 8s ease-in-out infinite;
-    z-index: 3;
-}
-
-.h-izq-1 { width: 190px; margin-top: 40px; }
-.h-izq-2 { width: 170px; margin-top: 20px; }
-.h-izq-3 { width: 190px; margin-top: 10px; }
-
-.h-der-1 { width: 150px; margin-top: 40px; }
-.h-der-2 { width: 170px; margin-top: 20px; }
-.h-der-3 { width: 190px; margin-top: 10px; }
-
-/* Posiciones específicas izquierda */
-.hero-helados-izquierda .helado-contenedor:nth-child(1) {
-    animation: entrarIzquierda 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
-    opacity: 0;
-}
-.hero-helados-izquierda .helado-contenedor:nth-child(2) {
-    animation: entrarIzquierda 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
-    opacity: 0;
-}
-.hero-helados-izquierda .helado-contenedor:nth-child(3) {
-    animation: entrarIzquierda 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
-    opacity: 0;
-}
-.hero-helados-derecha .helado-contenedor:nth-child(1) {
-    animation: entrarDerecha 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
-    opacity: 0;
-}
-.hero-helados-derecha .helado-contenedor:nth-child(2) {
-    animation: entrarDerecha 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
-    opacity: 0;
-}
-.hero-helados-derecha .helado-contenedor:nth-child(3) {
-    animation: entrarDerecha 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
-    opacity: 0;
-}
-
-/* ========== KEYFRAMES ========== */
-@keyframes entrarIzquierda {
-    from {
-        transform: translateX(-100vw) rotate(-12deg);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0) rotate(-12deg);
-        opacity: 1;
-    }
-}
-
-@keyframes entrarDerecha {
-    from {
-        transform: translateX(100vw) rotate(12deg);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0) rotate(12deg);
-        opacity: 1;
-    }
-}
-
-@keyframes flotar {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(15px); }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
@@ -408,14 +270,4 @@
     z-index: 1;
 }
 
-#hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.90);
-    z-index: 0;
-}
 
