@@ -103,3 +103,55 @@ if (navToggle && navMenu) {
         }
     });
 }
+
+// ========== GESTOR DE SESIÓN PASIVO ==========
+document.addEventListener("DOMContentLoaded", () => {
+    const botonLogin = document.querySelector('.navbar-login');
+    const estaAutenticado = localStorage.getItem("trabajadorAutenticado") === "true";
+
+    if (botonLogin) {
+        if (estaAutenticado) {
+            // 1. Extraemos los datos guardados del usuario
+            const usuarioSesion = JSON.parse(localStorage.getItem("usuarioSesion"));
+            
+            if (usuarioSesion && usuarioSesion.nombre) {
+                // Cortamos el string para obtener solo el Primer Nombre (Ej: "Eliezer Chirinos" -> "Eliezer")
+                const primerNombre = usuarioSesion.nombre.trim().split(" ")[0];
+                
+                // 2. Creamos dinámicamente la etiqueta span para el nombre
+                const nombreSpan = document.createElement("span");
+                nombreSpan.className = "user-name-navbar";
+                nombreSpan.textContent = primerNombre;
+                
+                // Lo metemos dentro del contenedor del botón (se colocará automáticamente al lado de la imagen)
+                botonLogin.appendChild(nombreSpan);
+                
+                // 3. Mejoramos el tooltip mostrando su Cargo corporativo y la acción
+                // Convertimos la primera letra del cargo a Mayúscula para que se vea pro (Ej: "preventista" -> "Preventista")
+                const cargoFormateado = usuarioSesion.cargo.charAt(0).toUpperCase() + usuarioSesion.cargo.slice(1);
+                botonLogin.setAttribute('data-red', `Cerrar Sesión`);
+            } else {
+                // Fallback de seguridad por si no encuentra el objeto con el nombre
+                botonLogin.setAttribute('data-red', 'Cerrar Sesión');
+            }
+
+            // 4. Modificamos el clic: En vez de ir a login.html, gestiona el cierre de sesión
+            botonLogin.addEventListener('click', (e) => {
+                e.preventDefault(); // Evita que la página navegue al formulario
+                
+                const confirmar = confirm("¿Está seguro de que desea cerrar sesión?");
+                if (confirmar) {
+                    // Limpiamos TODO lo relacionado a la sesión de este trabajador
+                    localStorage.removeItem("trabajadorAutenticado");
+                    localStorage.removeItem("usuarioSesion"); 
+
+                    alert("Sesión cerrada. Ahora navegas como invitado.");
+                    window.location.reload(); // Recarga el inicio limpio
+                }
+            });
+        } else {
+            // Si no está autenticado, nos aseguramos de que mantenga su comportamiento normal
+            botonLogin.setAttribute('data-red', 'Inicia Sesión');
+        }
+    }
+});

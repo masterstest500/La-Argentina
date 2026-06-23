@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <link rel="stylesheet" href="css/login.css"> 
+</head>
+<body class="login-body">
+
+    <div class="registro-container">
+        <div class="login-logo">
+            <img src="img/logos/logo3.png" alt="Helados La Argentina"> 
+            <h2>Registro de Personal</h2>
+            <p>Cree una cuenta para acceder a sus herramientas de trabajo.</p>
+        </div>
+
+        <form id="registro-form">
+            <div class="form-grid">
+                
+                <div class="input-group">
+                    <label for="reg-nombre">Nombre y Apellido</label>
+                    <input type="text" id="reg-nombre" placeholder="Ej. Eliezer Chirinos" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-cedula">Cédula de Identidad</label>
+                    <input type="text" id="reg-cedula" placeholder="Ej. 31110444" maxlength="8" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-telefono">Número de Teléfono</label>
+                    <input type="tel" id="reg-telefono" placeholder="Ej. 04121234567" maxlength="11" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-correo">Correo Electrónico</label>
+                    <input type="email" id="reg-correo" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" placeholder="••••••••" maxlength="10" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-cargo">Cargo en la Empresa</label>
+                    <select id="reg-cargo" required class="reg-select">
+                        <option value="" disabled selected>Seleccione su cargo...</option>
+                        <option value="preventista">Preventista</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="operador">Operador de Planta</option>
+                    </select>
+                </div>
+
+                <div id="registro-error" class="error-box hidden full-width">
+                    <span class="error-icon">⚠️</span>
+                    <span id="registro-error-text">Por favor, rellene todos los campos.</span>
+                </div>
+
+                <div class="login-opciones full-width" style="justify-content: center;">
+                    <a href="login.html" class="login-link">¿Ya tiene una cuenta? Inicie Sesión</a>
+                </div>
+
+                <button type="submit" class="btn-login full-width">Registrarse</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/registro.js"></script>
+</body>
+</html>

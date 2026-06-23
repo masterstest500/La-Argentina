@@ -1,0 +1,205 @@
+/* Estilos específicos para la vista de Login */
+.login-body {
+    background: linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-logo img {
+    max-width: 140px;
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.login-logo h2 {
+    font-size: 1.4rem;
+    color: #ff0000; /* Dorado Premium */
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #cc0000;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.589);
+}
+
+/* Botón de envío */
+.btn-login {
+    background: linear-gradient(90deg, #ff0000 0%, #9e0202 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.9rem;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 56, 56, 0.4);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* Caja de errores dinámicos */
+.error-box {
+    background: rgba(231, 76, 60, 0.15);
+    border: 1px solid #e74c3c;
+    color: #f1948a;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    animation: shake 0.4s ease-in-out;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Animación de vibración para errores visuales */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* =========================================
+   Opciones inferiores (Registro y Recuperar)
+   ========================================= */
+.login-opciones {
+    display: flex;
+    justify-content: space-between; /* Envía uno a la izquierda y otro a la derecha */
+    align-items: center;
+    margin-bottom: 1.2rem; /* Separación antes del botón rojo */
+    width: 100%;
+}
+
+.login-link {
+    color: #cccccc; /* Un gris claro para no opacar el botón principal */
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    color: #ff0000; /* Se ilumina con el rojo de Helados La Argentina */
+    text-decoration: underline;
+}
+
+/* Estilos para el selector de cargos en el registro */
+.reg-select {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    width: 100%;
+}
+
+.reg-select:focus {
+    outline: none;
+    border-color: #cc0000;
+    background: #1a1a1a; /* Fondo oscuro sólido cuando se despliegan las opciones */
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.589);
+}
+
+.reg-select option {
+    background-color: #111111; /* Asegura que las letras sean legibles dentro del menú */
+    color: #ffffff;
+}
+
+
+/* =========================================
+   Contenedor Ancho para el Registro
+   ========================================= */
+.registro-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 700px; /* Mucho más ancho que los 400px del login */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+/* Grilla para dividir en 2 columnas */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas del mismo ancho */
+    gap: 0 1.5rem; /* Espaciado entre columnas (0 vertical, 1.5rem horizontal) */
+}
+
+/* Clases para los elementos que deben ocupar todo el ancho (botón, mensajes) */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Responsividad: Si se ve en un celular, vuelve a 1 sola columna */
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

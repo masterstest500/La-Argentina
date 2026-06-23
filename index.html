@@ -92,7 +92,14 @@
                 <img src="img/logos/youtube.png" alt="YouTube">
             </a>
         </div>
-
+        
+        <!-- Login -->
+        <div class="navbar-acciones">
+            <a href="login.html" class="navbar-login" data-red="Iniciar sesión">
+                <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
+            </a>
+        </div>
+        
         <!-- Botón menú móvil -->
         <div class="nav-toggle" id="nav-toggle">
             <span></span>
@@ -267,17 +274,7 @@
         </div>
 
     </div><!-- /carrusel-wrapper -->
-</section>
-
-<!-- ========== PRODUCTOS DESTACADOS ========== -->
-        <section id="productos-destacados">
-    
-        </section>
-
-    <!-- ========== QUIÉNES SOMOS (preview) ========== -->
-    <section id="quienes-somos">
-
-    </section>    
+</section> 
 
 <!-- ========== CONTACTO ========== -->
 <section id="contacto">
@@ -301,7 +298,7 @@
                     <div class="contacto-icono">✉️</div>
                     <div class="contacto-dato-info">
                         <span class="contacto-dato-titulo">Correo</span>
-                        <span class="contacto-dato-valor">ecarrascal@helar.com</span>
+                        <span class="contacto-dato-valor">soporteit.helar@gmail.com </span>
                     </div>
                 </div>
                 <div class="contacto-dato">
@@ -316,30 +313,36 @@
 
         <!-- Columna derecha: formulario -->
         <div class="contacto-formulario">
-            <div class="contacto-form-inner">
+            <form id="contacto-form" class="contacto-form-inner">
+
                 <div class="form-grupo">
                     <label class="form-label">Nombre completo</label>
-                    <input type="text" class="form-input" placeholder="¿Cómo te llamas?">
+                    <input type="text" id="contacto-nombre" name="from_name" class="form-input" placeholder="¿Cómo te llamas?" required>
                     <span class="form-linea"></span>
                 </div>
                 <div class="form-grupo">
                     <label class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-input" placeholder="tucorreo@.com">
+                    <input type="email" id="contacto-correo" name="reply_to" class="form-input" placeholder="tucorreo@.com" required>
                     <span class="form-linea"></span>
                 </div>
                 <div class="form-grupo">
                     <label class="form-label">Mensaje</label>
-                    <textarea class="form-input form-textarea" placeholder="¿En qué podemos ayudarte?"></textarea>
+                    <textarea id="contacto-mensaje" name="message" class="form-input form-textarea" placeholder="¿En qué podemos ayudarte?" required></textarea>
                     <span class="form-linea"></span>
                 </div>
-                <button class="form-btn" onclick="enviarWhatsApp()">
+
+                <div id="contacto-alerta" class="form-alerta hidden"></div>
+
+                <button type="submit" id="contacto-btn" class="form-btn">
                     Enviar mensaje →
                 </button>
-            </div>
+            </form>
         </div>
 
     </div>
 </section>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.js"></script>
 
 <!-- ========== UBÍCANOS ========== -->
     <section id="ubicanos">
@@ -411,7 +414,7 @@
             <ul class="footer-contacto">
                 <li>📍 Calle 61 entre calles 114A y 114B, Galpon Numero 28, Zona Industrial Los Robles, Maracaibo - Estado Zulia</li>
                 <li>📞 +58 414-6147918</li>
-                <li>📧 ecarrascal@helar.com</li>
+                <li>📧 soporteit.helar@gmail.com</li>
             </ul>
         </div>
 
@@ -439,6 +442,7 @@
     <script src="js/carrusel.js"></script>
     <script src="js/whatsapp.js"></script>
     <script src="js/mapa.js"></script>
+    <script src="js/contacto.js"></script>
 
 </body>
 </html>
