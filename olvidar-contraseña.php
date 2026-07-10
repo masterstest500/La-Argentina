@@ -42,6 +42,10 @@
             </div>
 
             <button type="submit" class="btn-login" style="margin-top: 1.5rem;">Actualizar Contraseña</button>
+            
+            <div class="login-opciones" style="justify-content: center; margin-top: 1rem;">
+                <a href="login.php" class="login-link">Volver al Inicio de Sesión</a>
+            </div>
         </form>
     </div>
 

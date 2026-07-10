@@ -2,11 +2,12 @@
 session_start();
 require_once 'conexion.php';
 
-// --- PUERTA 1: SI ES PETICIÓN POST (AJAX DESDE JS) ---
+// --- LÓGICA BACKEND (Segura contra Inyección SQL) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json'); // Solo para la respuesta JSON
+    header('Content-Type: application/json');
     
-    $cedula   = trim($_POST['cedula']);
+    // Saneamiento de datos para seguridad
+    $cedula   = mysqli_real_escape_string($conexion, trim($_POST['cedula']));
     $password = $_POST['password'];
 
     if (empty($cedula) || empty($password)) {
@@ -29,32 +30,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo json_encode(["status" => "error", "message" => "Cédula no registrada."]);
     }
-    exit; // ¡MUY IMPORTANTE! Detiene el archivo aquí para no enviar el HTML
+    exit; // Detiene la ejecución aquí para no imprimir el HTML en la respuesta JSON
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="img/logos/logo3.png">
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body class="login-body">
 
-    <?php include 'navbar.php'; ?>
-
     <div class="login-container">
+        <div class="login-logo">
+            <img src="img/logos/logo3.png" alt="Helados La Argentina"> 
+            <h2>¡Hola Trabajador!</h2>
+            <p>Antes de entrar, por favor inicie sesión.</p>
+        </div>
+
         <form id="login-form">
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" id="cedula" name="cedula" required>
+            <div class="input-group">
+                <label for="cedula">Cédula de Identidad</label>
+                <input type="text" id="cedula" placeholder="Ej. 12345678" maxlength="8" required autocomplete="username">
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="••••••••" maxlength="10" required autocomplete="current-password">
             </div>
-            <button type="submit">Iniciar Sesión</button>
+
+            <div id="error-message" class="error-box hidden">
+                <span class="error-icon">⚠️</span>
+                <span id="error-text">Usuario o contraseña incorrectos.</span>
+            </div>
+
+            <div class="login-opciones">
+                <a href="registro.php" class="login-link">Registrarse</a>
+                <a href="olvidar-contraseña.php" class="login-link">¿Olvidó su contraseña?</a>
+            </div>
+            <button type="submit" class="btn-login">Iniciar Sesión</button>
         </form>
     </div>
 
