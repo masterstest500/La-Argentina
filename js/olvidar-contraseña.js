@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("trabajadorAutenticado") === "true") {
-        window.location.href = "index.html";
+        window.location.href = "index.php";
         return;
     }
 
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`¡Contraseña modificada con éxito, ${usuariosBBDD[usuarioIndice].nombre}! El sistema ha registrado el cambio. Será redirigido al inicio de sesión.`);
                 
                 // Redirección automática inmediata tras aceptar el alert
-                window.location.href = "login.html";
+                window.location.href = "login.php";
             } else {
                 mostrarError("Los datos no coinciden con ningún trabajador registrado en el sistema.");
             }

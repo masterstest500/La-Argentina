@@ -1,3 +1,7 @@
+<?php
+// Esto DEBE ir en la línea 1, antes del <!DOCTYPE html>
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,7 +17,7 @@
     <meta property="og:title" content="Productos — Helados La Argentina">
     <meta property="og:description" content="Descubre todos nuestros sabores artesanales. Más de 20 productos para todos los gustos.">
     <meta property="og:image" content="img/logos/logo3.png">
-    <meta property="og:url" content="https://helar.ve/productos.html">
+    <meta property="og:url" content="https://helar.ve/productos.php">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_VE">
 
@@ -34,64 +38,7 @@
 </head>
 <body>
 
-    <!-- ========== NAVBAR ========== -->
-    <header id="navbar">
-        <nav class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="img/logos/logo.png" alt="Helados La Argentina">
-                </a>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="productos.html" class="nav-link">Productos</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a></li>
-                        <li><a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a></li>
-                        <li><a href="quienes-somos.html?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
-                    </ul>
-            </li>
-                <li class="nav-item">
-                <a href="index.html#contacto" class="nav-link">Contacto</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.html#ubicanos" class="nav-link">Ubícanos</a>
-            </li>
-            <li class="nav-item">
-                <a href="descargables.html" class="nav-link">Descargables</a>
-            </li>
-            </ul>
-            <div class="nav-redes">
-                <a href="#" class="red-social proximamente" data-red="Instagram">
-                    <img src="img/logos/instagram.png" alt="Instagram">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="Facebook">
-                    <img src="img/logos/facebook.png" alt="Facebook">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="YouTube">
-                    <img src="img/logos/youtube.png" alt="YouTube">
-                </a>
-            </div>
-            <!-- Login -->
-            <div class="navbar-acciones">
-                <a href="login.html" class="navbar-login" data-red="Iniciar sesión">
-                    <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
-                </a>
-            </div>
-        </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+<?php include 'navbar.php'; ?>
 
     <!-- ========== CONTENIDO PRINCIPAL ========== -->
     <main id="productos">
@@ -106,7 +53,7 @@
         <div class="productos-grid">
 
             <!-- Chocolate -->
-            <a href="detalle-helado.html?id=chocolate" class="producto-card" style="--color-sabor: #2c1506;">
+            <a href="detalle-helado.php?id=chocolate" class="producto-card" style="--color-sabor: #2c1506;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/chocolate3.png" alt="Chocolate">
                 </div>
@@ -118,7 +65,7 @@
             </a>
 
             <!-- Cookies and Cream -->
-            <a href="detalle-helado.html?id=cookies-and-cream" class="producto-card" style="--color-sabor: #1a1a1a;">
+            <a href="detalle-helado.php?id=cookies-and-cream" class="producto-card" style="--color-sabor: #1a1a1a;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/cookies-and-cream.png" alt="Cookies and Cream">
                 </div>
@@ -130,7 +77,7 @@
             </a>
 
             <!-- Fantasía -->
-            <a href="detalle-helado.html?id=fantasia" class="producto-card" style="--color-sabor: #25adb3;">
+            <a href="detalle-helado.php?id=fantasia" class="producto-card" style="--color-sabor: #25adb3;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fantasy.png" alt="Fantasía">
                 </div>
@@ -142,7 +89,7 @@
             </a>
 
             <!-- Fantoche -->
-            <a href="detalle-helado.html?id=fantoche" class="producto-card" style="--color-sabor: #9A7548;">
+            <a href="detalle-helado.php?id=fantoche" class="producto-card" style="--color-sabor: #9A7548;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fantoche2.png" alt="Fantoche">
                 </div>
@@ -154,7 +101,7 @@
             </a>
 
             <!-- Fantoche Fresa -->
-            <a href="detalle-helado.html?id=fantoche-fresa" class="producto-card" style="--color-sabor: #6b1a3a;">
+            <a href="detalle-helado.php?id=fantoche-fresa" class="producto-card" style="--color-sabor: #6b1a3a;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fantofresa.png" alt="Fantoche Fresa">
                 </div>
@@ -166,7 +113,7 @@
             </a>
 
             <!-- Fantoche Chocolate -->
-            <a href="detalle-helado.html?id=fantoche-chocolate" class="producto-card" style="--color-sabor: #1a0a00;">
+            <a href="detalle-helado.php?id=fantoche-chocolate" class="producto-card" style="--color-sabor: #1a0a00;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fantoche-chocolate.png" alt="Fantoche Chocolate">
                 </div>
@@ -178,7 +125,7 @@
             </a>
 
             <!-- Fresa -->
-            <a href="detalle-helado.html?id=fresa" class="producto-card" style="--color-sabor: #b1306a;">
+            <a href="detalle-helado.php?id=fresa" class="producto-card" style="--color-sabor: #b1306a;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fresa.png" alt="Fresa">
                 </div>
@@ -190,7 +137,7 @@
             </a>
 
             <!-- Mantecado -->
-            <a href="detalle-helado.html?id=mantecado" class="producto-card" style="--color-sabor: #1a5a8a;">
+            <a href="detalle-helado.php?id=mantecado" class="producto-card" style="--color-sabor: #1a5a8a;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/manteca3.png" alt="Mantecado">
                 </div>
@@ -202,7 +149,7 @@
             </a>
 
             <!-- Pistacho -->
-            <a href="detalle-helado.html?id=pistacho" class="producto-card" style="--color-sabor: #55bb21;">
+            <a href="detalle-helado.php?id=pistacho" class="producto-card" style="--color-sabor: #55bb21;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/pistacho.png" alt="Pistacho">
                 </div>
@@ -214,7 +161,7 @@
             </a>
 
             <!-- Ron con Pasas -->
-            <a href="detalle-helado.html?id=ron-con-pasas" class="producto-card" style="--color-sabor: #D29514;">
+            <a href="detalle-helado.php?id=ron-con-pasas" class="producto-card" style="--color-sabor: #D29514;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/ron-pasas.png" alt="Ron con Pasas">
                 </div>
@@ -226,7 +173,7 @@
             </a>
 
             <!-- Tramontana -->
-            <a href="detalle-helado.html?id=tramontana" class="producto-card" style="--color-sabor: #FF8C00;">
+            <a href="detalle-helado.php?id=tramontana" class="producto-card" style="--color-sabor: #FF8C00;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/tramontana2.png" alt="Tramontana">
                 </div>
@@ -238,7 +185,7 @@
             </a>
 
             <!-- Trisabor -->
-            <a href="detalle-helado.html?id=trisabor" class="producto-card" style="--color-sabor: #936B12;">
+            <a href="detalle-helado.php?id=trisabor" class="producto-card" style="--color-sabor: #936B12;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/trisabor2.png" alt="Trisabor">
                 </div>
@@ -250,7 +197,7 @@
             </a>
 
             <!-- Sunny Cream -->
-            <a href="detalle-helado.html?id=sunny-cream" class="producto-card" style="--color-sabor: #e98f08;">
+            <a href="detalle-helado.php?id=sunny-cream" class="producto-card" style="--color-sabor: #e98f08;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/sunny-cream.png" alt="Sunny Cream">
                 </div>
@@ -262,7 +209,7 @@
             </a>
 
             <!-- Fruty Top -->
-            <a href="detalle-helado.html?id=fruty-top" class="producto-card" style="--color-sabor: #99C267;">
+            <a href="detalle-helado.php?id=fruty-top" class="producto-card" style="--color-sabor: #99C267;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/fruty-top.png" alt="Fruty Top">
                 </div>
@@ -274,7 +221,7 @@
             </a>
 
             <!-- Sandwich -->
-            <a href="detalle-helado.html?id=sandwich" class="producto-card" style="--color-sabor: #3B2A1A;">
+            <a href="detalle-helado.php?id=sandwich" class="producto-card" style="--color-sabor: #3B2A1A;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/sandwich.png" alt="Sandwich">
                 </div>
@@ -286,7 +233,7 @@
             </a>
 
             <!-- Nevadito -->
-            <a href="detalle-helado.html?id=nevadito" class="producto-card" style="--color-sabor: #5B8DB8;">
+            <a href="detalle-helado.php?id=nevadito" class="producto-card" style="--color-sabor: #5B8DB8;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/nevadito.png" alt="Nevadito">
                 </div>
@@ -298,7 +245,7 @@
             </a>
 
             <!-- Pinta Lengua -->
-            <a href="detalle-helado.html?id=pinta-lengua" class="producto-card" style="--color-sabor: #0073df;">
+            <a href="detalle-helado.php?id=pinta-lengua" class="producto-card" style="--color-sabor: #0073df;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/pinta-lengua.png" alt="Pinta Lengua">
                 </div>
@@ -310,7 +257,7 @@
             </a>
 
             <!-- Maxi Cream -->
-            <a href="detalle-helado.html?id=maxi-cream" class="producto-card" style="--color-sabor: #C47A2B;">
+            <a href="detalle-helado.php?id=maxi-cream" class="producto-card" style="--color-sabor: #C47A2B;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/maxi-cream.png" alt="Maxi Cream">
                 </div>
@@ -322,7 +269,7 @@
             </a>
 
             <!-- Maximus -->
-            <a href="detalle-helado.html?id=maximus" class="producto-card" style="--color-sabor: #1A3A5C;">
+            <a href="detalle-helado.php?id=maximus" class="producto-card" style="--color-sabor: #1A3A5C;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/maximus.png" alt="Maximus">
                 </div>
@@ -334,7 +281,7 @@
             </a>
 
             <!-- Trompo Loco -->
-            <a href="detalle-helado.html?id=trompo-loco" class="producto-card" style="--color-sabor: #d45dd8;">
+            <a href="detalle-helado.php?id=trompo-loco" class="producto-card" style="--color-sabor: #d45dd8;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/trompo-loco.png" alt="Trompo Loco">
                 </div>
@@ -346,7 +293,7 @@
             </a>
 
             <!-- Choco Mini -->
-            <a href="detalle-helado.html?id=choco-mini" class="producto-card" style="--color-sabor: #bb7a4f;">
+            <a href="detalle-helado.php?id=choco-mini" class="producto-card" style="--color-sabor: #bb7a4f;">
                 <div class="producto-img-wrapper">
                     <img src="img/helados/choco-mini2.png" alt="Choco Mini">
                 </div>
@@ -382,10 +329,10 @@
             <div class="footer-col">
                 <h4 class="footer-titulo">Navegación</h4>
                 <ul class="footer-nav">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
-                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="quienes-somos.php">¿Quiénes Somos?</a></li>
+                    <li><a href="index.php#contacto">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -400,7 +347,7 @@
         <div class="footer-barra">
             <footer style = "text-align: center; width: 100%">
             <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
-            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+            <a href="terminos-condiciones.php" class="footer-terminos">Términos y Condiciones</a>
         </div>
 
     </footer>

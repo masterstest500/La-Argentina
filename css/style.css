@@ -830,6 +830,72 @@ main, header, footer, section, div {
     margin-top: 6px;
 }
 
+/* ====================================================================
+   🍦 SECCIÓN: CINTILLO DE PRODUCTOS (CINTA TRANSPORTADORA PLANA)
+   ==================================================================== */
+.cintillo-productos {
+    background-color: #ffffff;
+    padding: 2.5rem 0;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    width: 100%;
+    overflow: hidden; /* Corta limpiamente los potes que entran y salen de la pantalla */
+    display: flex;
+}
+
+/* El riel que arrastra la cadena de producción de forma constante */
+.cintillo-track {
+    display: flex;
+    width: max-content;
+    /* Rueda de forma perpetua. No se altera, pause ni frena con el mouse */
+    animation: cintaContinua 40s linear infinite; 
+}
+
+/* Bloques contenedores de los helados */
+.cintillo-group {
+    display: flex;
+    align-items: center;
+    gap: 80px;           /* Separación fija e idéntica entre potes */
+    padding-right: 80px; /* Margen de acople exacto para evitar saltos ópticos */
+}
+
+/* Render estático de los potes de helado */
+.cintillo-group img {
+    height: 110px;      
+    width: auto;        
+    object-fit: contain;
+    pointer-events: none; /* Hace que el navegador ignore por completo los eventos del mouse sobre la imagen */
+}
+
+/* ====================================================================
+   🔄 BUCLE DE ENGRANAJE PERFECTO
+   ==================================================================== */
+@keyframes cintaContinua {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Al desplazarse exactamente el -33.3333% (el ancho equivalente a un grupo entero), */
+        /* el inicio del Grupo B se clava en la coordenada exacta donde empezó el Grupo A, */
+        /* reiniciando el bucle de forma invisible e infinita sin saltos ni baches. */
+        transform: translateX(-33.3333%);
+    }
+}
+
+/* ====================================================================
+   🔄 MATEMÁTICA DE LA ANIMACIÓN CINEMÁTICA
+   ==================================================================== */
+@keyframes carruselInfinito {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Se desplaza exactamente el 50% (un grupo entero). En ese microsegundo, */
+        /* el Grupo 2 se posiciona exactamente donde inició el Grupo 1 y se repite. */
+        transform: translateX(-50%);
+    }
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
     #mapa-leaflet {
@@ -1107,4 +1173,100 @@ main, header, footer, section, div {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Por defecto el menú desplegable está oculto */
+#user-dropdown-options {
+    display: none;
+    position: absolute;
+    /* ... tus otros estilos de diseño ... */
+}
+
+/* Cuando JavaScript le inyecta la clase "show", se hace visible */
+#user-dropdown-options.show {
+    display: block !important;
+}
+
+/* ========== TOAST DE ALERTA DE SEGURIDAD ========== */
+.toast-alerta {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background-color: #1c1c1c; /* Tu fondo --gris */
+    border-left: 4px solid #cc0000; /* Tu color --rojo */
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    z-index: 2500; /* Por encima de cualquier modal o navbar */
+    max-width: 380px;
+    width: calc(100% - 48px);
+    transform: translateX(130%); /* Empieza completamente escondido a la derecha */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote elegante */
+}
+
+/* Clase de activación por JS */
+.toast-alerta.mostrar-toast {
+    transform: translateX(0);
+}
+
+.toast-contenido {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+    position: relative;
+}
+
+.toast-icono {
+    font-size: 1.5rem;
+    animation: vibrar 0.5s ease-in-out infinite alternate;
+}
+
+.toast-texto {
+    font-family: 'Montserrat', sans-serif;
+    color: #f5f5f5; /* Tu --blanco */
+}
+
+.toast-texto h5 {
+    margin: 0 0 4px 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #ff2222; /* Tu --rojo-hover */
+}
+
+.toast-texto p {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.toast-cerrar {
+    background: none;
+    border: none;
+    color: #f5f5f5;
+    font-size: 1.4rem;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.toast-cerrar:hover {
+    opacity: 1;
+    color: #cc0000;
+}
+
+/* Animación sutil para el icono de advertencia */
+@keyframes vibrar {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
 }

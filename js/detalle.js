@@ -179,7 +179,7 @@ if (producto) {
     aleatorios.forEach(relId => {
         const rel = productos[relId];
         const card = document.createElement('a');
-        card.href = `detalle-helado.html?id=${relId}`;
+        card.href = `detalle-helado.php?id=${relId}`;
         card.classList.add('relacionado-card');
         card.style.backgroundColor = rel.color;
         card.innerHTML = `
@@ -195,7 +195,7 @@ if (producto) {
     });
 
 } else {
-    window.location.href = 'productos.html';
+    window.location.href = 'productos.php';
 }
 
 // Transición suave imagen principal

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,7 +16,7 @@
     <meta property="og:title" content="¿Quiénes Somos? — Helados La Argentina">
     <meta property="og:description" content="Más de 40 años de historia, tradición y sabor venezolano. Conoce nuestra misión, visión y valores.">
     <meta property="og:image" content="img/logos/logo3.png">
-    <meta property="og:url" content="https://helar.ve/quienes-somos.html">
+    <meta property="og:url" content="https://helar.ve/quienes-somos.php">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_VE">
 
@@ -33,64 +36,8 @@
 </head>
 <body>
 
-    <!-- ========== NAVBAR ========== -->
-    <header id="navbar">
-        <nav class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="img/logos/logo.png" alt="Helados La Argentina">
-                </a>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="productos.html" class="nav-link">Productos</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a></li>
-                        <li><a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a></li>
-                        <li><a href="quienes-somos.html?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
-                    </ul>
-            </li>
-                <li class="nav-item">
-                <a href="index.html#contacto" class="nav-link">Contacto</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.html#ubicanos" class="nav-link">Ubícanos</a>
-            </li>
-            <li class="nav-item">
-                <a href="descargables.html" class="nav-link">Descargables</a>
-            </li>
-            </ul>
-            <div class="nav-redes">
-                <a href="#" class="red-social proximamente" data-red="Instagram">
-                    <img src="img/logos/instagram.png" alt="Instagram">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="Facebook">
-                    <img src="img/logos/facebook.png" alt="Facebook">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="YouTube">
-                    <img src="img/logos/youtube.png" alt="YouTube">
-                </a>
-            </div>
-            <!-- Login -->
-            <div class="navbar-acciones">
-                <a href="login.html" class="navbar-login" data-red="Iniciar sesión">
-                    <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
-                </a>
-            </div>
-        </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+<?php include 'navbar.php'; ?>
+
 
     <!-- ========== CONTENIDO PRINCIPAL ========== -->
    <main id="quienes-somos">
@@ -300,10 +247,10 @@
             <div class="footer-col">
                 <h4 class="footer-titulo">Navegación</h4>
                 <ul class="footer-nav">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
-                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="quienes-somos.php">¿Quiénes Somos?</a></li>
+                    <li><a href="index.php#contacto">Contacto</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -318,7 +265,7 @@
         <div class="footer-barra">
             <footer style = "text-align: center; width: 100%">
             <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
-            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+            <a href="terminos-condiciones.php" class="footer-terminos">Términos y Condiciones</a>
         </div>
     </footer>
 

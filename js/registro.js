@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Verificamos si el usuario ya está logueado para no dejarlo registrarse de nuevo
     if (localStorage.getItem("trabajadorAutenticado") === "true") {
-        window.location.href = "index.html";
+        window.location.href = "index.php";
         return;
     }
 
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (registroForm) {
         registroForm.addEventListener("submit", (e) => {
-            e.preventDefault(); // Evitamos que la página recargue
+            e.preventDefault(); // Evitamos que la página recargue de golpe
 
-            // 1. Capturamos todos los valores de los inputs
+            // 1. Capturamos todos los valores de los inputs corporativos
             const nombre = document.getElementById("reg-nombre").value.trim();
             const cedula = document.getElementById("reg-cedula").value.trim();
             const telefono = document.getElementById("reg-telefono").value.trim();
@@ -22,54 +22,57 @@ document.addEventListener("DOMContentLoaded", () => {
             const cargo = document.getElementById("reg-cargo").value;
 
             // Ocultamos la caja de errores antes de evaluar
-            errorBox.classList.add("hidden");
+            if (errorBox) errorBox.classList.add("hidden");
 
-            // 2. Validación de seguridad básica
+            // 2. Tu validación de seguridad básica
             if (!/^\d+$/.test(cedula)) {
                 mostrarError("La Cédula de Identidad debe contener solo números.");
                 return;
             }
 
             // ====================================================================
-            // 💾 CONEXIÓN CON LA "BASE DE DATOS" (LocalStorage)
+            // 🚀 CONEXIÓN REAL CON EL SERVIDOR (FETCH -> PHP -> MYSQL)
             // ====================================================================
             
-            // Traemos la lista de usuarios guardados. Si está vacía, creamos un arreglo nuevo [].
-            let usuariosBBDD = JSON.parse(localStorage.getItem('usuariosBBDD')) || [];
+            // Empaquetamos los datos para enviárselos al archivo PHP
+            const datosFormulario = new FormData();
+            datosFormulario.append("nombre", nombre);
+            datosFormulario.append("cedula", cedula);
+            datosFormulario.append("telefono", telefono);
+            datosFormulario.append("correo", correo);
+            datosFormulario.append("password", password);
+            datosFormulario.append("cargo", cargo);
 
-            // Buscamos si ya existe alguien con esa cédula
-            const usuarioExiste = usuariosBBDD.find(usuario => usuario.cedula === cedula);
-            
-            if (usuarioExiste) {
-                mostrarError("Error: Esta Cédula ya se encuentra registrada en el sistema.");
-                return;
-            }
-
-            // 3. Empaquetamos la información del nuevo trabajador
-            const nuevoTrabajador = {
-                nombre: nombre,
-                cedula: cedula,
-                telefono: telefono,
-                correo: correo,
-                password: password, // Nota: En un sistema real con servidor, esto iría encriptado
-                cargo: cargo
-            };
-
-            // 4. Lo metemos en la lista y guardamos la tabla actualizada en la memoria
-            usuariosBBDD.push(nuevoTrabajador);
-            localStorage.setItem('usuariosBBDD', JSON.stringify(usuariosBBDD));
-
-            // ¡Éxito!
-            alert(`¡Registro exitoso! Bienvenido al equipo, ${nombre}. Ahora inicie sesión.`);
-            
-            // Redirigimos al usuario al login para que entre con su cuenta recién creada
-            window.location.href = "login.html";
+            // Hacemos el envío por detrás de escena hacia registro.php
+            fetch("registro.php", {
+                method: "POST",
+                body: datosFormulario
+            })
+            .then(respuesta => respuesta.json()) // Esperamos la respuesta en formato JSON
+            .then(data => {
+                if (data.status === "success") {
+                    // ¡Éxito real en la Base de Datos!
+                    alert(`¡Registro exitoso! Bienvenido al equipo, ${nombre}. Ahora inicie sesión.`);
+                    window.location.href = "login.php";
+                } else {
+                    // Si el servidor PHP rebota un error (como cédula duplicada), lo mostramos en tu caja estética
+                    mostrarError(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error en la petición:", error);
+                mostrarError("Ocurrió un error de comunicación con el servidor local XAMPP.");
+            });
         });
     }
 
-    // Función auxiliar para mostrar errores en pantalla
+    // Tu función original para mostrar errores en pantalla
     function mostrarError(mensaje) {
-        errorText.textContent = mensaje;
-        errorBox.classList.remove("hidden");
+        if (errorText && errorBox) {
+            errorText.textContent = mensaje;
+            errorBox.classList.remove("hidden");
+        } else {
+            alert(mensaje);
+        }
     }
 });

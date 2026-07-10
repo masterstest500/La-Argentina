@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://helar.ve/index.html</loc>
+        <loc>https://helar.ve/index.php</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
 
     <url>
-        <loc>https://helar.ve/productos.html</loc>
+        <loc>https://helar.ve/productos.php</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
 
     <url>
-        <loc>https://helar.ve/quienes-somos.html</loc>
+        <loc>https://helar.ve/quienes-somos.php</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://helar.ve/quienes-somos.html?seccion=historia</loc>
+        <loc>https://helar.ve/quienes-somos.php?seccion=historia</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
 
     <url>
-        <loc>https://helar.ve/quienes-somos.html?seccion=valores</loc>
+        <loc>https://helar.ve/quienes-somos.php?seccion=valores</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.7</priority>
     </url>
 
     <url>
-        <loc>https://helar.ve/terminos-condiciones.html</loc>
+        <loc>https://helar.ve/terminos-condiciones.php</loc>
         <lastmod>2026-03-10</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>

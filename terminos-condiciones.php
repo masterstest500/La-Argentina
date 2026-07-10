@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,7 +15,7 @@
     <meta property="og:title" content="Términos y Condiciones — Helados La Argentina">
     <meta property="og:description" content="Políticas de calidad, inocuidad, no discriminación y gestión ambiental de PROLACTECA.">
     <meta property="og:image" content="img/logos/logo3.png">
-    <meta property="og:url" content="https://helar.ve/terminos-condiciones.html">
+    <meta property="og:url" content="https://helar.ve/terminos-condiciones.php">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_VE">
 
@@ -33,32 +36,32 @@
     <!-- NAVBAR -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">
+            <a href="index.php" class="nav-logo">
                 <img src="img/logos/logo.png" alt="La Argentina" class="nav-logo-img">
             </a>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="index.php" class="nav-link">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a href="productos.html" class="nav-link">Productos</a>
+                    <a href="productos.php" class="nav-link">Productos</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
                     <ul class="dropdown-menu">
-                        <li><a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a></li>
-                        <li><a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a></li>
-                        <li><a href="quienes-somos.html?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
+                        <li><a href="quienes-somos.php?seccion=historia" class="dropdown-link">Historia</a></li>
+                        <li><a href="quienes-somos.php" class="dropdown-link">Misión y Visión</a></li>
+                        <li><a href="quienes-somos.php?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#contacto" class="nav-link">Contacto</a>
+                    <a href="index.php#contacto" class="nav-link">Contacto</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#ubicanos" class="nav-link">Ubícanos</a>
+                    <a href="index.php#ubicanos" class="nav-link">Ubícanos</a>
                 </li>
                 <li class="nav-item">
-                <a href="descargables.html" class="nav-link">Descargables</a>
+                <a href="descargables.php" class="nav-link">Descargables</a>
                 </li>
             </ul>
             <div class="nav-redes">
@@ -74,7 +77,7 @@
             </div>
             <!-- Login -->
             <div class="navbar-acciones">
-                <a href="login.html" class="navbar-login" data-red="Iniciar sesión">
+                <a href="login.php" class="navbar-login" data-red="Iniciar sesión">
                     <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
                 </a>
             </div>
@@ -207,12 +210,12 @@
             <div class="footer-col">
                 <h4 class="footer-titulo">Navegación</h4>
                 <ul class="footer-nav">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="productos.html">Productos</a></li>
-                    <li><a href="quienes-somos.html?seccion=mision">Misión</a></li>
-                    <li><a href="quienes-somos.html?seccion=vision">Visión</a></li>
-                    <li><a href="quienes-somos.html?seccion=historia">Historia</a></li>
-                    <li><a href="quienes-somos.html?seccion=valores">Valores</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="productos.php">Productos</a></li>
+                    <li><a href="quienes-somos.php?seccion=mision">Misión</a></li>
+                    <li><a href="quienes-somos.php?seccion=vision">Visión</a></li>
+                    <li><a href="quienes-somos.php?seccion=historia">Historia</a></li>
+                    <li><a href="quienes-somos.php?seccion=valores">Valores</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -227,7 +230,7 @@
         <div class="footer-barra">
             <footer style = "text-align: center; width: 100%">
             <p>© 2026 Helados La Argentina. Todos los derechos reservados.</p>
-            <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+            <a href="terminos-condiciones.php" class="footer-terminos">Términos y Condiciones</a>
         </div>
     </footer>
 

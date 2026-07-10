@@ -34,13 +34,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
+    position: relative;
 }
 
-/* ========== LOGO ========== */
-.nav-logo img {
-    height: 90px;
+/* ========== LOGO UNIFICADO PARA TODAS LAS ESTRUCTURAS ========== */
+.nav-logo img, 
+.nav-logo-img {
+    height: 65px; /* Ajusta este tamaño al que prefieras */
     width: auto;
     object-fit: contain;
+    display: block;
 }
 
 /* ========== MENÚ ========== */
@@ -133,6 +136,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    right: -6px;
 }
 
 .red-social {
@@ -152,6 +156,31 @@
 
 .red-social:hover img {
     filter: brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(7000%) hue-rotate(0deg);
+}
+
+/* ========== CONTENEDOR DE LOGIN / SESIÓN ABSOLUTO ========== */
+.navbar-acciones {
+    position: relative;        /* 📍 Mantenemos el flujo natural de flexbox */
+    width: 5%;              /* 🔒 Espacio sagrado e inamovible para que NADA se desplace */
+    right: -35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* ➡️ Hace que el contenido se alinee simétrico a la derecha */
+    gap: 8px;
+    height: 100%;
+}
+
+.navbar-acciones #id-user-name-display span {
+    font-size: 0.78rem;           /* ✍️ Un toque más pequeño, fino y estético */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+    max-width: 85px;             /* 🛑 Límite de ancho para el texto */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;     /* ✂️ Si el nombre es muy largo, añade "..." automáticamente */
+    vertical-align: middle;
 }
 
 /* Tooltip Próximamente */
@@ -197,112 +226,27 @@
     transition: var(--transicion);
 }
 
-/* 1. EL CONTENEDOR (Aquí manejas la distancia entre el logo y el texto) */
-.navbar-login {
-    position: absolute !important;
-    right: -40px; /* 📍 Controla la distancia desde el borde derecho del cintillo */
-    top: 50%;    /* Lo baja a la mitad */
-    transform: translateX(20%) translatey(-49%); /* Truco matemático para centrarlo verticalmente perfecto */
-    
-    /* Limpiamos cualquier margen que te esté rompiendo el diseño */
-    margin: 0 !important; 
-}
-
-/* 2. LA IMAGEN (Aquí SOLO controlas el tamaño del logo) */
-.navbar-login img, 
-.login-logo-img {
-    width: 24px !important;  
-    height: 24px !important;
-    margin-left: 30px !important; /* Elimina cualquier margen izquierdo */
-    object-fit: contain;
-}
-
-/* =========================================================================
-   💬 TOOLTIP PARA EL LOGO DE LOGIN
-   ========================================================================= */
-
-/* 1. Preparamos el contenedor asegurando que tenga posición relativa */
-.navbar-login {
-    position: absolute !important; 
-}
-
-/* 2. Creamos el bocadillo del tooltip */
-.navbar-login::after {
-    content: attr(data-red); /* Usamos el atributo data-red para el texto del tooltip */
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 70%;
-    transform: translateX(-50%);
-    background-color: var(--negro);
-    border: 1px solid var(--rojo);
-    color: var(--blanco);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    padding: 5px 10px;
-    white-space: nowrap;
+/* Estado base oculto del menú */
+#user-dropdown-options {
+    display: block !important; /* Permitimos que exista en el DOM para poder animarlo */
     opacity: 0;
     visibility: hidden;
-    transition: var(--transicion);
-    z-index: 999;
+    transform: translateY(-15px); /* Empieza un poco más arriba */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    position: absolute;
+    right: -60px;
+    left: auto;
+    min-width: 180px;
+    background-color: #111; /* Ajusta al fondo oscuro de tu navbar */
+    border-radius: 4px;
+    z-index: 1000;
 }
 
-/* 3. Lo mostramos con una suave transición al pasar el mouse (Hover) */
-.navbar-login:hover::after {
+/* Estado activo cuando se abre (Animación) */
+#user-dropdown-options.mostrar-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) scale(1); /* Vuelve a su tamaño normal al aparecer */
-}
-
-/* =========================================================================
-   CAMBIO DE COLOR DEL LOGO A ROJO EN HOVER
-   ========================================================================= */
-
-/* Primero, le aseguramos la transición al estado normal de la imagen */
-.login-logo-img {
-    transition: var(--transicion) !important;
-}
-
-/* Cuando pasamos el mouse por el enlace, transformamos la imagen a rojo */
-.navbar-login:hover img,
-.navbar-login:hover .login-logo-img {
-    /* Este filtro matemático convierte los píxeles blancos exactamente en el rojo de la marca */
-    filter: brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(7000%) hue-rotate(0deg);
-}
-
-/* ====================================================================
-   Alineación del Nombre de Usuario Logueado en el Navbar
-   ==================================================================== */
-
-/* Contenedor principal */
-.navbar-login {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px; 
-    text-decoration: none;
-}
-
-/* Estilos del nombre inyectado */
-.user-name-navbar {
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    font-family: 'Poppins', sans-serif;
-    white-space: nowrap; 
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    
-    /* 🕒 NUEVO: Transición suave para que el cambio de color no sea brusco o "violento" */
-    transition: color 0.3s ease; 
-}
-
-/* ====================================================================
-   🔥 EFECTO HOVER UNIFICADO (NUEVO)
-   ==================================================================== */
-/* Cuando pasas el mouse por el área del login, el texto muta a un rojo estético */
-.navbar-login:hover .user-name-navbar {
-    color: #ff0000; /* Un rojo moderno y brillante que resalta en el fondo oscuro */
+    transform: translateY(0); /* Sube o baja suavemente a su posición original */
 }
 
 /* ========== RESPONSIVE ========== */
@@ -362,4 +306,56 @@
         margin-top: 8px;
         background-color: var(--negro);
     }
+}
+
+/* Soporte para apertura por clic en el menú de usuario logueado */
+#user-dropdown-options.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+/* Clase utilitaria para ocultar elementos de forma absoluta */
+.hidden {
+    display: none !important;
+}
+
+/* ====================================================================
+   🔒 SEGURIDAD PARA MODO INVITADO (UNIFICADO)
+   ==================================================================== */
+/* Si el menú tiene la clase 'guest-mode', el menú desplegable jamás se mostrará */
+.guest-mode .dropdown-menu,
+.guest-mode:hover .dropdown-menu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* ====================================================================
+   🎛️ BOTONES GLOBALES DE ADMINISTRACIÓN
+   ==================================================================== */
+.btn-volver {
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.btn-volver:hover {
+    color: #cc0000; /* Rojo La Argentina */
+}
+
+/* Corrección global para el icono de login */
+.login-logo-img {
+    width: 20px !important; 
+    height: 20px !important;
+    filter: brightness(0) invert(1); /* Esto lo pone blanco automáticamente */
+    vertical-align: middle;
+    display: inline-block;
 }

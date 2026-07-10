@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 🛡️ GUARDIÁN INVERSO: Si el trabajador YA está autenticado, lo mandamos directo al index
     if (localStorage.getItem("trabajadorAutenticado") === "true") {
-        window.location.href = "index.html";
+        window.location.href = "index.php";
         return; 
     }
     
@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
-            e.preventDefault(); 
+            e.preventDefault(); // Evitamos recarga de página
 
             const cedulaIngresada = document.getElementById("cedula").value.trim();
             const passwordIngresada = document.getElementById("password").value;
 
             // Ocultar el error box antes de cada intento
-            errorBox.classList.add("hidden");
+            if (errorBox) errorBox.classList.add("hidden");
 
             // 1. Validación de formato de cédula (Solo números)
             if (!/^\d+$/.test(cedulaIngresada)) {
@@ -26,42 +26,53 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // ====================================================================
-            // 🔍 BÚSQUEDA EN LA "BASE DE DATOS" (LocalStorage)
+            // 🚀 PETICIÓN REAL AL SERVIDOR DE BASE DE DATOS (FETCH -> LOGIN.PHP)
             // ====================================================================
             
-            // Traemos todos los usuarios registrados. Si no hay ninguno, traemos un arreglo vacío.
-            const usuariosBBDD = JSON.parse(localStorage.getItem('usuariosBBDD')) || [];
+            const datosLogin = new FormData();
+            datosLogin.append("cedula", cedulaIngresada);
+            datosLogin.append("password", passwordIngresada);
 
-            // Buscamos un usuario que tenga EXACTAMENTE la misma cédula y contraseña ingresada
-            const usuarioValido = usuariosBBDD.find(usuario => 
-                usuario.cedula === cedulaIngresada && usuario.password === passwordIngresada
-            );
-
-            // 2. Validación de credenciales
-            if (usuarioValido) {
-                // Guardar estado de autenticación general
-                localStorage.setItem("trabajadorAutenticado", "true"); 
-                
-                // 📦 ¡NUEVO! Guardamos los datos de este usuario específico en la sesión actual
-                // Solo guardamos lo necesario (nombre y cargo) por seguridad
-                localStorage.setItem("usuarioSesion", JSON.stringify({
-                    nombre: usuarioValido.nombre,
-                    cargo: usuarioValido.cargo
-                }));
-                
-                // ¡ÉXITO! El sistema saluda al trabajador por su nombre
-                alert(`¡Autenticación exitosa! Bienvenido al sistema, ${usuarioValido.nombre}.`);
-                
-                window.location.href = "index.html"; 
-            } else {
-                // ERROR: Datos incorrectos o usuario no registrado
-                mostrarError("Cédula o contraseña incorrectas. Verifique sus datos o regístrese.");
-            }
+            fetch("login.php", {
+                method: "POST",
+                body: datosLogin
+            })
+            .then(respuesta => respuesta.json())
+            .then(data => {
+                // 👁️ LÍNEA DE ESPIONAJE: Ver exactamente qué responde el servidor
+                console.log("Respuesta real del servidor PHP:", data);
+                if (data.status === "success") {
+                    // Guardar estado de autenticación general en el navegador para los guardianes visuales
+                    localStorage.setItem("trabajadorAutenticado", "true"); 
+                    
+                    // Guardamos los datos que devolvió MySQL en la sesión actual
+                    localStorage.setItem("usuarioSesion", JSON.stringify({
+                        nombre: data.nombre,
+                        cargo: data.cargo
+                    }));
+                    
+                    // ¡ÉXITO! El sistema saluda al trabajador por su nombre real
+                    alert(`¡Autenticación exitosa! Bienvenido al sistema, ${data.nombre}.`);
+                    
+                    window.location.href = "index.php"; 
+                } else {
+                    // Si el PHP dice que no coincide la clave o no existe la cédula
+                    mostrarError(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error en el login:", error);
+                mostrarError("Ocurrió un error de comunicación con el servidor local XAMPP.");
+            });
         });
     }
 
     function mostrarError(mensaje) {
-        errorText.textContent = mensaje;
-        errorBox.classList.remove("hidden");
+        if (errorText && errorBox) {
+            errorText.textContent = mensaje;
+            errorBox.classList.remove("hidden");
+        } else {
+            alert(mensaje);
+        }
     }
 });

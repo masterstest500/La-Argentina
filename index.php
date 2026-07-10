@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="preload" as="image" href="img/banner/arte rotulado La Argentina.jpg">
     <meta charset="UTF-8">
     <style>body { background-color: #ffffff; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +47,7 @@
     <nav class="nav-container">
 <!-- Logo -->
         <div class="nav-logo">
-            <a href="index.html">
+            <a href="index.php">
                 <img src="img/logos/logo.png" alt="Helados La Argentina">
             </a>
         </div>
@@ -56,27 +55,27 @@
         <!-- Menú -->
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="index.php" class="nav-link">Inicio</a>
             </li>
             <li class="nav-item">
-                <a href="productos.html" class="nav-link">Productos</a>
+                <a href="productos.php" class="nav-link">Productos</a>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
                 <ul class="dropdown-menu">
-                    <li><a href="quienes-somos.html?seccion=historia" class="dropdown-link">Historia</a></li>
-                    <li><a href="quienes-somos.html" class="dropdown-link">Misión y Visión</a></li>
-                    <li><a href="quienes-somos.html?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
+                    <li><a href="quienes-somos.php?seccion=historia" class="dropdown-link">Historia</a></li>
+                    <li><a href="quienes-somos.php" class="dropdown-link">Misión y Visión</a></li>
+                    <li><a href="quienes-somos.php?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="index.html#contacto" class="nav-link">Contacto</a>
+                <a href="index.php#contacto" class="nav-link">Contacto</a>
             </li>
             <li class="nav-item">
-                <a href="index.html#ubicanos" class="nav-link">Ubícanos</a>
+                <a href="index.php#ubicanos" class="nav-link">Ubícanos</a>
             </li>
             <li class="nav-item">
-                <a href="descargables.html" class="nav-link">Descargables</a>
+                <a href="descargables.php" class="nav-link">Descargables</a>
             </li>
         </ul>
 
@@ -94,10 +93,18 @@
         </div>
         
         <!-- Login -->
-        <div class="navbar-acciones">
-            <a href="login.html" class="navbar-login" data-red="Iniciar sesión">
-                <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
-            </a>
+        <div class="navbar-acciones" id="user-nav-section">
+            <div id="user-menu-wrapper" class="nav-item dropdown">
+        
+                <a href="login.php" id="user-nav-trigger" class="nav-link" style="text-decoration: none; display: flex; align-items: center;">
+                    <img src="img/logos/login.png" alt="User" class="login-logo-img" style="filter: brightness(0) invert(1); width: 20px; height: 20px; vertical-align: middle;">
+                    <span id="user-nav-text" style="color: var(--color-texto-principal); font-weight: bold; margin-left: 8px; display: none;"></span>
+                </a>
+        
+                <ul class="dropdown-menu" id="user-dropdown-options">
+                    </ul>
+
+            </div>
         </div>
         
         <!-- Botón menú móvil -->
@@ -276,6 +283,53 @@
     </div><!-- /carrusel-wrapper -->
 </section> 
 
+<section class="cintillo-productos"> 
+    <div class="cintillo-track">
+        <div class="cintillo-group">
+            <img src="img/helados/chocolate2.png" alt="Chocolate">
+            <img src="img/helados/fresa.png" alt="Fresa">
+            <img src="img/helados/mantecado.png" alt="Mantecado">
+            <img src="img/helados/ron-pasas.png" alt="Ron-pasas">
+            <img src="img/helados/fantofresa.png" alt="Fantoche"> 
+            <img src="img/helados/tramontana.png" alt="Tramontana">
+            <img src="img/helados/fantasia.png" alt="Fantasia">
+            <img src="img/helados/fantoche-chocolate.png" alt="Fantoche Chocolate">
+            <img src="img/helados/pistacho.png" alt="Pistacho"> 
+            <img src="img/helados/fantoche.png" alt="Fantoche">
+            <img src="img/helados/trisabor.png" alt="Trisabor">
+        </div>
+
+        <div class="cintillo-group">
+            <img src="img/helados/chocolate2.png" alt="Chocolate">
+            <img src="img/helados/fresa.png" alt="Fresa">
+            <img src="img/helados/mantecado.png" alt="Mantecado">
+            <img src="img/helados/ron-pasas.png" alt="Ron-pasas">
+            <img src="img/helados/fantofresa.png" alt="Fantoche"> 
+            <img src="img/helados/tramontana.png" alt="Tramontana">
+            <img src="img/helados/fantasia.png" alt="Fantasia">
+            <img src="img/helados/fantoche-chocolate.png" alt="Fantoche Chocolate">
+            <img src="img/helados/pistacho.png" alt="Pistacho"> 
+            <img src="img/helados/fantoche.png" alt="Fantoche">
+            <img src="img/helados/trisabor.png" alt="Trisabor">
+        </div>
+
+        <div class="cintillo-group">
+            <img src="img/helados/chocolate2.png" alt="Chocolate">
+            <img src="img/helados/fresa.png" alt="Fresa">
+            <img src="img/helados/mantecado.png" alt="Mantecado">
+            <img src="img/helados/ron-pasas.png" alt="Ron-pasas">
+            <img src="img/helados/fantofresa.png" alt="Fantoche"> 
+            <img src="img/helados/tramontana.png" alt="Tramontana">
+            <img src="img/helados/fantasia.png" alt="Fantasia">
+            <img src="img/helados/fantoche-chocolate.png" alt="Fantoche Chocolate">
+            <img src="img/helados/pistacho.png" alt="Pistacho"> 
+            <img src="img/helados/fantoche.png" alt="Fantoche">
+            <img src="img/helados/trisabor.png" alt="Trisabor">
+        </div>
+        
+    </div>
+</section>
+
 <!-- ========== CONTACTO ========== -->
 <section id="contacto">
     <div class="contacto-contenedor">
@@ -399,12 +453,12 @@
         <div class="footer-col">
             <h4 class="footer-titulo">Navegación</h4>
             <ul class="footer-nav">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="productos.html">Productos</a></li>
-                <li><a href="quienes-somos.html">¿Quiénes Somos?</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="productos.php">Productos</a></li>
+                <li><a href="quienes-somos.php">¿Quiénes Somos?</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-                <li><a href="index.html#ubicanos">Ubicanos</a></li>
-				<li><a href="descargables.html">Descargables</a></li>
+                <li><a href="index.php#ubicanos">Ubicanos</a></li>
+				<li><a href="descargables.php">Descargables</a></li>
             </ul>
         </div>
 
@@ -424,7 +478,7 @@
     <div class="footer-barra">
         <footer style = "text-align: center; width: 100%">
         <p>© 2026 Helados La Argentina · Todos los derechos reservados</p>
-        <a href="terminos-condiciones.html" class="footer-terminos">Términos y Condiciones</a>
+        <a href="terminos-condiciones.php" class="footer-terminos">Términos y Condiciones</a>
     </div>
 
 </footer>
@@ -438,11 +492,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=2"></script>
     <script src="js/carrusel.js"></script>
     <script src="js/whatsapp.js"></script>
     <script src="js/mapa.js"></script>
     <script src="js/contacto.js"></script>
+    <script src="js/auth-navbar.js"></script>
 
 </body>
 </html>
