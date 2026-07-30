@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $sql_buscar = "SELECT nombre, cargo, password FROM usuarios WHERE cedula = '$cedula'";
+    $sql_buscar = "SELECT id, nombre, cargo, password FROM usuarios WHERE cedula = '$cedula'";
     $resultado = mysqli_query($conexion, $sql_buscar);
 
     if (mysqli_num_rows($resultado) > 0) {
@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password === $usuario['password']) {
             $_SESSION['user']  = trim($usuario['nombre']);
             $_SESSION['cargo'] = trim($usuario['cargo']);
-            echo json_encode(["status" => "success", "nombre" => $usuario['nombre'], "cargo" => $usuario['cargo']]);
+            $_SESSION['usuario_id']    = trim($usuario['id']);
+            echo json_encode(["status" => "success", "nombre" => $usuario['nombre'], "cargo" => $usuario['cargo'], "id" => $usuario['id']]);
         } else {
             echo json_encode(["status" => "error", "message" => "La contraseña introducida es incorrecta."]);
         }
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="login-container">
         <div class="login-logo">
-            <img src="img/logos/logo3.png" alt="Helados La Argentina"> 
+            <img src="img/logos/logo3.png" alt="Helados La Argentina">
             <h2>¡Hola Trabajador!</h2>
             <p>Antes de entrar, por favor inicie sesión.</p>
         </div>

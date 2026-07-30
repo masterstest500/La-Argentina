@@ -40,7 +40,7 @@
 /* ========== LOGO UNIFICADO PARA TODAS LAS ESTRUCTURAS ========== */
 .nav-logo img, 
 .nav-logo-img {
-    height: 65px; /* Ajusta este tamaño al que prefieras */
+    height: 90px; /* Ajusta este tamaño al que prefieras */
     width: auto;
     object-fit: contain;
     display: block;

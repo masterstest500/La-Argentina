@@ -1,45 +1,77 @@
 <?php
-// 1. 🛡️ Control de Sesión y Escudo de Seguridad
+// ==========================================
+// 1. 🛡️ CONTROL DE SESIÓN Y SEGURIDAD
+// ==========================================
 session_start();
-$cargoUsuario = isset($_SESSION['cargo']) ? strtolower($_SESSION['cargo']) : '';
 
-// Permitir el acceso a administradores, ventas y preventistas
-if (!isset($_SESSION['user']) || !in_array($cargoUsuario, ['administrador', 'ventas', 'preventista'])) {
-    header("Location: index.php?error=acceso_restringido");
+if (!isset($_SESSION['user']) || !isset($_SESSION['cargo'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$cargoUsuario = strtolower(trim($_SESSION['cargo']));
+$cargos_autorizados = ['preventista'];
+
+if (!in_array($cargoUsuario, $cargos_autorizados)) {
+    header("Location: index.php?error=acceso_denegado");
     exit();
 }
 
 include('conexion.php'); 
 $nombre_usuario = $_SESSION['user'];
 $rol_usuario = $_SESSION['cargo'];
-
 $mensaje_alerta = "";
 
 // ==========================================
-// 2. 🔥 MOTOR BACKEND: PROCESAR EL PEDIDO COMPLETO
+// 2. ⚡ ENDPOINTS AJAX (Para Selectores Dinámicos)
+// ==========================================
+// Este bloque intercepta las peticiones de JavaScript para cargar clientes y sucursales sin recargar la página
+if (isset($_GET['accion'])) {
+    header('Content-Type: application/json');
+    
+    if ($_GET['accion'] == 'get_clientes' && isset($_GET['id_ruta'])) {
+        $id_ruta = intval($_GET['id_ruta']);
+        $sql = "SELECT id, codigo_cliente, nombre_negocio FROM clientes WHERE id_ruta = $id_ruta ORDER BY nombre_negocio ASC";
+        $res = mysqli_query($conexion, $sql);
+        $clientes = [];
+        while($row = mysqli_fetch_assoc($res)) { $clientes[] = $row; }
+        echo json_encode($clientes);
+        exit();
+    }
+    
+    if ($_GET['accion'] == 'get_sucursales' && isset($_GET['id_cliente'])) {
+        $id_cliente = intval($_GET['id_cliente']);
+        $sql = "SELECT id, codigo_sucursal, nombre_sucursal FROM sucursales WHERE id_cliente = $id_cliente ORDER BY nombre_sucursal ASC";
+        $res = mysqli_query($conexion, $sql);
+        $sucursales = [];
+        while($row = mysqli_fetch_assoc($res)) { $sucursales[] = $row; }
+        echo json_encode($sucursales);
+        exit();
+    }
+}
+
+// ==========================================
+// 3. 🔥 MOTOR BACKEND: PROCESAR EL PEDIDO
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) {
-    $cliente_id   = intval($_POST['cliente_id']);
+    $cliente_id   = intval($_POST['hidden_cliente_id']);
+    // Si no hay sucursal, enviamos NULL a la BD
+    $sucursal_id  = !empty($_POST['hidden_sucursal_id']) ? intval($_POST['hidden_sucursal_id']) : "NULL"; 
     $vendedor     = $nombre_usuario;
-    $json_carrito = $_POST['items_carrito']; // Cadena JSON desde el frontend
+    $json_carrito = $_POST['items_carrito'];
     $items        = json_decode($json_carrito, true);
 
     if ($cliente_id > 0 && !empty($items)) {
-        
-        // 🚨 PASO CRÍTICO DE CALIDAD: Iniciamos una transacción SQL
-        // Si algo falla a mitad de camino, MySQL deshace todo para no dejar datos corruptos.
         mysqli_begin_transaction($conexion);
 
         try {
             $total_pedido = 0;
             $detalles_a_insertar = [];
 
-            // Primera pasada: Validar stock en el servidor y calcular subtotales
             foreach ($items as $item) {
                 $producto_id = intval($item['id']);
                 $cantidad    = intval($item['cantidad']);
 
-                // Consultamos el stock real actual en base de datos
                 $sql_p = "SELECT sabor, stock_potes, precio FROM productos WHERE id = $producto_id";
                 $res_p = mysqli_query($conexion, $sql_p);
                 $prod  = mysqli_fetch_assoc($res_p);
@@ -52,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                 $subtotal = $cantidad * $precio_u;
                 $total_pedido += $subtotal;
 
-                // Guardamos en memoria para la inserción masiva posterior
                 $detalles_a_insertar[] = [
                     'producto_id' => $producto_id,
                     'cantidad' => $cantidad,
@@ -61,42 +92,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                 ];
             }
 
-            // 1️⃣ Insertar en Tabla Maestro (pedidos)
-            $sql_maestro = "INSERT INTO pedidos (cliente_id, vendedor, total) VALUES ($cliente_id, '$vendedor', $total_pedido)";
+            // Inserción Maestra (Ahora incluye la sucursal)
+            $sql_maestro = "INSERT INTO pedidos (cliente_id, sucursal_id, vendedor, total) VALUES ($cliente_id, $sucursal_id, '$vendedor', $total_pedido)";
             if (!mysqli_query($conexion, $sql_maestro)) {
                 throw new Exception("Error al registrar la cabecera del pedido.");
             }
-            $pedido_id = mysqli_insert_id($conexion); // Capturamos el ID autoincremental generado
+            $pedido_id = mysqli_insert_id($conexion);
 
-            // 2️⃣ Insertar Renglones y Restar Inventario
             foreach ($detalles_a_insertar as $det) {
-                // Insertar en detalle_pedidos
                 $sql_det = "INSERT INTO detalle_pedidos (pedido_id, producto_id, cantidad, precio_unitario, subtotal) 
                             VALUES ($pedido_id, " . $det['producto_id'] . ", " . $det['cantidad'] . ", " . $det['precio_unitario'] . ", " . $det['subtotal'] . ")";
-                
                 if (!mysqli_query($conexion, $sql_det)) {
                     throw new Exception("Error al registrar los renglones del pedido.");
                 }
 
-                // Descontar existencias en productos
                 $sql_update = "UPDATE productos SET stock_potes = stock_potes - " . $det['cantidad'] . " WHERE id = " . $det['producto_id'];
                 if (!mysqli_query($conexion, $sql_update)) {
                     throw new Exception("Error al actualizar el inventario físico.");
                 }
             }
 
-            // Si todo salió perfecto, consolidamos los datos en la BD
             mysqli_commit($conexion);
             header("Location: pedidos.php?guardado=exito");
             exit();
 
         } catch (Exception $e) {
-            // Si ocurrió algún error o falta stock, cancelamos toda la operación
             mysqli_rollback($conexion);
             $mensaje_alerta = "<div class='alerta error'><i class='fa-solid fa-triangle-exclamation'></i> Error: " . $e->getMessage() . "</div>";
         }
     } else {
-        $mensaje_alerta = "<div class='alerta error'><i class='fa-solid fa-circle-xmark'></i> Por favor, seleccione un cliente y agregue al menos un sabor.</div>";
+        $mensaje_alerta = "<div class='alerta error'><i class='fa-solid fa-circle-xmark'></i> Formulario incompleto. Asegúrese de completar el embudo y añadir sabores.</div>";
     }
 }
 
@@ -104,9 +129,9 @@ if (isset($_GET['guardado']) && $_GET['guardado'] == 'exito') {
     $mensaje_alerta = "<div class='alerta exito'><i class='fa-solid fa-circle-check'></i> ¡Pedido registrado y stock descontado con éxito!</div>";
 }
 
-// Consultas para alimentar los Select dinámicos del Formulario
-$query_clientes  = "SELECT id, nombre_negocio, rif FROM clientes ORDER BY nombre_negocio ASC";
-$result_clientes = mysqli_query($conexion, $query_clientes);
+// Consultas iniciales para pintar la vista
+$query_rutas = "SELECT id, nombre_ruta FROM rutas ORDER BY id ASC";
+$result_rutas = mysqli_query($conexion, $query_rutas);
 
 $query_productos = "SELECT id, sabor, stock_potes, precio FROM productos WHERE stock_potes > 0 ORDER BY sabor ASC";
 $result_productos = mysqli_query($conexion, $query_productos);
@@ -123,6 +148,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: #0b0b0b; color: #ffffff; padding: 40px; }
+        
         .header-seccion { margin-bottom: 30px; }
         .header-seccion h1 { font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .header-seccion h1 span { color: #ff0015; }
@@ -130,19 +156,30 @@ $result_productos = mysqli_query($conexion, $query_productos);
         .btn-volver { color: #ffffff; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 0.9rem; transition: color 0.3s; }
         .btn-volver:hover { color: #ff0015; }
 
-        .dashboard-container { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
-        .panel-izquierdo, .panel-derecho { background-color: #141414; border-radius: 8px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .panel-izquierdo { flex: 1; min-width: 350px; border-left: 4px solid #ff0015; height: fit-content; }
+        .panel-fondo { background-color: #141414; border-radius: 8px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 20px; }
+        .panel-embudo { border-top: 4px solid #ff0015; }
+        
+        .dashboard-container { display: flex; gap: 30px; flex-wrap: wrap; }
+        .panel-izquierdo { flex: 1; min-width: 350px; }
         .panel-derecho { flex: 1.5; min-width: 500px; display: flex; flex-direction: column; justify-content: space-between; }
 
         h2 { font-size: 1.3rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .fila-embudo { display: flex; gap: 20px; align-items: flex-end; }
+        .fila-embudo .grupo-input { flex: 1; margin-bottom: 0; }
+
         .grupo-input { margin-bottom: 20px; }
         .grupo-input label { display: block; color: #ff0015; font-weight: 600; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; }
         .grupo-input select, .grupo-input input { width: 100%; padding: 12px; background-color: #222222; border: 1px solid #333333; border-radius: 6px; color: #ffffff; font-size: 1rem; }
         .grupo-input select:focus, .grupo-input input:focus { outline: none; border-color: #ff0015; }
+        .grupo-input select:disabled { background-color: #1a1a1a; color: #555; cursor: not-allowed; }
 
         .btn-secundario { width: 100%; padding: 12px; background-color: #333333; color: #fff; border: 1px solid #444; border-radius: 6px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: background-color 0.3s; }
         .btn-secundario:hover { background-color: #444; }
+        
+        .btn-sucursal { background-color: transparent; color: #fff; border: 1px solid #ff0015; padding: 12px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: 600; transition: 0.3s; }
+        .btn-sucursal:hover { background-color: #ff0015; }
+
         .btn-primario { width: 100%; padding: 14px; background-color: #ff0015; color: #ffffff; border: none; border-radius: 6px; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background-color 0.3s; margin-top: 20px; }
         .btn-primario:hover { background-color: #ff0019; }
 
@@ -155,10 +192,18 @@ $result_productos = mysqli_query($conexion, $query_productos);
         .total-label { font-size: 1.1rem; text-transform: uppercase; color: #aaa; }
         .total-monto { font-size: 1.8rem; font-weight: 700; color: #ff0015; }
 
-        /* Estilos de Alertas */
+        /* Estilos de Alertas y Modales */
         .alerta { padding: 15px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
         .error { background-color: rgba(230, 57, 70, 0.15); color: #ff0015; border: 1px solid #ff0015; }
         .exito { background-color: rgba(40, 167, 69, 0.15); color: #28a745; border: 1px solid #28a745; }
+
+        /* Contenedor bloqueado hasta completar embudo */
+        #zona_transaccion { opacity: 0.4; pointer-events: none; transition: 0.3s; }
+
+        /* Modal CSS puro */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #141414; padding: 30px; border-radius: 8px; width: 100%; max-width: 400px; border: 1px solid #333; }
+        .modal-active { display: flex; }
     </style>
 </head>
 <body>
@@ -171,9 +216,42 @@ $result_productos = mysqli_query($conexion, $query_productos);
 
     <?php echo $mensaje_alerta; ?>
 
-    <div class="dashboard-container">
+    <!-- BLOQUE 1: EMBUDO DE SELECCIÓN -->
+    <div class="panel-fondo panel-embudo">
+        <h2>1. Datos del Destinatario</h2>
+        <div class="fila-embudo">
+            <div class="grupo-input">
+                <label for="select_ruta">Ruta Asignada</label>
+                <select id="select_ruta">
+                    <option value="" selected disabled>-- Seleccione Ruta --</option>
+                    <?php while ($ruta = mysqli_fetch_assoc($result_rutas)): ?>
+                        <option value="<?php echo $ruta['id']; ?>"><?php echo htmlspecialchars($ruta['nombre_ruta']); ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="select_cliente">Cliente Destino</label>
+                <select id="select_cliente" disabled>
+                    <option value="" selected disabled>-- Primero elija una ruta --</option>
+                </select>
+            </div>
+
+            <div class="grupo-input" id="contenedor_btn_sucursal" style="display: none;">
+                <button type="button" class="btn-sucursal" onclick="abrirModal()">
+                    <i class="fa-solid fa-location-dot"></i> Elegir Sucursal
+                </button>
+            </div>
+        </div>
+        <p id="indicador_destino" style="color: #28a745; margin-top: 15px; font-size: 0.9rem; font-weight: bold; display: none;">
+            <i class="fa-solid fa-check-circle"></i> Destino fijado. Puede armar el pedido.
+        </p>
+    </div>
+
+    <!-- BLOQUE 2: ZONA DE TRANSACCIÓN (Bloqueada por defecto) -->
+    <div id="zona_transaccion" class="dashboard-container">
         
-        <div class="panel-formulario panel-izquierdo">
+        <div class="panel-fondo panel-izquierdo">
             <h2>Configurar Renglón</h2>
             
             <div class="grupo-input">
@@ -201,24 +279,14 @@ $result_productos = mysqli_query($conexion, $query_productos);
             </button>
         </div>
 
-        <div class="panel-tabla panel-derecho">
+        <div class="panel-fondo panel-derecho">
             <div>
                 <h2>Resumen de la Orden</h2>
                 
                 <form action="pedidos.php" method="POST" id="form_pedido">
-                    
-                    <div class="grupo-input">
-                        <label for="cliente_id">Cliente Receptor</label>
-                        <select name="cliente_id" id="cliente_id" required>
-                            <option value="">-- Seleccione el Cliente Destino --</option>
-                            <?php while ($cli = mysqli_fetch_assoc($result_clientes)): ?>
-                                <option value="<?php echo $cli['id']; ?>">
-                                    <?php echo htmlspecialchars($cli['nombre_negocio']); ?> [RIF: <?php echo htmlspecialchars($cli['rif']); ?>]
-                                </option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
+                    <!-- Inputs ocultos que alimentarán el Backend -->
+                    <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
+                    <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
                     <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
 
                     <table>
@@ -250,63 +318,158 @@ $result_productos = mysqli_query($conexion, $query_productos);
                 </form>
             </div>
         </div>
+    </div>
 
+    <!-- MODAL DE SUCURSALES (CSS Puro) -->
+    <div id="modalSucursal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 style="color: #ff0015; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">Sedes Múltiples</h2>
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 15px;">Este cliente posee varias sucursales. Seleccione la de destino:</p>
+            
+            <div class="grupo-input">
+                <select id="select_sucursal_modal">
+                    <!-- Llenado por JS -->
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn-secundario" onclick="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn-primario" style="margin-top: 0;" onclick="confirmarSucursal()">Confirmar Sede</button>
+            </div>
+        </div>
     </div>
 
     <script>
+        // ==========================================
+        // LÓGICA DEL EMBUDO (Ruta -> Cliente -> Sucursal)
+        // ==========================================
+        const selectRuta = document.getElementById('select_ruta');
+        const selectCliente = document.getElementById('select_cliente');
+        const btnSucursalContainer = document.getElementById('contenedor_btn_sucursal');
+        const indicadorDestino = document.getElementById('indicador_destino');
+        const zonaTransaccion = document.getElementById('zona_transaccion');
+        
+        let sucursalesTemporales = [];
+
+        // 1. Al cambiar la Ruta
+        selectRuta.addEventListener('change', async function() {
+            const rutaId = this.value;
+            bloquearTransaccion();
+            selectCliente.innerHTML = '<option value="">Cargando clientes...</option>';
+            selectCliente.disabled = true;
+
+            try {
+                const response = await fetch(`pedidos.php?accion=get_clientes&id_ruta=${rutaId}`);
+                const clientes = await response.json();
+                
+                selectCliente.innerHTML = '<option value="" selected disabled>-- Seleccione Cliente --</option>';
+                clientes.forEach(c => {
+                    selectCliente.innerHTML += `<option value="${c.id}">${c.codigo_cliente} - ${c.nombre_negocio}</option>`;
+                });
+                selectCliente.disabled = false;
+            } catch (error) {
+                console.error("Error cargando clientes", error);
+            }
+        });
+
+        // 2. Al cambiar el Cliente
+        selectCliente.addEventListener('change', async function() {
+            const clienteId = this.value;
+            bloquearTransaccion();
+            
+            try {
+                const response = await fetch(`pedidos.php?accion=get_sucursales&id_cliente=${clienteId}`);
+                sucursalesTemporales = await response.json();
+
+                if (sucursalesTemporales.length > 0) {
+                    // Tiene sucursales: Forzar a que elija una
+                    btnSucursalContainer.style.display = 'block';
+                    
+                    // Llenar el select del modal
+                    const selectModal = document.getElementById('select_sucursal_modal');
+                    selectModal.innerHTML = '<option value="" selected disabled>-- Elija la Sucursal --</option>';
+                    sucursalesTemporales.forEach(s => {
+                        selectModal.innerHTML += `<option value="${s.id}">${s.codigo_sucursal} - ${s.nombre_sucursal}</option>`;
+                    });
+                } else {
+                    // No tiene sucursales: Sede única, liberar transacción
+                    btnSucursalContainer.style.display = 'none';
+                    desbloquearTransaccion(clienteId, null);
+                }
+            } catch (error) {
+                console.error("Error cargando sucursales", error);
+            }
+        });
+
+        // 3. Control del Modal
+        function abrirModal() { document.getElementById('modalSucursal').classList.add('modal-active'); }
+        function cerrarModal() { document.getElementById('modalSucursal').classList.remove('modal-active'); }
+        
+        function confirmarSucursal() {
+            const idSucursal = document.getElementById('select_sucursal_modal').value;
+            if (!idSucursal) {
+                alert("Debe seleccionar una sucursal.");
+                return;
+            }
+            cerrarModal();
+            desbloquearTransaccion(selectCliente.value, idSucursal);
+        }
+
+        // 4. Funciones de Interfaz
+        function bloquearTransaccion() {
+            zonaTransaccion.style.opacity = '0.4';
+            zonaTransaccion.style.pointerEvents = 'none';
+            btnSucursalContainer.style.display = 'none';
+            indicadorDestino.style.display = 'none';
+            document.getElementById('hidden_cliente_id').value = '';
+            document.getElementById('hidden_sucursal_id').value = '';
+        }
+
+        function desbloquearTransaccion(clienteId, sucursalId) {
+            zonaTransaccion.style.opacity = '1';
+            zonaTransaccion.style.pointerEvents = 'auto';
+            indicadorDestino.style.display = 'block';
+            
+            // Asignar a los inputs ocultos para el POST
+            document.getElementById('hidden_cliente_id').value = clienteId;
+            if (sucursalId) document.getElementById('hidden_sucursal_id').value = sucursalId;
+        }
+
+        // ==========================================
+        // LÓGICA DEL CARRITO (Se mantiene intacta)
+        // ==========================================
         let carrito = [];
 
         function agregarItem() {
             const select = document.getElementById('select_sabor');
             const inputCant = document.getElementById('input_cantidad');
-            
             const productoId = select.value;
             const cantidad = parseInt(inputCant.value);
 
-            if (!productoId) {
-                alert('Por favor, selecciona un sabor de helado.');
-                return;
-            }
-            if (isNaN(cantidad) || cantidad <= 0) {
-                alert('Ingrese una cantidad válida de potes.');
-                return;
-            }
+            if (!productoId) { alert('Selecciona un sabor de helado.'); return; }
+            if (isNaN(cantidad) || cantidad <= 0) { alert('Cantidad inválida.'); return; }
 
-            // Capturamos la metadata desde los atributos data- de la opción HTML
             const optionSelected = select.options[select.selectedIndex];
             const sabor = optionSelected.getAttribute('data-sabor');
             const precio = parseFloat(optionSelected.getAttribute('data-precio'));
             const stockMax = parseInt(optionSelected.getAttribute('data-stock'));
 
-            // Control preventivo en el frontend para ahorrar recursos
             if (cantidad > stockMax) {
-                alert(`¡Alerta de Stock! Solo quedan ${stockMax} potes de ${sabor} en las cavas.`);
-                return;
+                alert(`Solo quedan ${stockMax} potes de ${sabor} en inventario.`); return;
             }
 
-            // Validamos si el producto ya fue listado abajo para acumularlo
             const indexExistente = carrito.findIndex(item => item.id === productoId);
-            
             if (indexExistente !== -1) {
                 const nuevaCantidad = carrito[indexExistente].cantidad + cantidad;
                 if (nuevaCantidad > stockMax) {
-                    alert(`No puedes agregar más potes. El acumulado en el carrito (${nuevaCantidad}) supera las existencias reales (${stockMax}).`);
-                    return;
+                    alert(`El acumulado supera las existencias reales (${stockMax}).`); return;
                 }
                 carrito[indexExistente].cantidad = nuevaCantidad;
                 carrito[indexExistente].subtotal = nuevaCantidad * precio;
             } else {
-                // Nuevo ítem al carrito local
-                carrito.push({
-                    id: productoId,
-                    sabor: sabor,
-                    precio: precio,
-                    cantidad: cantidad,
-                    subtotal: cantidad * precio
-                });
+                carrito.push({ id: productoId, sabor: sabor, precio: precio, cantidad: cantidad, subtotal: cantidad * precio });
             }
 
-            // Resetear input de cantidad a 1
             inputCant.value = 1;
             renderizarCarrito();
         }
@@ -333,7 +496,6 @@ $result_productos = mysqli_query($conexion, $query_productos);
 
             carrito.forEach((item, index) => {
                 totalAcumulado += item.subtotal;
-                
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>${item.sabor}</strong></td>
@@ -341,24 +503,20 @@ $result_productos = mysqli_query($conexion, $query_productos);
                         <td>${item.cantidad} Potes</td>
                         <td><strong>$${item.subtotal.toFixed(2)}</strong></td>
                         <td>
-                            <button type="button" class="btn-eliminar" onclick="eliminarItem(${index})">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <button type="button" class="btn-eliminar" onclick="eliminarItem(${index})"><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
                 `;
             });
 
-            // Actualizamos la vista del precio y cargamos el JSON en el formulario
             txtTotal.innerText = `$${totalAcumulado.toFixed(2)}`;
             hiddenInput.value = JSON.stringify(carrito);
         }
 
-        // Validación final antes de disparar el POST a PHP
         document.getElementById('form_pedido').addEventListener('submit', function(e) {
             if (carrito.length === 0) {
                 e.preventDefault();
-                alert('No puedes registrar un pedido vacío. Añade renglones de sabores primero.');
+                alert('No puedes registrar un pedido vacío.');
             }
         });
     </script>

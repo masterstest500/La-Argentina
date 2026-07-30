@@ -28,15 +28,19 @@
         </div>
 
         <div class="navbar-acciones">
-            <?php if(isset($_SESSION['rol'])): ?>
-                <a href="panel_<?= strtolower($_SESSION['rol']) ?>.php" class="navbar-user">
-                    <img src="img/logos/avatar.png" alt="Usuario" class="user-avatar-img">
-                    <span style="color: #333; font-weight: bold; margin-left: 8px;">
-                        <?= htmlspecialchars($_SESSION['nombre_usuario'] ?? 'Mi Panel') ?>
-                    </span>
-                </a>
+            <?php if(!empty($_SESSION['rol']) || !empty($_SESSION['cargo'])): ?>
+                <div class="nav-item dropdown" id="user-menu-logged">
+                    <a href="#" class="navbar-user dropdown-toggle" id="user-name-display">
+                        <img src="img/logos/login.png" alt="Usuario" class="user-avatar-img">
+                        <span id="user-text-name" style="color: #333; font-weight: bold; margin-left: 8px;">
+                            <?= htmlspecialchars($_SESSION['nombre_usuario'] ?? 'Mi Panel') ?>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" id="user-dropdown-options">
+                        </ul>
+                </div>
             <?php else: ?>
-                <a href="login.php" class="navbar-login" data-red="Iniciar sesión">
+                <a href="login.php" class="navbar-login" id="user-nav-trigger" data-red="Iniciar sesión">
                     <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
                 </a>
             <?php endif; ?>

@@ -121,23 +121,25 @@ function controlarEstadoUsuarioNavbar() {
 
     if (!trigger || !dropdownMenu) return;
 
+    // Diccionario con las NUEVAS funciones oficiales solicitadas por el tutor
     const rutasPorCargo = {
         "preventista": [
-            { texto: " Mis Rutas", url: "preventista.php" },
-            { texto: " Ver Clientes", url: "clientes.php" }
-        ],
-        "administrador": [
-            { texto: " Panel Admin", url: "admin.php" },
-            { texto: " Empleados", url: "empleados.php" },
-            { texto: " Panel de Control", url: "dashboard.php" },
-            { texto: " Gestión de Usuarios", url: "usuarios.php" },
-            { texto: " Reportes Globales", url: "reportes.php" }
+            { texto: "Catálogo", url: "catalogo.php" },
+            { texto: "Pedidos", url: "pedidos.php" },
+            { texto: "Captación", url: "captacion.php" },
+            { texto: "Disponibilidad", url: "neveras.php" }
         ],
         "ventas": [
-            { texto: " Módulo de Ventas", url: "ventas.php" },
-            { texto: " Caja y Cierre", url: "caja.php" },
-            { texto: " Inventario", url: "inventario.php" }
-        ]
+            { texto: "Creación de clientes", url: "clientes.php" },
+            { texto: "Inventario", url: "inventario.php" },
+            { texto: "Cambio de precio y tasa", url: "precio_tasa.php" },
+            { texto: "Asignación de neveras", url: "asignacion-neveras.php" },
+            { texto: "Disponibilidad de Neveras", url: "neveras.php" }
+        ],
+        "cobranza": [
+            { texto: "Gestión de cobranza", url: "cobranza.php" }
+        ],
+        "administrador": [] // El administrador no tendrá funciones por ahora
     };
 
     const estaAutenticado = localStorage.getItem("trabajadorAutenticado") === "true";
@@ -158,26 +160,34 @@ function controlarEstadoUsuarioNavbar() {
         const cargoUsuario = usuario.cargo ? usuario.cargo.toLowerCase().trim() : "";
         let enlacesHtml = "";
 
-        if (rutasPorCargo[cargoUsuario]) {
+        // 1. Primera Opción Fija: Perfil de Usuario (Para todos los perfiles)
+        enlacesHtml += `<li><a href="perfil.php" class="dropdown-link" style="color: #fff; padding: 10px; display: block; text-decoration: none;">Perfil de Usuario</a></li>`;
+        
+        // 2. Primera raya blanca (Separador estético del perfil)
+        enlacesHtml += `<li><hr style="margin: 5px 0; border-color: rgba(255, 255, 255, 0.4);"></li>`;
+
+        // 3. Inyección de funciones según el cargo del trabajador
+        if (rutasPorCargo[cargoUsuario] && rutasPorCargo[cargoUsuario].length > 0) {
             rutasPorCargo[cargoUsuario].forEach(ruta => {
                 enlacesHtml += `<li><a href="${ruta.url}" class="dropdown-link" style="color: #fff; padding: 10px; display: block; text-decoration: none;">${ruta.texto}</a></li>`;
             });
-        } else {
-            enlacesHtml += `<li><a href="#" class="dropdown-link" style="color: #fff; padding: 10px; display: block; text-decoration: none;">Panel General</a></li>`;
         }
 
-        dropdownMenu.innerHTML = `
-            ${enlacesHtml}
-            <li><hr style="margin: 5px 0; border-color: #333;"></li>
-            <li><a href="javascript:void(0)" class="dropdown-link" id="btn-logout" style="color: #fc0800; font-weight: bold; padding: 10px; display: block; text-decoration: none;">Cerrar Sesión</a></li>
-        `;
+        // 4. Segunda raya (Separador oscuro antes del botón de salida)
+        enlacesHtml += `<li><hr style="margin: 5px 0; border-color: #333;"></li>`;
+        
+        // 5. Última Opción Fija: Cerrar Sesión
+        enlacesHtml += `<li><a href="javascript:void(0)" class="dropdown-link" id="btn-logout" style="color: #fc0800; font-weight: bold; padding: 10px; display: block; text-decoration: none;">Cerrar Sesión</a></li>`;
 
+        // Acoplamos todo el menú construido al contenedor de la interfaz
+        dropdownMenu.innerHTML = enlacesHtml;
+
+        // Comportamiento del click para abrir/cerrar
         trigger.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
             dropdownMenu.classList.toggle("mostrar-menu");
         };
-
 
     } else {
         if (menuDesplegable) menuDesplegable.classList.add('guest-mode');

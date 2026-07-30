@@ -497,7 +497,6 @@
     <script src="js/whatsapp.js"></script>
     <script src="js/mapa.js"></script>
     <script src="js/contacto.js"></script>
-    <script src="js/auth-navbar.js"></script>
 
 </body>
 </html>
