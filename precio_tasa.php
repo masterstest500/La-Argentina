@@ -47,6 +47,25 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
     $tasa_actual = $fila['valor'];
 }
 // ---------------------------------
+
+// Consultar todos los productos del inventario trayendo su precio actual si existe
+$query_catalogo = "
+    SELECT 
+        di.codigo, 
+        di.producto AS sabor, 
+        IFNULL(p.precio, 0.00) AS precio 
+    FROM disponibilidad_inventario di
+    LEFT JOIN productos p 
+        ON di.codigo COLLATE utf8mb4_general_ci = p.codigo COLLATE utf8mb4_general_ci
+    WHERE di.cantidad > 0
+    ORDER BY di.producto ASC
+";
+$resultado_catalogo = $conexion->query($query_catalogo);
+$catalogo_php = [];
+while ($row = $resultado_catalogo->fetch_assoc()) {
+    $catalogo_php[] = $row;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -215,30 +234,32 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
 
         <!-- VISTA 1: GRILLA DE PRECIOS -->
         <div id="vista_precios" class="vista-seccion <?php echo $pestaña_activa == 'precios' ? 'active' : ''; ?>">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Código</th>
-                        <th style="width: 45%;">Descripción del Producto</th>
-                        <th style="width: 20%;">Precio Nuevo ($)</th>
-                        <th style="width: 10%; text-align: center;">Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody-precios">
-                    <!-- Las filas se inyectarán aquí mediante JavaScript -->
-                </tbody>
-            </table>
-            
-            <!-- Botón de Agregar "+" -->
-            <button type="button" class="btn-agregar-fila" onclick="agregarFilaPrecio()">
-                <i class="fa-solid fa-plus"></i> Añadir Producto
-            </button>
-            
-            <div class="btn-flotante">
-                <button type="button" class="btn-primario">
-                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios en Grilla
+            <form action="guardar_precios.php" method="POST">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Código</th>
+                            <th style="width: 45%;">Descripción del Producto</th>
+                            <th style="width: 20%;">Precio Nuevo ($)</th>
+                            <th style="width: 10%; text-align: center;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-precios">
+                        <!-- Las filas se inyectarán aquí mediante JavaScript -->
+                    </tbody>
+                </table>
+                
+                <!-- Botón de Agregar "+" -->
+                <button type="button" class="btn-agregar-fila" onclick="agregarFilaPrecio()">
+                    <i class="fa-solid fa-plus"></i> Añadir Producto
                 </button>
-            </div>
+                
+                <div class="btn-flotante">
+                    <button type="submit" class="btn-primario">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios en Grilla
+                    </button>
+                </div>
+            </form>
         </div>
 
         <!-- VISTA 2: CUADRO SOLICITANDO TASA -->
@@ -281,7 +302,7 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
     </script>
     
     <script>
-    // 1. Lógica de Pestañas (la que ya tenías)
+    // 1. Lógica de Pestañas
     function cambiarPestaña(vista, elementoBoton) {
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         document.querySelectorAll('.vista-seccion').forEach(sec => sec.classList.remove('active'));
@@ -289,32 +310,23 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
         document.getElementById('vista_' + vista).classList.add('active');
     }
 
-    // 2. Base de datos simulada (Temporal)
-    // Cuando conectemos con PHP, esto se generará consultando la tabla de productos
-    const catalogoHelados = {
-        "HEL-001": "Helado de Mantecado (Pote 4.5L)",
-        "HEL-002": "Helado de Chocolate (Pote 4.5L)",
-        "HEL-003": "Helado de Fresa (Pote 4.5L)",
-        "HEL-004": "Helado Fantoche (Pote 4.5L)",
-        "HEL-007": "Helado Fantoche Fresa (Pote 4.5L)",
-        "HEL-008": "Helado Fantoche Chocolate (Pote 4.5L)",
-        "HEL-009": "Helado Fantoche Mango (Pote 4.5L)",
-        "HEL-010": "Helado Premium Pistacho (Pote 4.5L)",
-        "HEL-011": "Helado Premium Tramontana (Pote 4.5L)",
-        "HEL-012": "Helado Trisabor (Pote 850ML)"
-    };
+    // 2. Catálogo conectado desde la Base de Datos (PHP a JS)
+    const catalogoHelados = [
+        <?php foreach ($catalogo_php as $prod): ?>
+        { codigo: "<?php echo $prod['codigo']; ?>", descripcion: "<?php echo htmlspecialchars($prod['sabor']); ?>", precio: "<?php echo $prod['precio']; ?>" },
+        <?php endforeach; ?>
+    ];
 
-    // 3. Generar las opciones de AMBOS Selects (Código y Descripción)
+    // 3. Generar las opciones de AMBOS Selects dinámicamente
     let opcionesCodigoHTML = '<option value="">Seleccione un código...</option>';
     let opcionesDescHTML = '<option value="">Seleccione un producto...</option>';
     
-    for (let codigo in catalogoHelados) {
-        opcionesCodigoHTML += `<option value="${codigo}">${codigo}</option>`;
-        // Usamos el mismo 'codigo' como value para sincronizarlos fácilmente
-        opcionesDescHTML += `<option value="${codigo}">${catalogoHelados[codigo]}</option>`;
-    }
+    catalogoHelados.forEach(item => {
+        opcionesCodigoHTML += `<option value="${item.codigo}">${item.codigo}</option>`;
+        opcionesDescHTML += `<option value="${item.codigo}">${item.descripcion}</option>`;
+    });
 
-    // 4. Función para agregar una nueva fila vacía
+    // 4. Función para agregar una nueva fila vacía con campo de texto controlado
     function agregarFilaPrecio() {
         const tbody = document.getElementById('tbody-precios');
         const tr = document.createElement('tr');
@@ -326,13 +338,20 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
                 </select>
             </td>
             <td>
-                <!-- Cambiamos el input readonly por un select -->
                 <select class="select-tabla select-desc" name="desc_producto[]" onchange="sincronizarFila(this, 'descripcion')" required>
                     ${opcionesDescHTML}
                 </select>
             </td>
             <td>
-                <input type="number" step="0.01" class="input-precio" name="nuevo_precio[]" placeholder="0.00" required>
+                <input type="text" 
+                    class="input-precio" 
+                    name="nuevo_precio[]" 
+                    placeholder="0.00"
+                    autocomplete="off" 
+                    maxlength="7"
+                    oninput="filtrarEntradaPrecio(this)"
+                    onblur="validarYFormatearPrecio(this)" 
+                    required>
             </td>
             <td style="text-align: center;">
                 <button type="button" class="btn-eliminar-fila" onclick="eliminarFila(this)" title="Quitar fila">
@@ -340,25 +359,77 @@ if ($resultado && $fila = $resultado->fetch_assoc()) {
                 </button>
             </td>
         `;
-        
         tbody.appendChild(tr);
+    }
+
+    // Filtra la escritura en tiempo real (impide pegar letras, múltiples puntos o > 3 dígitos enteros)
+    function filtrarEntradaPrecio(input) {
+        // Permite solo números y punto
+        input.value = input.value.replace(/[^0-9.]/g, '');
+        
+        // Evita múltiples puntos consecutivos o dispersos
+        const partes = input.value.split('.');
+        if (partes.length > 2) {
+            input.value = partes[0] + '.' + partes.slice(1).join('');
+        }
+        
+        // Restringe la parte entera a un máximo de 3 dígitos (máximo 999)
+        if (partes[0].length > 3) {
+            partes[0] = partes[0].substring(0, 3);
+            input.value = partes.join('.');
+        }
+    }
+
+    // Valida y corrige la estructura final al salir del casilla
+    function validarYFormatearPrecio(input) {
+        if (!input.value) return;
+
+        let valorNum = parseFloat(input.value);
+
+        // Rechaza ceros (0, 0.00, 000.00) o valores que excedan 999
+        if (isNaN(valorNum) || valorNum <= 0 || valorNum > 999) {
+            alert("Ingrese un precio válido (mayor a 0.00 y máximo 999.99).");
+            input.value = "";
+            return;
+        }
+
+        const partes = input.value.split('.');
+        
+        // Si no tiene punto decimal, le asigna .00 por defecto
+        if (partes.length === 1) {
+            input.value = valorNum.toFixed(2);
+            return;
+        }
+
+        // Manejo exacto de decimales (admite 2 o 3 dígitos, ej: 10.00 o 10.000)
+        const decimales = partes[1];
+        if (decimales.length < 2) {
+            input.value = valorNum.toFixed(2); // Corrige ej: 10.0 a 10.00
+        } else if (decimales.length > 3) {
+            input.value = valorNum.toFixed(2); // Recorta exceso de decimales ej: 10.00000 a 10.00
+        }
     }
 
     // 5. Función de autocompletado bidireccional
     function sincronizarFila(selectElement, origen) {
-        // Encontramos la fila actual donde ocurrió el cambio
         const fila = selectElement.closest('tr');
         const selectCodigo = fila.querySelector('.select-codigo');
         const selectDesc = fila.querySelector('.select-desc');
+        const inputPrecio = fila.querySelector('.input-precio');
         
-        // Obtenemos el valor que el usuario acaba de elegir
         const valorSeleccionado = selectElement.value;
         
-        // Sincronizamos dependiendo de qué select manipuló el usuario
         if (origen === 'codigo') {
             selectDesc.value = valorSeleccionado;
         } else if (origen === 'descripcion') {
             selectCodigo.value = valorSeleccionado;
+        }
+
+        // Opcional: Autocompletar el precio actual si se desea
+        const productoEncontrado = catalogoHelados.find(item => item.codigo === valorSeleccionado);
+        if (productoEncontrado && inputPrecio.value === "") {
+            let precioBase = parseFloat(productoEncontrado.precio);
+            inputPrecio.value = !isNaN(precioBase) && precioBase > 0 ? precioBase.toFixed(2) : "";
         }
     }
 

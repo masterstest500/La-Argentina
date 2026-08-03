@@ -17,62 +17,7 @@ session_start();
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.php" class="nav-logo">
-                <img src="img/logos/logo.png" alt="La Argentina" class="nav-logo-img">
-            </a>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.php" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="productos.php" class="nav-link">Productos</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle">¿Quiénes Somos? ▾</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="quienes-somos.php?seccion=historia" class="dropdown-link">Historia</a></li>
-                        <li><a href="quienes-somos.php" class="dropdown-link">Misión y Visión</a></li>
-                        <li><a href="quienes-somos.php?seccion=valores" class="dropdown-link">Principios y Valores</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php#contacto" class="nav-link">Contacto</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php#ubicanos" class="nav-link">Ubícanos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="descargables.php" class="nav-link">Descargables</a>
-                </li>
-            </ul>
-            <div class="nav-redes">
-                <a href="#" class="red-social proximamente" data-red="Instagram">
-                    <img src="img/logos/instagram.png" alt="Instagram">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="Facebook">
-                    <img src="img/logos/facebook.png" alt="Facebook">
-                </a>
-                <a href="#" class="red-social proximamente" data-red="YouTube">
-                    <img src="img/logos/youtube.png" alt="YouTube">
-                </a>
-            </div>
-            <!-- Login -->
-            <div class="navbar-acciones">
-                <a href="login.php" class="navbar-login" data-red="Iniciar sesión">
-                    <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
-                </a>
-            </div>
-        </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<?php include 'navbar.php'; ?>
 
     <!-- CONTENIDO -->
     <main id="descargables">

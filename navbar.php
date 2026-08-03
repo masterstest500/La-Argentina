@@ -1,10 +1,13 @@
 <header id="navbar">
     <nav class="nav-container">
+        <!-- Logo -->
         <div class="nav-logo">
-            <a href="index.php"> <img src="img/logos/logo.png" alt="Helados La Argentina">
+            <a href="index.php">
+                <img src="img/logos/logo.png" alt="Helados La Argentina">
             </a>
         </div>
 
+        <!-- Menú -->
         <ul class="nav-menu">
             <li class="nav-item"><a href="index.php" class="nav-link">Inicio</a></li>
             <li class="nav-item"><a href="productos.php" class="nav-link">Productos</a></li>
@@ -21,31 +24,29 @@
             <li class="nav-item"><a href="descargables.php" class="nav-link">Descargables</a></li>
         </ul>
 
+        <!-- Redes Sociales -->
         <div class="nav-redes">
             <a href="#" class="red-social proximamente" data-red="Instagram"><img src="img/logos/instagram.png" alt="Instagram"></a>
             <a href="#" class="red-social proximamente" data-red="Facebook"><img src="img/logos/facebook.png" alt="Facebook"></a>
             <a href="#" class="red-social proximamente" data-red="YouTube"><img src="img/logos/youtube.png" alt="YouTube"></a>
         </div>
 
+        <!-- Acciones de Usuario / Login unificadas para evitar doble fuente de verdad -->
         <div class="navbar-acciones">
-            <?php if(!empty($_SESSION['rol']) || !empty($_SESSION['cargo'])): ?>
-                <div class="nav-item dropdown" id="user-menu-logged">
-                    <a href="#" class="navbar-user dropdown-toggle" id="user-name-display">
-                        <img src="img/logos/login.png" alt="Usuario" class="user-avatar-img">
-                        <span id="user-text-name" style="color: #333; font-weight: bold; margin-left: 8px;">
-                            <?= htmlspecialchars($_SESSION['nombre_usuario'] ?? 'Mi Panel') ?>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu" id="user-dropdown-options">
-                        </ul>
-                </div>
-            <?php else: ?>
-                <a href="login.php" class="navbar-login" id="user-nav-trigger" data-red="Iniciar sesión">
-                    <img src="img/logos/login.png" alt="Login Helar" class="login-logo-img">
+            <div class="nav-item dropdown" id="user-menu-logged">
+                <a href="login.php" class="navbar-user dropdown-toggle" id="user-name-display" style="text-decoration: none; display: flex; align-items: center;">
+                    <img src="img/logos/login.png" alt="Usuario" class="user-avatar-img" style="filter: brightness(0) invert(1); width: 20px; height: 20px; vertical-align: middle;">
+                    <span id="user-text-name" style="color: var(--color-texto-principal); font-weight: bold; margin-left: 8px;">
+                        Cargando...
+                    </span>
                 </a>
-            <?php endif; ?>
+                <ul class="dropdown-menu" id="user-dropdown-options">
+                    <!-- Las opciones y el nombre se inyectan instantáneamente desde localStorage mediante main.js -->
+                </ul>
+            </div>
         </div>
 
+        <!-- Botón menú móvil -->
         <div class="nav-toggle" id="nav-toggle">
             <span></span>
             <span></span>

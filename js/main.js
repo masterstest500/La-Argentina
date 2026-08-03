@@ -272,20 +272,30 @@ window.addEventListener('pageshow', function(event) {
     }
 });
 
-// Pon esto al final de tu archivo main.js
+// ========================================================
+// CIERRE DE SESIÓN SINCRONIZADO (CLIENTE Y SERVIDOR)
+// ========================================================
 document.addEventListener('click', function(e) {
-    // Verificamos si el elemento clickeado es el botón de logout
     if (e.target && e.target.id === 'btn-logout') {
-        e.preventDefault(); // Detiene el salto del '#'
+        e.preventDefault();
         
         if (confirm("¿Está seguro de que desea cerrar sesión?")) {
-            // Limpiamos datos
-            localStorage.removeItem("trabajadorAutenticado");
-            localStorage.removeItem("usuarioSesion");
-            localStorage.removeItem("usuarioData");
-            
-            // Redirección forzada
-            window.location.replace("index.php"); 
+            // 1. Llamamos al backend en segundo plano para destruir la sesión de PHP
+            fetch('logout.php', { method: 'POST' })
+                .then(() => {
+                    // 2. Limpiamos las variables locales del navegador
+                    localStorage.removeItem("trabajadorAutenticado");
+                    localStorage.removeItem("usuarioSesion");
+                    localStorage.removeItem("usuarioData");
+                    
+                    // 3. Redirección forzada al inicio sin bucles
+                    window.location.replace("index.php");
+                })
+                .catch(() => {
+                    // Fallback de seguridad si falla la red
+                    localStorage.clear();
+                    window.location.replace("index.php");
+                });
         }
     }
 });

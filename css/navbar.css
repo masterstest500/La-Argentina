@@ -39,8 +39,8 @@
 
 /* ========== LOGO UNIFICADO PARA TODAS LAS ESTRUCTURAS ========== */
 .nav-logo img, 
-.nav-logo-img {
-    height: 90px; /* Ajusta este tamaño al que prefieras */
+.nav-logo-img-header {
+    height: 90px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -87,7 +87,7 @@
     color: var(--rojo-hover);
 }
 
-/* ========== DROPDOWN ========== */
+/* ========== DROPDOWN GENERAL (Navegación normal) ========== */
 .dropdown {
     position: relative;
 }
@@ -136,7 +136,6 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    right: -6px;
 }
 
 .red-social {
@@ -158,32 +157,104 @@
     filter: brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(7000%) hue-rotate(0deg);
 }
 
-/* ========== CONTENEDOR DE LOGIN / SESIÓN ABSOLUTO ========== */
-.navbar-acciones {
-    position: relative;        /* 📍 Mantenemos el flujo natural de flexbox */
-    width: 5%;              /* 🔒 Espacio sagrado e inamovible para que NADA se desplace */
-    right: -35px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* ➡️ Hace que el contenido se alinee simétrico a la derecha */
-    gap: 8px;
-    height: 100%;
+/* ====================================================================
+   ESTILIZACIÓN UNIFICADA DEL BOTÓN DE USUARIO Y SU MENÚ DESPLEGABLE
+   ==================================================================== */
+
+/* Contenedor del menú de usuario logueado */
+#user-menu-logged {
+    position: relative !important;
 }
 
-.navbar-acciones #id-user-name-display span {
-    font-size: 0.78rem;           /* ✍️ Un toque más pequeño, fino y estético */
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    display: inline-block;
-    max-width: 85px;             /* 🛑 Límite de ancho para el texto */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;     /* ✂️ Si el nombre es muy largo, añade "..." automáticamente */
+/* Botón principal del usuario (nombre + icono) */
+#user-name-display {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    color: var(--blanco) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    position: relative !important;
+    padding-bottom: 4px !important;
+    transition: var(--transicion) !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+}
+
+/* Tamaño exacto del icono de usuario */
+.user-avatar-img, 
+.login-logo-img {
+    width: 18px !important;
+    height: 18px !important;
+    object-fit: contain !important;
+    filter: brightness(0) invert(1) !important;
+    transition: var(--transicion) !important;
     vertical-align: middle;
+    display: inline-block;
 }
 
-/* Tooltip Próximamente */
+/* Texto del usuario limpio de subrayados o colores heredados */
+#user-text-name {
+    color: inherit !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+}
+
+/* Línea roja animada idéntica al resto del menú */
+#user-name-display::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 0% !important;
+    height: 2px !important;
+    background-color: var(--rojo) !important;
+    transition: var(--transicion) !important;
+}
+
+#user-name-display:hover {
+    color: var(--rojo-hover) !important;
+}
+
+#user-name-display:hover::after {
+    width: 100% !important;
+}
+
+/* Menú desplegable del usuario: Alineado perfectamente debajo y a la derecha del botón */
+#user-dropdown-options {
+    position: absolute !important;
+    top: calc(100% + 14px) !important;
+    left: 0 !important;
+    right: auto !important;
+    min-width: 180px !important;
+    background-color: var(--gris) !important;
+    border-top: 2px solid var(--rojo) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+    list-style: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
+    z-index: 1000 !important;
+    display: block !important;
+}
+
+#user-dropdown-options.show,
+#user-dropdown-options.mostrar-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+/* Tooltip Próximamente en redes */
 .proximamente::after {
     content: attr(data-red) ' — Próximamente';
     position: absolute;
@@ -226,27 +297,36 @@
     transition: var(--transicion);
 }
 
-/* Estado base oculto del menú */
-#user-dropdown-options {
-    display: block !important; /* Permitimos que exista en el DOM para poder animarlo */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-15px); /* Empieza un poco más arriba */
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-    position: absolute;
-    right: -60px;
-    left: auto;
-    min-width: 180px;
-    background-color: #111; /* Ajusta al fondo oscuro de tu navbar */
-    border-radius: 4px;
-    z-index: 1000;
+/* Clase utilitaria */
+.hidden {
+    display: none !important;
 }
 
-/* Estado activo cuando se abre (Animación) */
-#user-dropdown-options.mostrar-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0); /* Sube o baja suavemente a su posición original */
+/* Seguridad para modo invitado */
+.guest-mode .dropdown-menu,
+.guest-mode:hover .dropdown-menu,
+.guest-mode #user-dropdown-options {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Botones globales de administración */
+.btn-volver {
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.btn-volver:hover {
+    color: #cc0000;
 }
 
 /* ========== RESPONSIVE ========== */
@@ -287,75 +367,28 @@
         border-left: 2px solid var(--rojo);
         margin-top: 8px;
         display: none;
-    }
-
-    .dropdown.activo .dropdown-menu {
-        display: block;
-    }
-}
-
-@media (max-width: 768px) {
-    .dropdown.activo .dropdown-menu {
-        display: block;
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        border-top: none;
-        border-left: 2px solid var(--rojo);
-        margin-top: 8px;
         background-color: var(--negro);
     }
-}
 
-/* Soporte para apertura por clic en el menú de usuario logueado */
-#user-dropdown-options.show {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-}
+    .dropdown.activo .dropdown-menu {
+        display: block;
+    }
 
-/* Clase utilitaria para ocultar elementos de forma absoluta */
-.hidden {
-    display: none !important;
-}
+    #user-dropdown-options {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        border-top: none !important;
+        border-left: 2px solid var(--rojo) !important;
+        margin-top: 8px !important;
+        background-color: var(--negro) !important;
+        box-shadow: none !important;
+        display: none !important;
+    }
 
-/* ====================================================================
-   🔒 SEGURIDAD PARA MODO INVITADO (UNIFICADO)
-   ==================================================================== */
-/* Si el menú tiene la clase 'guest-mode', el menú desplegable jamás se mostrará */
-.guest-mode .dropdown-menu,
-.guest-mode:hover .dropdown-menu {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-}
-
-/* ====================================================================
-   🎛️ BOTONES GLOBALES DE ADMINISTRACIÓN
-   ==================================================================== */
-.btn-volver {
-    color: #ffffff;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-    font-size: 0.9rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    transition: color 0.3s ease;
-}
-
-.btn-volver:hover {
-    color: #cc0000; /* Rojo La Argentina */
-}
-
-/* Corrección global para el icono de login */
-.login-logo-img {
-    width: 20px !important; 
-    height: 20px !important;
-    filter: brightness(0) invert(1); /* Esto lo pone blanco automáticamente */
-    vertical-align: middle;
-    display: inline-block;
+    #user-dropdown-options.show,
+    #user-dropdown-options.mostrar-menu {
+        display: block !important;
+    }
 }

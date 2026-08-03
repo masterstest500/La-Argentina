@@ -143,7 +143,7 @@ $rol_usuario = $_SESSION['cargo'] ?? 'Ventas';
     </div>
 
     <div class="panel-fondo">
-        <form action="#" method="POST" id="form-cliente">
+        <form action="guardar_clientes.php" method="POST" id="form-cliente">
             <div class="form-grid">
                 
                 <!-- ==========================================
@@ -156,15 +156,15 @@ $rol_usuario = $_SESSION['cargo'] ?? 'Ventas';
                     
                     <div class="grupo-input">
                         <label>Razón Social</label>
-                        <input type="text" name="nombre_negocio" placeholder="Ej: Inversiones Los Andes C.A." required>
+                        <input type="text" name="nombre_negocio" placeholder="Ej: Inversiones Los Andes C.A." autocomplete="off" required>
                     </div>
                     <div class="grupo-input">
                         <label>RIF / Documento</label>
-                        <input type="text" name="rif" placeholder="Ej: J-12345678-9" required>
+                        <input type="text" name="rif" placeholder="Ej: J-12345678-9" autocomplete="off" required>
                     </div>
                     <div class="grupo-input">
                         <label>Código Principal</label>
-                        <input type="text" name="codigo_cliente" placeholder="Ej: CLI-001" required>
+                        <input type="text" name="codigo_cliente" placeholder="Ej: CLI-001" autocomplete="off" required>
                     </div>
 
                     <!-- Toggle Sucursal -->
@@ -181,11 +181,11 @@ $rol_usuario = $_SESSION['cargo'] ?? 'Ventas';
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
                             <div class="grupo-input" style="margin-bottom: 0;">
                                 <label>Código de Sucursal</label>
-                                <input type="text" name="codigo_sucursal" placeholder="Ej: SUC-NORTE-01">
+                                <input type="text" name="codigo_sucursal" placeholder="Ej: SUC-NORTE-01" autocomplete="off">
                             </div>
                             <div class="grupo-input" style="margin-bottom: 0;">
                                 <label>Nombre de Sucursal</label>
-                                <input type="text" name="nombre_sucursal" placeholder="Ej: Sucursal Bella Vista">
+                                <input type="text" name="nombre_sucursal" placeholder="Ej: Sucursal Bella Vista" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -233,16 +233,16 @@ $rol_usuario = $_SESSION['cargo'] ?? 'Ventas';
                     <div class="bloque-titulo"><i class="fa-solid fa-address-book"></i> Datos de Contacto</div>
                     <div class="grupo-input">
                         <label>Persona de Contacto</label>
-                        <input type="text" name="persona_contacto" placeholder="Ej: Juan Pérez">
+                        <input type="text" name="persona_contacto" placeholder="Ej: Juan Pérez" autocomplete="off">
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="grupo-input">
                             <label>Teléfono</label>
-                            <input type="text" name="telefono" placeholder="0414-0000000">
+                            <input type="text" name="telefono" placeholder="0414-0000000" autocomplete="off">
                         </div>
                         <div class="grupo-input">
                             <label>Correo Electrónico</label>
-                            <input type="email" name="correo" placeholder="correo@empresa.com">
+                            <input type="email" name="correo" placeholder="correo@empresa.com" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -446,6 +446,20 @@ $rol_usuario = $_SESSION['cargo'] ?? 'Ventas';
                     marcador.bindPopup("Ubicación capturada").openPopup();
                     setTimeout(() => { if (marcador) marcador.closePopup(); }, 5000);
                 });
+        });
+
+        // --- VALIDACIÓN DE MAPA OBLIGATORIO ANTES DE ENVIAR ---
+        document.getElementById('form-cliente').addEventListener('submit', function(e) {
+            const lat = document.getElementById('latitud').value;
+            const lng = document.getElementById('longitud').value;
+
+            if (!lat || !lng) {
+                e.preventDefault(); // Detiene el envío del formulario
+                alert('Atención: Debes hacer clic en el mapa para capturar la ubicación GPS del cliente antes de registrarlo.');
+                
+                // Mueve la vista suavemente hacia el mapa
+                document.getElementById('mapa').scrollIntoView({ behavior: 'smooth' });
+            }
         });
     </script>
 </body>

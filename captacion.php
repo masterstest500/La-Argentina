@@ -212,7 +212,7 @@ $cargo_display = ucfirst($cargo_usuario);
                                 <option value="Norte">Norte</option>
                                 <option value="Sur">Sur</option>
                                 <option value="COL">COL</option>
-                                <option value="Cañada">Cañada</option>
+                                <option value="Concepción">Concepción</option>
                                 <option value="Villa">Villa</option>
                             </select>
                         </div>

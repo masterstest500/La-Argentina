@@ -72,8 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                 $producto_id = intval($item['id']);
                 $cantidad    = intval($item['cantidad']);
 
-                $sql_p = "SELECT sabor, stock_potes, precio FROM productos WHERE id = $producto_id";
-                $res_p = mysqli_query($conexion, $sql_p);
+                $sql_p = "SELECT p.sabor, p.precio, p.codigo, di.cantidad AS stock_potes FROM productos p INNER JOIN disponibilidad_inventario di ON p.codigo COLLATE utf8mb4_general_ci = di.codigo COLLATE utf8mb4_general_ci WHERE p.id = $producto_id";                $res_p = mysqli_query($conexion, $sql_p);
                 $prod  = mysqli_fetch_assoc($res_p);
 
                 if (!$prod || $prod['stock_potes'] < $cantidad) {
@@ -86,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
 
                 $detalles_a_insertar[] = [
                     'producto_id' => $producto_id,
+                    'codigo_inventario' => $prod['codigo'],
                     'cantidad' => $cantidad,
                     'precio_unitario' => $precio_u,
                     'subtotal' => $subtotal
@@ -106,7 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                     throw new Exception("Error al registrar los renglones del pedido.");
                 }
 
-                $sql_update = "UPDATE productos SET stock_potes = stock_potes - " . $det['cantidad'] . " WHERE id = " . $det['producto_id'];
+                // Descontamos directamente de la fuente de la verdad usando el código del producto
+                $codigo_inv = $det['codigo_inventario'];
+                $cantidad_descontar = $det['cantidad'];
+                $sql_update = "UPDATE disponibilidad_inventario SET cantidad = cantidad - $cantidad_descontar WHERE codigo = '$codigo_inv'";                
                 if (!mysqli_query($conexion, $sql_update)) {
                     throw new Exception("Error al actualizar el inventario físico.");
                 }
@@ -133,7 +136,24 @@ if (isset($_GET['guardado']) && $_GET['guardado'] == 'exito') {
 $query_rutas = "SELECT id, nombre_ruta FROM rutas ORDER BY id ASC";
 $result_rutas = mysqli_query($conexion, $query_rutas);
 
-$query_productos = "SELECT id, sabor, stock_potes, precio FROM productos WHERE stock_potes > 0 ORDER BY sabor ASC";
+// Hacemos un JOIN para unir el ID y precio (de productos), el stock real (de disponibilidad_inventario) 
+// y ahora la PRESENTACIÓN (de detalles_catalogo)
+$query_productos = "
+    SELECT 
+        di.codigo,
+        di.producto AS sabor, 
+        di.cantidad AS stock_potes,
+        IFNULL(p.id, di.codigo) AS id,
+        IFNULL(p.precio, 0) AS precio,
+        IFNULL(dc.presentacion, '') AS presentacion
+    FROM disponibilidad_inventario di
+    LEFT JOIN productos p 
+        ON di.codigo COLLATE utf8mb4_general_ci = p.codigo COLLATE utf8mb4_general_ci 
+    LEFT JOIN detalles_catalogo dc 
+        ON di.codigo COLLATE utf8mb4_general_ci = dc.codigo_producto COLLATE utf8mb4_general_ci
+    WHERE di.cantidad > 0 
+    ORDER BY di.producto ASC
+";
 $result_productos = mysqli_query($conexion, $query_productos);
 ?>
 <!DOCTYPE html>
@@ -204,6 +224,96 @@ $result_productos = mysqli_query($conexion, $query_productos);
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: #141414; padding: 30px; border-radius: 8px; width: 100%; max-width: 400px; border: 1px solid #333; }
         .modal-active { display: flex; }
+        /* Estilos para la nueva lista de helados */
+        .lista-helados-container {
+            background-color: #222222;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            max-height: 250px; /* Limita el tamaño del cuadro */
+            overflow-y: auto;  /* Habilita el scroll interno */
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        /* Personalizar barra de scroll webkit */
+        .lista-helados-container::-webkit-scrollbar { width: 8px; }
+        .lista-helados-container::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 4px; }
+        .lista-helados-container::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .lista-helados-container::-webkit-scrollbar-thumb:hover { background: #ff0015; }
+
+        .item-helado {
+            background-color: #1a1a1a;
+            border: 1px solid transparent;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .item-helado:hover {
+            background-color: #2a2a2a;
+            border-color: #555;
+        }
+
+        /* Estado de Helado Seleccionado */
+        .item-helado.seleccionado {
+            border-color: #ff0015;
+            background-color: rgba(255, 0, 21, 0.1);
+        }
+
+        .item-info { display: flex; flex-direction: column; gap: 4px; }
+        .item-info strong { font-size: 0.95rem; color: #fff; }
+        .item-info span { font-size: 0.75rem; color: #888; }
+
+        .item-detalles { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        .badge-stock { font-size: 0.8rem; color: #28a745; font-weight: 600; }
+        .badge-precio { font-size: 0.9rem; color: #ff0015; font-weight: 700; }
+
+        /* 1. Contenedor general de la tabla */
+        .tabla-scroll-container {
+            max-height: 350px; /* Ajusta este valor según el espacio vertical en tu pantalla */
+            overflow-y: auto;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            background-color: #1a1a1a;
+        }
+
+        /* Para que la tabla ocupe el 100% del contenedor */
+        .tabla-scroll-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* 2. Fijar los encabezados de la tabla */
+        .tabla-scroll-container thead th {
+            position: sticky;
+            top: 0;
+            background-color: #222222; /* Color sólido obligatorio para que no se trasluzca el texto al subir */
+            color: #ffffff;
+            z-index: 10;
+            padding: 10px;
+            text-align: left;
+            /* Una sombra sutil para separar el encabezado del contenido en movimiento */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+        }
+
+        /* Estilos de las celdas del cuerpo para mantener orden */
+        .tabla-scroll-container tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #333333;
+            color: #ddd;
+        }
+
+        /* 3. Personalizar la barra de desplazamiento (igual a la lista de sabores) */
+        .tabla-scroll-container::-webkit-scrollbar { width: 8px; }
+        .tabla-scroll-container::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 4px; }
+        .tabla-scroll-container::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .tabla-scroll-container::-webkit-scrollbar-thumb:hover { background: #ff0015; }
     </style>
 </head>
 <body>
@@ -251,22 +361,23 @@ $result_productos = mysqli_query($conexion, $query_productos);
     <!-- BLOQUE 2: ZONA DE TRANSACCIÓN (Bloqueada por defecto) -->
     <div id="zona_transaccion" class="dashboard-container">
         
+        <!-- PANEL IZQUIERDO -->
         <div class="panel-fondo panel-izquierdo">
             <h2>Configurar Renglón</h2>
             
             <div class="grupo-input">
-                <label for="select_sabor">Sabor de Helado Disponible</label>
-                <select id="select_sabor">
-                    <option value="">-- Seleccione Helado --</option>
-                    <?php while ($prod = mysqli_fetch_assoc($result_productos)): ?>
-                        <option value="<?php echo $prod['id']; ?>" 
-                                data-sabor="<?php echo htmlspecialchars($prod['sabor']); ?>" 
-                                data-precio="<?php echo $prod['precio']; ?>" 
-                                data-stock="<?php echo $prod['stock_potes']; ?>">
-                            <?php echo htmlspecialchars($prod['sabor']); ?> (Disp: <?php echo $prod['stock_potes']; ?> Potes - $<?php echo number_format($prod['precio'], 2); ?>)
-                        </option>
-                    <?php endwhile; ?>
-                </select>
+                <label>Sabor de Helado Disponible</label>
+                
+                <button type="button" class="btn-secundario" onclick="abrirModalHelados()" style="margin-bottom: 15px; border-color: #555; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar Helados
+                </button>
+                
+                <input type="text" id="sabor_visual" placeholder="Ningún helado seleccionado..." disabled style="background-color: #1a1a1a; border: 1px dashed #555; color: #ff0015; font-weight: bold; text-align: center;">
+                
+                <input type="hidden" id="input_id_sabor" value="">
+                <input type="hidden" id="input_nombre_sabor" value="">
+                <input type="hidden" id="input_precio_sabor" value="">
+                <input type="hidden" id="input_stock_sabor" value="">
             </div>
 
             <div class="grupo-input">
@@ -274,53 +385,58 @@ $result_productos = mysqli_query($conexion, $query_productos);
                 <input type="number" id="input_cantidad" min="1" value="1">
             </div>
 
-            <button type="button" class="btn-secundario" onclick="agregarItem()">
+            <button type="button" class="btn-primario" onclick="agregarItem()" style="margin-top: 0;">
                 <i class="fa-solid fa-cart-plus"></i> Agregar al Renglón
             </button>
         </div>
 
+        <!-- PANEL DERECHO -->
         <div class="panel-fondo panel-derecho">
-            <div>
-                <h2>Resumen de la Orden</h2>
-                
-                <form action="pedidos.php" method="POST" id="form_pedido">
-                    <!-- Inputs ocultos que alimentarán el Backend -->
-                    <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
-                    <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
-                    <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
+            <form action="pedidos.php" method="POST" id="form_pedido">
+                <!-- Inputs ocultos que alimentarán el Backend -->
+                <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
+                <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
+                <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Sabor</th>
-                                <th>Precio U.</th>
-                                <th>Cantidad</th>
-                                <th>Subtotal</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla_carrito">
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: #666;">No se han añadido sabores a esta orden.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
-
-            <div class="contenedor-total">
                 <div>
-                    <div class="total-label">Total Neto a Pagar</div>
-                    <div class="total-monto" id="txt_total">$0.00</div>
+                    <h2>Resumen de la Orden</h2>
+                    
+                    <div class="tabla-scroll-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sabor</th>
+                                    <th>Precio U.</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla_carrito">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: #666;">No se han añadido sabores a esta orden.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <button type="submit" name="registrar_pedido" class="btn-primario" style="width: auto; padding: 14px 40px;">
-                    <i class="fa-solid fa-file-invoice-dollar"></i> Registrar Pedido Total
-                </button>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <!-- MODAL DE SUCURSALES (CSS Puro) -->
+                <div class="contenedor-total">
+                    <div>
+                        <div class="total-label">Total Neto a Pagar</div>
+                        <div class="total-monto" id="txt_total">$0.00</div>
+                    </div>
+                    <button type="submit" name="registrar_pedido" class="btn-primario" style="width: auto; padding: 14px 40px;">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Registrar Pedido Total
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div> <!-- CIERRE CORRECTO DE #zona_transaccion -->
+
+
+    <!-- MODAL DE SUCURSALES (Fuera de zona_transaccion) -->
     <div id="modalSucursal" class="modal-overlay">
         <div class="modal-content">
             <h2 style="color: #ff0015; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">Sedes Múltiples</h2>
@@ -335,6 +451,43 @@ $result_productos = mysqli_query($conexion, $query_productos);
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button type="button" class="btn-secundario" onclick="cerrarModal()">Cancelar</button>
                 <button type="button" class="btn-primario" style="margin-top: 0;" onclick="confirmarSucursal()">Confirmar Sede</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL DE CATÁLOGO DE HELADOS (Fuera de zona_transaccion) -->
+    <div id="modalHelados" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
+                <h2 style="color: #ff0015; margin: 0; font-size: 1.3rem;">Catálogo de Helados</h2>
+                <button type="button" onclick="cerrarModalHelados()" style="background: none; border: none; color: #aaa; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            
+            <input type="text" id="buscar_helado" placeholder="🔍 Buscar por sabor..." onkeyup="filtrarHelados()" style="width: 100%; padding: 12px; margin-bottom: 15px; background-color: #222; border: 1px solid #333; color: #fff; border-radius: 6px;">
+            
+            <div class="lista-helados-container" id="contenedor_lista_helados" style="max-height: 350px;">
+                <?php while ($prod = mysqli_fetch_assoc($result_productos)): ?>
+                    <div class="item-helado" 
+                        data-id="<?php echo $prod['id']; ?>" 
+                        data-sabor="<?php echo htmlspecialchars($prod['sabor']); ?>" 
+                        data-precio="<?php echo $prod['precio']; ?>" 
+                        data-stock="<?php echo $prod['stock_potes']; ?>"
+                        onclick="seleccionarHeladoModal(this)">
+                        
+                        <div class="item-info">
+                            <!-- AQUÍ SE MUESTRA EL NOMBRE -->
+                            <strong><?php echo htmlspecialchars($prod['sabor']); ?></strong>
+                            <!-- AQUÍ SE MUESTRA EL CÓDIGO Y LA PRESENTACIÓN -->
+                            <span>Cód: <?php echo htmlspecialchars($prod['codigo']); ?> | Pres: <b><?php echo htmlspecialchars($prod['presentacion']); ?></b></span>
+                        </div>
+                        <div class="item-detalles">
+                            <!-- AQUÍ SE MUESTRA LA CANTIDAD (STOCK) -->
+                            <span class="badge-stock">Disp: <?php echo $prod['stock_potes']; ?></span>
+                            <span class="badge-precio">$<?php echo number_format($prod['precio'], 2); ?></span>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
         </div>
     </div>
@@ -440,25 +593,68 @@ $result_productos = mysqli_query($conexion, $query_productos);
         // ==========================================
         let carrito = [];
 
+        // Funciones para abrir y cerrar el catálogo
+        function abrirModalHelados() { 
+            document.getElementById('modalHelados').classList.add('modal-active'); 
+            document.getElementById('buscar_helado').focus(); // Coloca el cursor en el buscador automáticamente
+        }
+        function cerrarModalHelados() { document.getElementById('modalHelados').classList.remove('modal-active'); }
+
+        // Función para el dinamismo de Búsqueda en Vivo
+        function filtrarHelados() {
+            const input = document.getElementById('buscar_helado').value.toLowerCase();
+            const items = document.querySelectorAll('.item-helado');
+            
+            items.forEach(item => {
+                const sabor = item.getAttribute('data-sabor').toLowerCase();
+                if (sabor.includes(input)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Nueva función al hacer click en un helado dentro del modal
+        function seleccionarHeladoModal(elemento) {
+            // Extraer datos del item clickeado
+            const id = elemento.getAttribute('data-id');
+            const sabor = elemento.getAttribute('data-sabor');
+            const precio = elemento.getAttribute('data-precio');
+            const stock = elemento.getAttribute('data-stock');
+
+            // Llenar los inputs ocultos
+            document.getElementById('input_id_sabor').value = id;
+            document.getElementById('input_nombre_sabor').value = sabor;
+            document.getElementById('input_precio_sabor').value = precio;
+            document.getElementById('input_stock_sabor').value = stock;
+
+            // Mostrar visualmente lo que se seleccionó
+            document.getElementById('sabor_visual').value = `${sabor} (Disp: ${stock})`;
+
+            // Cerrar el modal
+            cerrarModalHelados();
+        }
+
+        // ACTUALIZAR la función agregarItem() para que lea los inputs ocultos
         function agregarItem() {
-            const select = document.getElementById('select_sabor');
+            const idSeleccionado = document.getElementById('input_id_sabor').value;
             const inputCant = document.getElementById('input_cantidad');
-            const productoId = select.value;
             const cantidad = parseInt(inputCant.value);
 
-            if (!productoId) { alert('Selecciona un sabor de helado.'); return; }
+            if (!idSeleccionado) { alert('Haz clic en "Buscar Helados" y selecciona un sabor.'); return; }
             if (isNaN(cantidad) || cantidad <= 0) { alert('Cantidad inválida.'); return; }
 
-            const optionSelected = select.options[select.selectedIndex];
-            const sabor = optionSelected.getAttribute('data-sabor');
-            const precio = parseFloat(optionSelected.getAttribute('data-precio'));
-            const stockMax = parseInt(optionSelected.getAttribute('data-stock'));
+            // Extraer datos de los inputs ocultos
+            const sabor = document.getElementById('input_nombre_sabor').value;
+            const precio = parseFloat(document.getElementById('input_precio_sabor').value);
+            const stockMax = parseInt(document.getElementById('input_stock_sabor').value);
 
             if (cantidad > stockMax) {
                 alert(`Solo quedan ${stockMax} potes de ${sabor} en inventario.`); return;
             }
 
-            const indexExistente = carrito.findIndex(item => item.id === productoId);
+            const indexExistente = carrito.findIndex(item => item.id === idSeleccionado);
             if (indexExistente !== -1) {
                 const nuevaCantidad = carrito[indexExistente].cantidad + cantidad;
                 if (nuevaCantidad > stockMax) {
@@ -467,10 +663,14 @@ $result_productos = mysqli_query($conexion, $query_productos);
                 carrito[indexExistente].cantidad = nuevaCantidad;
                 carrito[indexExistente].subtotal = nuevaCantidad * precio;
             } else {
-                carrito.push({ id: productoId, sabor: sabor, precio: precio, cantidad: cantidad, subtotal: cantidad * precio });
+                carrito.push({ id: idSeleccionado, sabor: sabor, precio: precio, cantidad: cantidad, subtotal: cantidad * precio });
             }
 
+            // Reiniciar el formulario de entrada
             inputCant.value = 1;
+            document.getElementById('input_id_sabor').value = "";
+            document.getElementById('sabor_visual').value = ""; // Limpia la caja visual
+            
             renderizarCarrito();
         }
 
