@@ -131,13 +131,11 @@ function controlarEstadoUsuarioNavbar() {
         ],
         "ventas": [
             { texto: "Creación de clientes", url: "clientes.php" },
-            { texto: "Inventario", url: "inventario.php" },
+            { texto: "Editar Catálogo", url: "editar-catalogo.php" },
             { texto: "Cambio de precio y tasa", url: "precio_tasa.php" },
             { texto: "Asignación de neveras", url: "asignacion-neveras.php" },
-            { texto: "Disponibilidad de Neveras", url: "neveras.php" }
-        ],
-        "cobranza": [
-            { texto: "Gestión de cobranza", url: "cobranza.php" }
+            { texto: "Disponibilidad de Neveras", url: "" },
+            { texto: "Disponibilidad", url: "disponibilidad.php" }
         ],
         "administrador": [] // El administrador no tendrá funciones por ahora
     };

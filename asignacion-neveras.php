@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario_id']) && !isset($_SESSION['cargo'])) {
 
 // 2. Control de accesos por roles (Filtro estricto)
 // REGLA: Define aquí adentro qué cargos SI pueden ver esta página específica
-$cargos_autorizados = ['ventas', 'administrador']; 
+$cargos_autorizados = ['ventas']; 
 
 $cargo_usuario = strtolower($_SESSION['cargo'] ?? '');
 

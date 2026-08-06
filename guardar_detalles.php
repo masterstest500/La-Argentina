@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario_id']) && !isset($_SESSION['user']) && !isset($_SES
     exit();
 }
 
-$cargos_autorizados = ['preventista', 'administrador']; 
+$cargos_autorizados = ['ventas']; 
 $cargo_usuario = strtolower($_SESSION['cargo'] ?? $_SESSION['rol'] ?? '');
 
 if (!in_array($cargo_usuario, $cargos_autorizados)) {

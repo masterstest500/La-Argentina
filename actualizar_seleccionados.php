@@ -7,8 +7,9 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['cargo'])) {
     exit();
 }
 
-$cargos_autorizados = ['preventista', 'administrador']; 
-$cargo_usuario = strtolower($_SESSION['cargo'] ?? $_SESSION['rol'] ?? '');
+// Permitir acceso a Ventas y Administrador
+$cargos_autorizados = ['ventas', 'administrador', 'admin']; 
+$cargo_usuario = strtolower(trim($_SESSION['cargo'] ?? $_SESSION['rol'] ?? ''));
 
 if (!in_array($cargo_usuario, $cargos_autorizados)) {
     header("Location: index.php?error=acceso_denegado");
@@ -45,18 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['items']) && is_array(
         $stmt->close();
         $conexion->close();
 
-        // Redireccionar con alerta de éxito
-        header("Location: neveras.php?status=success");
+        // REDIRECCIÓN CORREGIDA: Vuelve a disponibilidad.php
+        header("Location: disponibilidad.php?status=success");
         exit();
 
     } else {
         // En caso de fallo en la preparación de la consulta
-        header("Location: neveras.php?status=error");
+        header("Location: disponibilidad.php?status=error");
         exit();
     }
 
 } else {
     // Si se intenta ingresar al archivo sin enviar datos
-    header("Location: neveras.php");
+    header("Location: disponibilidad.php");
     exit();
 }
+?>

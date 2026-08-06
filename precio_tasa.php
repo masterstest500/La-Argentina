@@ -216,7 +216,7 @@ while ($row = $resultado_catalogo->fetch_assoc()) {
 
     <div class="header-seccion">
         <h1>Módulo de <span>Actualización de Valores</span></h1>
-        <p>Usuario: <strong><?php echo htmlspecialchars($nombre_usuario); ?></strong> (<?php echo htmlspecialchars($rol_usuario); ?>)</p>
+        <p>Bienvenido: <strong><?php echo htmlspecialchars($nombre_usuario); ?></strong> (<?php echo htmlspecialchars($rol_usuario); ?>)</p>
         <a href="index.php" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
     </div>
 

@@ -25,7 +25,6 @@ $mensaje_alerta = "";
 // ==========================================
 // 2. ⚡ ENDPOINTS AJAX (Para Selectores Dinámicos)
 // ==========================================
-// Este bloque intercepta las peticiones de JavaScript para cargar clientes y sucursales sin recargar la página
 if (isset($_GET['accion'])) {
     header('Content-Type: application/json');
     
@@ -55,7 +54,6 @@ if (isset($_GET['accion'])) {
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) {
     $cliente_id   = intval($_POST['hidden_cliente_id']);
-    // Si no hay sucursal, enviamos NULL a la BD
     $sucursal_id  = !empty($_POST['hidden_sucursal_id']) ? intval($_POST['hidden_sucursal_id']) : "NULL"; 
     $vendedor     = $nombre_usuario;
     $json_carrito = $_POST['items_carrito'];
@@ -72,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                 $producto_id = intval($item['id']);
                 $cantidad    = intval($item['cantidad']);
 
-                $sql_p = "SELECT p.sabor, p.precio, p.codigo, di.cantidad AS stock_potes FROM productos p INNER JOIN disponibilidad_inventario di ON p.codigo COLLATE utf8mb4_general_ci = di.codigo COLLATE utf8mb4_general_ci WHERE p.id = $producto_id";                $res_p = mysqli_query($conexion, $sql_p);
+                $sql_p = "SELECT p.sabor, p.precio, p.codigo, di.cantidad AS stock_potes FROM productos p INNER JOIN disponibilidad_inventario di ON p.codigo COLLATE utf8mb4_general_ci = di.codigo COLLATE utf8mb4_general_ci WHERE p.id = $producto_id";
+                $res_p = mysqli_query($conexion, $sql_p);
                 $prod  = mysqli_fetch_assoc($res_p);
 
                 if (!$prod || $prod['stock_potes'] < $cantidad) {
@@ -92,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                 ];
             }
 
-            // Inserción Maestra (Ahora incluye la sucursal)
             $sql_maestro = "INSERT INTO pedidos (cliente_id, sucursal_id, vendedor, total) VALUES ($cliente_id, $sucursal_id, '$vendedor', $total_pedido)";
             if (!mysqli_query($conexion, $sql_maestro)) {
                 throw new Exception("Error al registrar la cabecera del pedido.");
@@ -106,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
                     throw new Exception("Error al registrar los renglones del pedido.");
                 }
 
-                // Descontamos directamente de la fuente de la verdad usando el código del producto
                 $codigo_inv = $det['codigo_inventario'];
                 $cantidad_descontar = $det['cantidad'];
                 $sql_update = "UPDATE disponibilidad_inventario SET cantidad = cantidad - $cantidad_descontar WHERE codigo = '$codigo_inv'";                
@@ -136,8 +133,6 @@ if (isset($_GET['guardado']) && $_GET['guardado'] == 'exito') {
 $query_rutas = "SELECT id, nombre_ruta FROM rutas ORDER BY id ASC";
 $result_rutas = mysqli_query($conexion, $query_rutas);
 
-// Hacemos un JOIN para unir el ID y precio (de productos), el stock real (de disponibilidad_inventario) 
-// y ahora la PRESENTACIÓN (de detalles_catalogo)
 $query_productos = "
     SELECT 
         di.codigo,
@@ -180,7 +175,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
         .panel-embudo { border-top: 4px solid #ff0015; }
         
         .dashboard-container { display: flex; gap: 30px; flex-wrap: wrap; }
-        .panel-izquierdo { flex: 1; min-width: 350px; }
+        .panel-izquierdo { flex: 1; min-width: 380px; }
         .panel-derecho { flex: 1.5; min-width: 500px; display: flex; flex-direction: column; justify-content: space-between; }
 
         h2 { font-size: 1.3rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
@@ -212,7 +207,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
         .total-label { font-size: 1.1rem; text-transform: uppercase; color: #aaa; }
         .total-monto { font-size: 1.8rem; font-weight: 700; color: #ff0015; }
 
-        /* Estilos de Alertas y Modales */
+        /* Estilos de Alertas */
         .alerta { padding: 15px; border-radius: 6px; margin-bottom: 25px; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
         .error { background-color: rgba(230, 57, 70, 0.15); color: #ff0015; border: 1px solid #ff0015; }
         .exito { background-color: rgba(40, 167, 69, 0.15); color: #28a745; border: 1px solid #28a745; }
@@ -220,24 +215,23 @@ $result_productos = mysqli_query($conexion, $query_productos);
         /* Contenedor bloqueado hasta completar embudo */
         #zona_transaccion { opacity: 0.4; pointer-events: none; transition: 0.3s; }
 
-        /* Modal CSS puro */
+        /* Modal CSS */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: #141414; padding: 30px; border-radius: 8px; width: 100%; max-width: 400px; border: 1px solid #333; }
         .modal-active { display: flex; }
-        /* Estilos para la nueva lista de helados */
+
         .lista-helados-container {
             background-color: #222222;
             border: 1px solid #333333;
             border-radius: 6px;
-            max-height: 250px; /* Limita el tamaño del cuadro */
-            overflow-y: auto;  /* Habilita el scroll interno */
+            max-height: 250px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 5px;
             padding: 10px;
         }
 
-        /* Personalizar barra de scroll webkit */
         .lista-helados-container::-webkit-scrollbar { width: 8px; }
         .lista-helados-container::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 4px; }
         .lista-helados-container::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
@@ -255,65 +249,96 @@ $result_productos = mysqli_query($conexion, $query_productos);
             transition: all 0.2s ease;
         }
 
-        .item-helado:hover {
-            background-color: #2a2a2a;
-            border-color: #555;
-        }
-
-        /* Estado de Helado Seleccionado */
-        .item-helado.seleccionado {
-            border-color: #ff0015;
-            background-color: rgba(255, 0, 21, 0.1);
-        }
-
+        .item-helado:hover { background-color: #2a2a2a; border-color: #555; }
         .item-info { display: flex; flex-direction: column; gap: 4px; }
         .item-info strong { font-size: 0.95rem; color: #fff; }
         .item-info span { font-size: 0.75rem; color: #888; }
-
         .item-detalles { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
         .badge-stock { font-size: 0.8rem; color: #28a745; font-weight: 600; }
         .badge-precio { font-size: 0.9rem; color: #ff0015; font-weight: 700; }
 
-        /* 1. Contenedor general de la tabla */
         .tabla-scroll-container {
-            max-height: 350px; /* Ajusta este valor según el espacio vertical en tu pantalla */
+            max-height: 350px;
             overflow-y: auto;
             border: 1px solid #333333;
             border-radius: 6px;
             background-color: #1a1a1a;
         }
 
-        /* Para que la tabla ocupe el 100% del contenedor */
-        .tabla-scroll-container table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* 2. Fijar los encabezados de la tabla */
+        .tabla-scroll-container table { width: 100%; border-collapse: collapse; }
         .tabla-scroll-container thead th {
             position: sticky;
             top: 0;
-            background-color: #222222; /* Color sólido obligatorio para que no se trasluzca el texto al subir */
+            background-color: #222222;
             color: #ffffff;
             z-index: 10;
             padding: 10px;
             text-align: left;
-            /* Una sombra sutil para separar el encabezado del contenido en movimiento */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
         }
 
-        /* Estilos de las celdas del cuerpo para mantener orden */
-        .tabla-scroll-container tbody td {
-            padding: 10px;
-            border-bottom: 1px solid #333333;
-            color: #ddd;
-        }
-
-        /* 3. Personalizar la barra de desplazamiento (igual a la lista de sabores) */
+        .tabla-scroll-container tbody td { padding: 10px; border-bottom: 1px solid #333333; color: #ddd; }
         .tabla-scroll-container::-webkit-scrollbar { width: 8px; }
         .tabla-scroll-container::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 4px; }
         .tabla-scroll-container::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
         .tabla-scroll-container::-webkit-scrollbar-thumb:hover { background: #ff0015; }
+
+        /* ==========================================
+           ESTILOS DE BOTONES DE RENGLÓN (Capturas)
+           ========================================== */
+        .card-renglon {
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .btn-box-add {
+            width: 44px;
+            height: 44px;
+            background-color: #141414;
+            border: 2px solid #ff0015;
+            border-radius: 8px;
+            color: #ff0015;
+            font-size: 1.2rem;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-box-add:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 0, 21, 0.4);
+        }
+
+        .btn-box-delete {
+            background: none;
+            border: none;
+            color: #ff0015;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 8px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-box-delete:hover {
+            color: #ff4d5e;
+            transform: scale(1.15);
+        }
+
+        .contenedor-acciones-renglon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
     </style>
 </head>
 <body>
@@ -358,42 +383,26 @@ $result_productos = mysqli_query($conexion, $query_productos);
         </p>
     </div>
 
-    <!-- BLOQUE 2: ZONA DE TRANSACCIÓN (Bloqueada por defecto) -->
+    <!-- BLOQUE 2: ZONA DE TRANSACCIÓN -->
     <div id="zona_transaccion" class="dashboard-container">
         
-        <!-- PANEL IZQUIERDO -->
+        <!-- PANEL IZQUIERDO: CONFIGURAR RENGLÓN -->
         <div class="panel-fondo panel-izquierdo">
             <h2>Configurar Renglón</h2>
             
-            <div class="grupo-input">
-                <label>Sabor de Helado Disponible</label>
-                
-                <button type="button" class="btn-secundario" onclick="abrirModalHelados()" style="margin-bottom: 15px; border-color: #555; display: flex; justify-content: center; align-items: center; gap: 10px;">
-                    <i class="fa-solid fa-magnifying-glass"></i> Buscar Helados
-                </button>
-                
-                <input type="text" id="sabor_visual" placeholder="Ningún helado seleccionado..." disabled style="background-color: #1a1a1a; border: 1px dashed #555; color: #ff0015; font-weight: bold; text-align: center;">
-                
-                <input type="hidden" id="input_id_sabor" value="">
-                <input type="hidden" id="input_nombre_sabor" value="">
-                <input type="hidden" id="input_precio_sabor" value="">
-                <input type="hidden" id="input_stock_sabor" value="">
+            <!-- CONTENEDOR DINÁMICO DE RENGLONES -->
+            <div id="contenedor_renglones">
+                <!-- Se genera dinámicamente mediante JS -->
             </div>
 
-            <div class="grupo-input">
-                <label for="input_cantidad">Cantidad de Potes</label>
-                <input type="number" id="input_cantidad" min="1" value="1">
-            </div>
-
-            <button type="button" class="btn-primario" onclick="agregarItem()" style="margin-top: 0;">
+            <button type="button" class="btn-primario" onclick="agregarTodosLosRenglones()" style="margin-top: 10px;">
                 <i class="fa-solid fa-cart-plus"></i> Agregar al Renglón
             </button>
         </div>
 
-        <!-- PANEL DERECHO -->
+        <!-- PANEL DERECHO: RESUMEN DE LA ORDEN -->
         <div class="panel-fondo panel-derecho">
             <form action="pedidos.php" method="POST" id="form_pedido">
-                <!-- Inputs ocultos que alimentarán el Backend -->
                 <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
                 <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
                 <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
@@ -433,19 +442,16 @@ $result_productos = mysqli_query($conexion, $query_productos);
             </form>
         </div>
 
-    </div> <!-- CIERRE CORRECTO DE #zona_transaccion -->
+    </div>
 
-
-    <!-- MODAL DE SUCURSALES (Fuera de zona_transaccion) -->
+    <!-- MODAL DE SUCURSALES -->
     <div id="modalSucursal" class="modal-overlay">
         <div class="modal-content">
             <h2 style="color: #ff0015; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">Sedes Múltiples</h2>
             <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 15px;">Este cliente posee varias sucursales. Seleccione la de destino:</p>
             
             <div class="grupo-input">
-                <select id="select_sucursal_modal">
-                    <!-- Llenado por JS -->
-                </select>
+                <select id="select_sucursal_modal"></select>
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -455,8 +461,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
         </div>
     </div>
 
-
-    <!-- MODAL DE CATÁLOGO DE HELADOS (Fuera de zona_transaccion) -->
+    <!-- MODAL DE CATÁLOGO DE HELADOS -->
     <div id="modalHelados" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
@@ -476,13 +481,10 @@ $result_productos = mysqli_query($conexion, $query_productos);
                         onclick="seleccionarHeladoModal(this)">
                         
                         <div class="item-info">
-                            <!-- AQUÍ SE MUESTRA EL NOMBRE -->
                             <strong><?php echo htmlspecialchars($prod['sabor']); ?></strong>
-                            <!-- AQUÍ SE MUESTRA EL CÓDIGO Y LA PRESENTACIÓN -->
                             <span>Cód: <?php echo htmlspecialchars($prod['codigo']); ?> | Pres: <b><?php echo htmlspecialchars($prod['presentacion']); ?></b></span>
                         </div>
                         <div class="item-detalles">
-                            <!-- AQUÍ SE MUESTRA LA CANTIDAD (STOCK) -->
                             <span class="badge-stock">Disp: <?php echo $prod['stock_potes']; ?></span>
                             <span class="badge-precio">$<?php echo number_format($prod['precio'], 2); ?></span>
                         </div>
@@ -504,7 +506,6 @@ $result_productos = mysqli_query($conexion, $query_productos);
         
         let sucursalesTemporales = [];
 
-        // 1. Al cambiar la Ruta
         selectRuta.addEventListener('change', async function() {
             const rutaId = this.value;
             bloquearTransaccion();
@@ -525,7 +526,6 @@ $result_productos = mysqli_query($conexion, $query_productos);
             }
         });
 
-        // 2. Al cambiar el Cliente
         selectCliente.addEventListener('change', async function() {
             const clienteId = this.value;
             bloquearTransaccion();
@@ -535,17 +535,13 @@ $result_productos = mysqli_query($conexion, $query_productos);
                 sucursalesTemporales = await response.json();
 
                 if (sucursalesTemporales.length > 0) {
-                    // Tiene sucursales: Forzar a que elija una
                     btnSucursalContainer.style.display = 'block';
-                    
-                    // Llenar el select del modal
                     const selectModal = document.getElementById('select_sucursal_modal');
                     selectModal.innerHTML = '<option value="" selected disabled>-- Elija la Sucursal --</option>';
                     sucursalesTemporales.forEach(s => {
                         selectModal.innerHTML += `<option value="${s.id}">${s.codigo_sucursal} - ${s.nombre_sucursal}</option>`;
                     });
                 } else {
-                    // No tiene sucursales: Sede única, liberar transacción
                     btnSucursalContainer.style.display = 'none';
                     desbloquearTransaccion(clienteId, null);
                 }
@@ -554,21 +550,16 @@ $result_productos = mysqli_query($conexion, $query_productos);
             }
         });
 
-        // 3. Control del Modal
         function abrirModal() { document.getElementById('modalSucursal').classList.add('modal-active'); }
         function cerrarModal() { document.getElementById('modalSucursal').classList.remove('modal-active'); }
         
         function confirmarSucursal() {
             const idSucursal = document.getElementById('select_sucursal_modal').value;
-            if (!idSucursal) {
-                alert("Debe seleccionar una sucursal.");
-                return;
-            }
+            if (!idSucursal) { alert("Debe seleccionar una sucursal."); return; }
             cerrarModal();
             desbloquearTransaccion(selectCliente.value, idSucursal);
         }
 
-        // 4. Funciones de Interfaz
         function bloquearTransaccion() {
             zonaTransaccion.style.opacity = '0.4';
             zonaTransaccion.style.pointerEvents = 'none';
@@ -582,95 +573,174 @@ $result_productos = mysqli_query($conexion, $query_productos);
             zonaTransaccion.style.opacity = '1';
             zonaTransaccion.style.pointerEvents = 'auto';
             indicadorDestino.style.display = 'block';
-            
-            // Asignar a los inputs ocultos para el POST
             document.getElementById('hidden_cliente_id').value = clienteId;
             if (sucursalId) document.getElementById('hidden_sucursal_id').value = sucursalId;
         }
 
         // ==========================================
-        // LÓGICA DEL CARRITO (Se mantiene intacta)
+        // LÓGICA DE RENGLONES DINÁMICOS
         // ==========================================
-        let carrito = [];
+        let renglonContador = 0;
+        let renglonActivoModal = null;
 
-        // Funciones para abrir y cerrar el catálogo
-        function abrirModalHelados() { 
-            document.getElementById('modalHelados').classList.add('modal-active'); 
-            document.getElementById('buscar_helado').focus(); // Coloca el cursor en el buscador automáticamente
+        function crearRenglonHTML(idRenglon) {
+            const card = document.createElement('div');
+            card.className = 'card-renglon';
+            card.id = `renglon_card_${idRenglon}`;
+            card.innerHTML = `
+                <div class="grupo-input">
+                    <label>Sabor de Helado Disponible</label>
+                    <button type="button" class="btn-secundario" onclick="abrirModalHeladosPara(${idRenglon})" style="margin-bottom: 12px; border-color: #555; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-magnifying-glass"></i> Buscar Helados
+                    </button>
+                    <input type="text" id="sabor_visual_${idRenglon}" placeholder="Ningún helado seleccionado..." disabled style="background-color: #1a1a1a; border: 1px dashed #555; color: #ff0015; font-weight: bold; text-align: center;">
+                    
+                    <input type="hidden" id="input_id_sabor_${idRenglon}" value="">
+                    <input type="hidden" id="input_nombre_sabor_${idRenglon}" value="">
+                    <input type="hidden" id="input_precio_sabor_${idRenglon}" value="">
+                    <input type="hidden" id="input_stock_sabor_${idRenglon}" value="">
+                </div>
+
+                <div style="display: flex; gap: 15px; align-items: flex-end;">
+                    <div class="grupo-input" style="flex: 1; margin-bottom: 0;">
+                        <label for="input_cantidad_${idRenglon}">Cantidad de Potes</label>
+                        <input type="number" id="input_cantidad_${idRenglon}" min="1" value="1">
+                    </div>
+                    <div class="contenedor-acciones-renglon">
+                        <button type="button" class="btn-box-add" onclick="agregarNuevoRenglón()" title="Añadir otro producto">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn-box-delete btn-eliminar-renglon" onclick="eliminarRenglón(${idRenglon})" title="Eliminar este producto">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return card;
         }
-        function cerrarModalHelados() { document.getElementById('modalHelados').classList.remove('modal-active'); }
 
-        // Función para el dinamismo de Búsqueda en Vivo
-        function filtrarHelados() {
-            const input = document.getElementById('buscar_helado').value.toLowerCase();
-            const items = document.querySelectorAll('.item-helado');
-            
-            items.forEach(item => {
-                const sabor = item.getAttribute('data-sabor').toLowerCase();
-                if (sabor.includes(input)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
+        function agregarNuevoRenglón() {
+            renglonContador++;
+            const contenedor = document.getElementById('contenedor_renglones');
+            contenedor.appendChild(crearRenglonHTML(renglonContador));
+            actualizarVisibilidadEliminar();
+        }
+
+        function eliminarRenglón(idRenglon) {
+            const card = document.getElementById(`renglon_card_${idRenglon}`);
+            if (card) {
+                card.remove();
+                actualizarVisibilidadEliminar();
+            }
+        }
+
+        function actualizarVisibilidadEliminar() {
+            const renglones = document.querySelectorAll('.card-renglon');
+            renglones.forEach(card => {
+                const btnEliminar = card.querySelector('.btn-eliminar-renglon');
+                if (btnEliminar) {
+                    // Muestra la papelera solo si hay 2 o más renglones
+                    btnEliminar.style.display = (renglones.length > 1) ? 'inline-flex' : 'none';
                 }
             });
         }
 
-        // Nueva función al hacer click en un helado dentro del modal
+        // Inicializar con un renglón
+        document.addEventListener('DOMContentLoaded', function() {
+            agregarNuevoRenglón();
+        });
+
+        // ==========================================
+        // LÓGICA DEL MODAL DE HELADOS Y CARRITO
+        // ==========================================
+        function abrirModalHeladosPara(idRenglon) { 
+            renglonActivoModal = idRenglon;
+            document.getElementById('modalHelados').classList.add('modal-active'); 
+            document.getElementById('buscar_helado').value = '';
+            filtrarHelados();
+            document.getElementById('buscar_helado').focus();
+        }
+
+        function cerrarModalHelados() { 
+            document.getElementById('modalHelados').classList.remove('modal-active'); 
+            renglonActivoModal = null;
+        }
+
+        function filtrarHelados() {
+            const input = document.getElementById('buscar_helado').value.toLowerCase();
+            const items = document.querySelectorAll('.item-helado');
+            items.forEach(item => {
+                const sabor = item.getAttribute('data-sabor').toLowerCase();
+                item.style.display = sabor.includes(input) ? 'flex' : 'none';
+            });
+        }
+
         function seleccionarHeladoModal(elemento) {
-            // Extraer datos del item clickeado
+            if (renglonActivoModal === null) return;
+
             const id = elemento.getAttribute('data-id');
             const sabor = elemento.getAttribute('data-sabor');
             const precio = elemento.getAttribute('data-precio');
             const stock = elemento.getAttribute('data-stock');
 
-            // Llenar los inputs ocultos
-            document.getElementById('input_id_sabor').value = id;
-            document.getElementById('input_nombre_sabor').value = sabor;
-            document.getElementById('input_precio_sabor').value = precio;
-            document.getElementById('input_stock_sabor').value = stock;
+            document.getElementById(`input_id_sabor_${renglonActivoModal}`).value = id;
+            document.getElementById(`input_nombre_sabor_${renglonActivoModal}`).value = sabor;
+            document.getElementById(`input_precio_sabor_${renglonActivoModal}`).value = precio;
+            document.getElementById(`input_stock_sabor_${renglonActivoModal}`).value = stock;
+            document.getElementById(`sabor_visual_${renglonActivoModal}`).value = `${sabor} (Disp: ${stock})`;
 
-            // Mostrar visualmente lo que se seleccionó
-            document.getElementById('sabor_visual').value = `${sabor} (Disp: ${stock})`;
-
-            // Cerrar el modal
             cerrarModalHelados();
         }
 
-        // ACTUALIZAR la función agregarItem() para que lea los inputs ocultos
-        function agregarItem() {
-            const idSeleccionado = document.getElementById('input_id_sabor').value;
-            const inputCant = document.getElementById('input_cantidad');
-            const cantidad = parseInt(inputCant.value);
+        // CARRITO / RESUMEN DE LA ORDEN
+        let carrito = [];
 
-            if (!idSeleccionado) { alert('Haz clic en "Buscar Helados" y selecciona un sabor.'); return; }
-            if (isNaN(cantidad) || cantidad <= 0) { alert('Cantidad inválida.'); return; }
+        function agregarTodosLosRenglones() {
+            const renglones = document.querySelectorAll('.card-renglon');
+            let itemsProcesados = 0;
 
-            // Extraer datos de los inputs ocultos
-            const sabor = document.getElementById('input_nombre_sabor').value;
-            const precio = parseFloat(document.getElementById('input_precio_sabor').value);
-            const stockMax = parseInt(document.getElementById('input_stock_sabor').value);
+            renglones.forEach(card => {
+                const idRenglon = card.id.replace('renglon_card_', '');
+                const idSeleccionado = document.getElementById(`input_id_sabor_${idRenglon}`).value;
+                const inputCant = document.getElementById(`input_cantidad_${idRenglon}`);
+                const cantidad = parseInt(inputCant.value);
 
-            if (cantidad > stockMax) {
-                alert(`Solo quedan ${stockMax} potes de ${sabor} en inventario.`); return;
-            }
+                if (idSeleccionado && !isNaN(cantidad) && cantidad > 0) {
+                    const sabor = document.getElementById(`input_nombre_sabor_${idRenglon}`).value;
+                    const precio = parseFloat(document.getElementById(`input_precio_sabor_${idRenglon}`).value);
+                    const stockMax = parseInt(document.getElementById(`input_stock_sabor_${idRenglon}`).value);
 
-            const indexExistente = carrito.findIndex(item => item.id === idSeleccionado);
-            if (indexExistente !== -1) {
-                const nuevaCantidad = carrito[indexExistente].cantidad + cantidad;
-                if (nuevaCantidad > stockMax) {
-                    alert(`El acumulado supera las existencias reales (${stockMax}).`); return;
+                    if (cantidad > stockMax) {
+                        alert(`Atención: Solo quedan ${stockMax} potes de ${sabor}.`);
+                        return;
+                    }
+
+                    const indexExistente = carrito.findIndex(item => item.id === idSeleccionado);
+                    if (indexExistente !== -1) {
+                        const nuevaCantidad = carrito[indexExistente].cantidad + cantidad;
+                        if (nuevaCantidad > stockMax) {
+                            alert(`El acumulado de ${sabor} supera el stock disponible (${stockMax}).`);
+                            return;
+                        }
+                        carrito[indexExistente].cantidad = nuevaCantidad;
+                        carrito[indexExistente].subtotal = nuevaCantidad * precio;
+                    } else {
+                        carrito.push({ id: idSeleccionado, sabor: sabor, precio: precio, cantidad: cantidad, subtotal: cantidad * precio });
+                    }
+                    itemsProcesados++;
                 }
-                carrito[indexExistente].cantidad = nuevaCantidad;
-                carrito[indexExistente].subtotal = nuevaCantidad * precio;
-            } else {
-                carrito.push({ id: idSeleccionado, sabor: sabor, precio: precio, cantidad: cantidad, subtotal: cantidad * precio });
+            });
+
+            if (itemsProcesados === 0) {
+                alert('Selecciona al menos un helado e ingresa una cantidad válida.');
+                return;
             }
 
-            // Reiniciar el formulario de entrada
-            inputCant.value = 1;
-            document.getElementById('input_id_sabor').value = "";
-            document.getElementById('sabor_visual').value = ""; // Limpia la caja visual
-            
+            // Reiniciar panel a un solo renglón limpio
+            document.getElementById('contenedor_renglones').innerHTML = '';
+            renglonContador = 0;
+            agregarNuevoRenglón();
+
             renderizarCarrito();
         }
 
