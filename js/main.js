@@ -133,8 +133,6 @@ function controlarEstadoUsuarioNavbar() {
             { texto: "Creación de clientes", url: "clientes.php" },
             { texto: "Editar Catálogo", url: "editar-catalogo.php" },
             { texto: "Cambio de precio y tasa", url: "precio_tasa.php" },
-            { texto: "Asignación de neveras", url: "asignacion-neveras.php" },
-            { texto: "Disponibilidad de Neveras", url: "" },
             { texto: "Disponibilidad", url: "disponibilidad.php" }
         ],
         "administrador": [] // El administrador no tendrá funciones por ahora
