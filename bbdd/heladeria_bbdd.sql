@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-08-2026 a las 21:20:04
+-- Tiempo de generación: 07-08-2026 a las 22:12:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,13 +47,6 @@ CREATE TABLE `captaciones` (
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
---
--- Volcado de datos para la tabla `captaciones`
---
-
-INSERT INTO `captaciones` (`id`, `fecha_visita`, `ruta`, `frecuencia`, `nombre_cliente`, `posicion_itinerario`, `comentarios`, `instalacion_nevera`, `vendedor`, `formato_path`, `acta_path`, `rif_path`, `cedula_path`, `recibo_path`, `fachada_path`, `firma_path`, `fecha_registro`) VALUES
-(2, '2026-08-07', 'Sur', 'Mensual', 'Inversiones Alexandra Pineda C.A.', 'Turno de Tarde', '', 'NO', 'Paul Leal', 'uploads/captaciones/archivo_formato_6a76057d3d30f.xlsx', 'uploads/captaciones/archivo_acta_6a76057d3d521.xlsx', 'uploads/captaciones/archivo_rif_6a76057d3e9f8.pdf', 'uploads/captaciones/archivo_cedula_6a76057d3ecbc.jpeg', 'uploads/captaciones/archivo_recibo_6a76057d3eed4.pdf', 'uploads/captaciones/archivo_fachada_6a76057d3f1bc.jpeg', 'uploads/captaciones/archivo_firma_6a76057d3f446.pdf', '2026-08-07 16:19:09');
-
 -- --------------------------------------------------------
 
 --
@@ -91,13 +84,6 @@ CREATE TABLE `clientes` (
   `tiene_nevera` tinyint(1) DEFAULT 0,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `clientes`
---
-
-INSERT INTO `clientes` (`id`, `codigo_cliente`, `codigo_sucursal`, `id_ruta`, `rif`, `nombre_negocio`, `direccion_fiscal`, `persona_contacto`, `latitud`, `longitud`, `telefono`, `correo`, `ruta_rif`, `ruta_acta`, `ruta_fachada`, `tiene_nevera`, `fecha_creacion`) VALUES
-(9, 'CLI-001', 'SUC-SUR-01', 2, 'J-12345678-9', 'Inversiones Alexandra Pineda C.A.', 'Avenida 42, Calle 175 La Coromoto, San Francisco', 'Israel Pineda', 10.55443946, -71.63922787, '0412-8943048', 'isra69@gmail.com', NULL, NULL, NULL, 0, '2026-08-07 15:55:50');
 
 -- --------------------------------------------------------
 
@@ -200,15 +186,6 @@ CREATE TABLE `detalle_pedidos` (
   `subtotal` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
---
--- Volcado de datos para la tabla `detalle_pedidos`
---
-
-INSERT INTO `detalle_pedidos` (`id`, `pedido_id`, `producto_id`, `cantidad`, `precio_unitario`, `subtotal`) VALUES
-(9, 9, 22, 30, 5.00, 150.00),
-(10, 9, 49, 5, 5.50, 27.50),
-(11, 9, 11, 11, 5.00, 55.00);
-
 -- --------------------------------------------------------
 
 --
@@ -278,13 +255,6 @@ CREATE TABLE `pedidos` (
   `fecha_pedido` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` varchar(20) DEFAULT 'Completado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `pedidos`
---
-
-INSERT INTO `pedidos` (`id`, `cliente_id`, `sucursal_id`, `vendedor`, `total`, `fecha_pedido`, `estado`) VALUES
-(9, 9, 5, 'Paul Leal', 232.50, '2026-08-07 16:12:13', 'Completado');
 
 -- --------------------------------------------------------
 
@@ -375,13 +345,6 @@ CREATE TABLE `sucursales` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
---
--- Volcado de datos para la tabla `sucursales`
---
-
-INSERT INTO `sucursales` (`id`, `codigo_sucursal`, `id_cliente`, `nombre_sucursal`, `direccion`, `fecha_creacion`) VALUES
-(5, 'SUC-SUR-01', 9, 'Sucursal Coromoto', 'Avenida 42, Calle 175 La Coromoto, San Francisco', '2026-08-07 15:55:50');
-
 -- --------------------------------------------------------
 
 --
@@ -408,8 +371,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `cedula`, `nombre`, `correo`, `telefono`, `password`, `cargo`, `fecha_registro`, `foto_perfil`, `pref_stock`, `pref_pdf`, `pref_datos`) VALUES
-(13, '31110444', 'Eliezer Chirinos', 'eliezer.05le4l@gmail.com', '04246577356', 'ventas1234', 'Ventas', '2026-08-07 15:42:19', 'uploads/perfiles/user_13_1786117537.png', 0, 0, 0),
-(14, '33272884', 'Paul Leal', 'pauleal2008@gmail.com', '0422719337', 'preventa12', 'Preventista', '2026-08-07 16:03:26', 'uploads/perfiles/user_14_1786118984.png', 0, 0, 0);
+(15, '30468992', 'Admin', 'soporteit.helar@gmail.com', '04121071582', '12345', 'Ventas', '2026-08-07 19:56:00', NULL, 0, 0, 0),
+(16, '30478992', 'Admin 2', 'correohelar.@gmail.com', '04246577356', '12345', 'Preventista', '2026-08-07 20:00:50', NULL, 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -587,7 +550,7 @@ ALTER TABLE `sucursales`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas
