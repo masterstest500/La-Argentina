@@ -34,7 +34,8 @@
         <!-- Acciones de Usuario / Login unificadas para evitar doble fuente de verdad -->
         <div class="navbar-acciones">
             <div class="nav-item dropdown" id="user-menu-logged">
-                <a href="login.php" class="navbar-user dropdown-toggle" id="user-name-display" style="text-decoration: none; display: flex; align-items: center;">
+                <!-- CORRECCIÓN: href cambiado a "#" -->
+                <a href="#" class="navbar-user dropdown-toggle" id="user-name-display" style="text-decoration: none; display: flex; align-items: center;" onclick="event.preventDefault();">
                     <img src="img/logos/login.png" alt="Usuario" class="user-avatar-img" style="filter: brightness(0) invert(1); width: 20px; height: 20px; vertical-align: middle;">
                     <span id="user-text-name" style="color: var(--color-texto-principal); font-weight: bold; margin-left: 8px;">
                         Cargando...

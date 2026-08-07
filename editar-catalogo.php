@@ -6,7 +6,7 @@ if (!isset($_SESSION['usuario_id']) && !isset($_SESSION['user']) && !isset($_SES
     exit();
 }
 
-$cargos_autorizados = ['ventas', 'administrador']; 
+$cargos_autorizados = ['ventas']; 
 $cargo_usuario = strtolower($_SESSION['cargo'] ?? $_SESSION['rol'] ?? '');
 
 if (!in_array($cargo_usuario, $cargos_autorizados)) {
@@ -205,8 +205,8 @@ $bloques_helados = array_chunk($productos, 2);
                         <!-- Producto 1 -->
                         <div class="helado-subseccion">
                             <div class="acciones-tarjeta">
-                                <button class="btn-accion editar" title="Editar" onclick="abrirModalEditar('<?php echo $par[0]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[0]['codigo_producto'])); ?>', '<?php echo htmlspecialchars(addslashes($par[0]['nombre_producto'])); ?>', '<?php echo htmlspecialchars(addslashes($par[0]['presentacion'])); ?>', '<?php echo htmlspecialchars(addslashes($par[0]['ingredientes'])); ?>', '<?php echo htmlspecialchars($par[0]['ruta_imagen']); ?>')"><i class="fas fa-pencil"></i></button>
-                                <button class="btn-accion eliminar" title="Eliminar" onclick="confirmarEliminar('<?php echo $par[0]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[0]['nombre_producto'])); ?>')"><i class="fas fa-trash"></i></button>
+                                <button class="btn-accion editar" title="Editar" onclick='abrirModalEditar(<?php echo htmlspecialchars(json_encode($par[0]), ENT_QUOTES, "UTF-8"); ?>)'><i class="fas fa-pencil"></i></button>
+                                <button class="btn-accion eliminar" title="Eliminar" onclick="confirmarEliminar('<?php echo $par[0]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[0]['nombre_producto'] ?? ''), ENT_QUOTES); ?>')"><i class="fas fa-trash"></i></button>
                             </div>
                             <div class="helado-img-box">
                                 <?php if (!empty($par[0]['ruta_imagen'])): ?>
@@ -230,8 +230,8 @@ $bloques_helados = array_chunk($productos, 2);
                             <!-- Producto 2 -->
                             <div class="helado-subseccion">
                                 <div class="acciones-tarjeta">
-                                    <button class="btn-accion editar" title="Editar" onclick="abrirModalEditar('<?php echo $par[1]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[1]['codigo_producto'])); ?>', '<?php echo htmlspecialchars(addslashes($par[1]['nombre_producto'])); ?>', '<?php echo htmlspecialchars(addslashes($par[1]['presentacion'])); ?>', '<?php echo htmlspecialchars(addslashes($par[1]['ingredientes'])); ?>', '<?php echo htmlspecialchars($par[1]['ruta_imagen']); ?>')"><i class="fas fa-pencil"></i></button>
-                                    <button class="btn-accion eliminar" title="Eliminar" onclick="confirmarEliminar('<?php echo $par[1]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[1]['nombre_producto'])); ?>')"><i class="fas fa-trash"></i></button>
+                                    <button class="btn-accion editar" title="Editar" onclick='abrirModalEditar(<?php echo htmlspecialchars(json_encode($par[1]), ENT_QUOTES, "UTF-8"); ?>)'><i class="fas fa-pencil"></i></button>
+                                    <button class="btn-accion eliminar" title="Eliminar" onclick="confirmarEliminar('<?php echo $par[1]['id']; ?>', '<?php echo htmlspecialchars(addslashes($par[1]['nombre_producto'] ?? ''), ENT_QUOTES); ?>')"><i class="fas fa-trash"></i></button>
                                 </div>
                                 <div class="helado-img-box">
                                     <?php if (!empty($par[1]['ruta_imagen'])): ?>
@@ -311,20 +311,20 @@ $bloques_helados = array_chunk($productos, 2);
             document.getElementById('imgPreview').style.display = 'none';
         }
 
-        function abrirModalEditar(id, codigo, nombre, presentacion, ingredientes, rutaImagen) {
+        function abrirModalEditar(producto) {
             document.getElementById('modalFormulario').style.display = 'flex';
-            document.getElementById('modalTitulo').innerHTML = 'Editar: <span style="color: #ff0015;">' + nombre + '</span>';
+            document.getElementById('modalTitulo').innerHTML = 'Editar: <span style="color: #ff0015;">' + (producto.nombre_producto || producto.codigo_producto) + '</span>';
             document.getElementById('accionInput').value = 'editar';
-            document.getElementById('idInput').value = id;
-            document.getElementById('codigoInput').value = codigo;
+            document.getElementById('idInput').value = producto.id;
+            document.getElementById('codigoInput').value = producto.codigo_producto;
             document.getElementById('codigoInput').readOnly = true;
-            document.getElementById('nombreInput').value = nombre;
-            document.getElementById('presentacionInput').value = presentacion;
-            document.getElementById('ingredientesInput').value = ingredientes;
+            document.getElementById('nombreInput').value = producto.nombre_producto || '';
+            document.getElementById('presentacionInput').value = producto.presentacion || '';
+            document.getElementById('ingredientesInput').value = producto.ingredientes || '';
             
             let preview = document.getElementById('imgPreview');
-            if(rutaImagen) {
-                preview.src = rutaImagen;
+            if (producto.ruta_imagen) {
+                preview.src = producto.ruta_imagen;
                 preview.style.display = 'block';
             } else {
                 preview.style.display = 'none';

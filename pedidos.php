@@ -699,7 +699,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
             const renglones = document.querySelectorAll('.card-renglon');
             let itemsProcesados = 0;
 
-            renglones.forEach(card => {
+            for (const card of renglones) {
                 const idRenglon = card.id.replace('renglon_card_', '');
                 const idSeleccionado = document.getElementById(`input_id_sabor_${idRenglon}`).value;
                 const inputCant = document.getElementById(`input_cantidad_${idRenglon}`);
@@ -712,7 +712,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
 
                     if (cantidad > stockMax) {
                         alert(`Atención: Solo quedan ${stockMax} potes de ${sabor}.`);
-                        return;
+                        return; // Detiene completamente la adición y conserva el formulario
                     }
 
                     const indexExistente = carrito.findIndex(item => item.id === idSeleccionado);
@@ -720,7 +720,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
                         const nuevaCantidad = carrito[indexExistente].cantidad + cantidad;
                         if (nuevaCantidad > stockMax) {
                             alert(`El acumulado de ${sabor} supera el stock disponible (${stockMax}).`);
-                            return;
+                            return; // Detiene completamente
                         }
                         carrito[indexExistente].cantidad = nuevaCantidad;
                         carrito[indexExistente].subtotal = nuevaCantidad * precio;
@@ -729,7 +729,7 @@ $result_productos = mysqli_query($conexion, $query_productos);
                     }
                     itemsProcesados++;
                 }
-            });
+            }
 
             if (itemsProcesados === 0) {
                 alert('Selecciona al menos un helado e ingresa una cantidad válida.');

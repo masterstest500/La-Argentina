@@ -8,7 +8,7 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['cargo'])) {
 }
 
 // 2. Control de accesos por roles (Preventista y Administrador)
-$cargos_autorizados = ['preventista', 'administrador', 'ventas']; 
+$cargos_autorizados = ['preventista']; 
 $cargo_usuario = strtolower($_SESSION['cargo'] ?? $_SESSION['rol'] ?? '');
 
 if (!in_array($cargo_usuario, $cargos_autorizados)) {

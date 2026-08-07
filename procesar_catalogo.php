@@ -32,9 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sssss", $codigo, $nombre, $ingredientes, $presentacion, $ruta_imagen);
         $stmt->execute();
 
-        // 2. Insertar o actualizar en disponibilidad_inventario para que se vea en catalogo.php
-        $stmt_inv = $conexion->prepare("INSERT INTO disponibilidad_inventario (codigo, producto, categoria, cantidad) VALUES (?, ?, 'GENERAL', 1) ON DUPLICATE KEY UPDATE producto = VALUES(producto)");
-        $stmt_inv->bind_param("ss", $codigo, $nombre);
+        // 2. Verificar si el código ya existe en disponibilidad_inventario
+        $stmt_check = $conexion->prepare("SELECT id FROM disponibilidad_inventario WHERE codigo = ?");
+        $stmt_check->bind_param("s", $codigo);
+        $stmt_check->execute();
+        $res_check = $stmt_check->get_result();
+
+        if ($res_check->num_rows > 0) {
+            // Ya existe: Solo actualizamos el nombre
+            $stmt_inv = $conexion->prepare("UPDATE disponibilidad_inventario SET producto = ? WHERE codigo = ?");
+            $stmt_inv->bind_param("ss", $nombre, $codigo);
+        } else {
+            // No existe: Lo insertamos como nuevo
+            $stmt_inv = $conexion->prepare("INSERT INTO disponibilidad_inventario (codigo, producto, categoria, cantidad) VALUES (?, ?, 'GENERAL', 1)");
+            $stmt_inv->bind_param("ss", $codigo, $nombre);
+        }
         $stmt_inv->execute();
 
     } elseif ($accion === 'editar') {

@@ -89,9 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <select id="reg-cargo" required class="reg-select">
                         <option value="" disabled selected>Seleccione su cargo...</option>
                         <option value="preventista">Preventista</option>
-                        <option value="administrador">Administrador</option>
                         <option value="ventas">Ventas</option>
-                        <option value="cobranza">Cobranza</option>
                     </select>
                 </div>
 

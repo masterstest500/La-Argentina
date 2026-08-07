@@ -99,6 +99,7 @@ session_start();
     <div id="whatsapp-btn"></div>
     <script src="js/whatsapp.js"></script>
     <script src="js/detalle.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>

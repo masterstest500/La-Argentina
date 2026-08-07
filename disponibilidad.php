@@ -8,7 +8,7 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['cargo'])) {
 }
 
 // 2. Control de accesos restringido a Ventas y Administrador
-$cargos_autorizados = ['ventas', 'administrador']; 
+$cargos_autorizados = ['ventas']; 
 $cargo_usuario = strtolower($_SESSION['cargo'] ?? $_SESSION['rol'] ?? '');
 
 if (!in_array($cargo_usuario, $cargos_autorizados)) {
@@ -243,7 +243,7 @@ $ultima_fecha = ($row_fecha && $row_fecha['ultima'])
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM disponibilidad_inventario ORDER BY id ASC";
+                            $query = "SELECT * FROM disponibilidad_inventario ORDER BY categoria ASC, id ASC";                            
                             $resultado = $conexion->query($query);
                             $categoria_anterior = "";
 
@@ -442,12 +442,16 @@ $ultima_fecha = ($row_fecha && $row_fecha['ultima'])
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             
-            if(status === 'deleted_selected') {
+            // Agregando el manejo de errores a tu mismo código
+            if (status === 'deleted_selected') {
                 Swal.fire({ icon: 'success', title: '¡Eliminados!', text: 'Los productos seleccionados fueron borrados.', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#ff0015', timer: 3000 });
-            } else if(status === 'success') {
+            } else if (status === 'success') {
                 Swal.fire({ icon: 'success', title: '¡Actualizado!', text: 'El inventario ha sido actualizado con éxito.', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#ff0015', timer: 3000 });
+            } else if (status === 'error_extension') {
+                Swal.fire({ icon: 'error', title: 'Archivo no válido', text: 'Por favor sube un archivo Excel (.xls o .xlsx).', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#ff0015' });
+            } else if (status === 'error_procesamiento' || status === 'error') {
+                Swal.fire({ icon: 'error', title: 'Error', text: 'Ocurrió un problema procesando la solicitud.', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#ff0015' });
             }
-            window.history.replaceState(null, null, window.location.pathname);
         }
     </script>
 </body>

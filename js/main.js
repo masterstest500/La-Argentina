@@ -135,7 +135,6 @@ function controlarEstadoUsuarioNavbar() {
             { texto: "Cambio de precio y tasa", url: "precio_tasa.php" },
             { texto: "Disponibilidad", url: "disponibilidad.php" }
         ],
-        "administrador": [] // El administrador no tendrá funciones por ahora
     };
 
     const estaAutenticado = localStorage.getItem("trabajadorAutenticado") === "true";

@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_pedido'])) 
             }
 
             // Inserción Maestra
-            $sql_maestro = "INSERT INTO pedidos (cliente_id, sucursal_id, vendedor, total) VALUES ($cliente_id, $sucursal_id, '$vendedor', $total_pedido)";
+            $vendedor = mysqli_real_escape_string($conexion, $nombre_usuario);
+            $sql_maestro = "INSERT INTO pedidos (cliente_id, sucursal_id, vendedor, total) VALUES ($cliente_id, $sucursal_id, '$vendedor', $total_pedido)";            
             if (!mysqli_query($conexion, $sql_maestro)) {
                 throw new Exception("Error al registrar la cabecera del pedido.");
             }
@@ -135,7 +136,8 @@ if (isset($_GET['guardado']) && $_GET['guardado'] == 'exito') {
 $query_rutas = "SELECT id, nombre_ruta FROM rutas ORDER BY id ASC";
 $result_rutas = mysqli_query($conexion, $query_rutas);
 
-$query_productos = "SELECT p.id, p.sabor, p.precio, p.codigo, di.cantidad AS stock_potes FROM productos p INNER JOIN disponibilidad_inventario di ON p.codigo = di.codigo WHERE di.cantidad > 0 ORDER BY p.sabor ASC";
+// 🟢 Consulta con Collation explícito
+$query_productos = "SELECT p.id, p.sabor, p.precio, p.codigo, di.cantidad AS stock_potes FROM productos p INNER JOIN disponibilidad_inventario di ON p.codigo COLLATE utf8mb4_general_ci = di.codigo COLLATE utf8mb4_general_ci WHERE di.cantidad > 0 ORDER BY p.sabor ASC";
 $result_productos = mysqli_query($conexion, $query_productos);
 ?>
 <!DOCTYPE html>
@@ -279,14 +281,13 @@ $result_productos = mysqli_query($conexion, $query_productos);
         </div>
 
         <div class="panel-fondo panel-derecho">
-            <div>
-                <h2>Resumen de la Orden</h2>
-                
-                <form action="procesar_pedidos.php" method="POST" id="form_pedido">
-                    <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
-                    <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
-                    <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
+            <form action="procesar_pedidos.php" method="POST" id="form_pedido">
+                <input type="hidden" name="hidden_cliente_id" id="hidden_cliente_id" required>
+                <input type="hidden" name="hidden_sucursal_id" id="hidden_sucursal_id">
+                <input type="hidden" name="items_carrito" id="items_carrito" value="[]">
 
+                <div>
+                    <h2>Resumen de la Orden</h2>
                     <table>
                         <thead>
                             <tr>
@@ -303,20 +304,19 @@ $result_productos = mysqli_query($conexion, $query_productos);
                             </tr>
                         </tbody>
                     </table>
-            </div>
-
-            <div class="contenedor-total">
-                <div>
-                    <div class="total-label">Total Neto a Pagar</div>
-                    <div class="total-monto" id="txt_total">$0.00</div>
                 </div>
-                <button type="submit" name="registrar_pedido" class="btn-primario" style="width: auto; padding: 14px 40px;">
-                    <i class="fa-solid fa-file-invoice-dollar"></i> Registrar Pedido Total
-                </button>
-                </form>
-            </div>
+
+                <div class="contenedor-total">
+                    <div>
+                        <div class="total-label">Total Neto a Pagar</div>
+                        <div class="total-monto" id="txt_total">$0.00</div>
+                    </div>
+                    <button type="submit" name="registrar_pedido" class="btn-primario" style="width: auto; padding: 14px 40px;">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Registrar Pedido Total
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
 
     <!-- MODAL DE SUCURSALES -->
     <div id="modalSucursal" class="modal-overlay">
