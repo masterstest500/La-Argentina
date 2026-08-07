@@ -156,9 +156,11 @@ $metrica_primaria_valor = "";
 $metrica_secundaria_titulo = "";
 $metrica_secundaria_valor = "";
 
-if ($cargo_usuario === 'preventista' || $cargo_usuario === 'ventas') {
-    $vendedor_escape = mysqli_real_escape_string($conexion, $nombre_usuario);
-    
+// Escapamos el nombre del usuario por seguridad para las consultas[cite: 1]
+$vendedor_escape = mysqli_real_escape_string($conexion, $nombre_usuario);
+
+if ($cargo_usuario === 'preventista') {
+    // MÉTRICAS EXCLUSIVAS PARA EL PREVENTISTA[cite: 1]
     $sql_pedidos_hoy = "SELECT COUNT(*) as total FROM pedidos WHERE vendedor = '$vendedor_escape' AND DATE(fecha_pedido) = CURDATE()";
     $res_p_hoy = mysqli_query($conexion, $sql_pedidos_hoy);
     $cant_pedidos = mysqli_fetch_assoc($res_p_hoy)['total'] ?? 0;
@@ -172,7 +174,26 @@ if ($cargo_usuario === 'preventista' || $cargo_usuario === 'ventas') {
     $metrica_secundaria_titulo = "Recaudación Total (Hoy)";
     $metrica_secundaria_valor = "$" . number_format($monto_hoy, 2);
 
+} elseif ($cargo_usuario === 'ventas') {
+    // NUEVAS MÉTRICAS PERSONALIZADAS PARA VENTAS
+    // 1. Mostrar cuántos productos conforman el catálogo actual
+    $sql_productos = "SELECT COUNT(*) as total FROM productos";
+    $res_prod = mysqli_query($conexion, $sql_productos);
+    $total_productos = mysqli_fetch_assoc($res_prod)['total'] ?? 0;
+
+    // 2. Mostrar la cantidad de clientes captados/creados hoy 
+    // (Asumiendo que usas la tabla 'captaciones' o 'clientes')
+    $sql_clientes_hoy = "SELECT COUNT(*) as total FROM captaciones WHERE DATE(fecha_registro) = CURDATE()";
+    $res_cli_hoy = mysqli_query($conexion, $sql_clientes_hoy);
+    $clientes_hoy = mysqli_fetch_assoc($res_cli_hoy)['total'] ?? 0;
+
+    $metrica_primaria_titulo = "Catálogo Gestionado";
+    $metrica_primaria_valor = $total_productos . " Productos";
+    $metrica_secundaria_titulo = "Nuevos Clientes (Hoy)";
+    $metrica_secundaria_valor = $clientes_hoy . " Registros";
+
 } elseif ($cargo_usuario === 'administrador') {
+    // MÉTRICAS PARA ADMINISTRADOR[cite: 1]
     $sql_total_users = "SELECT COUNT(*) as total FROM usuarios";
     $total_users = mysqli_fetch_assoc(mysqli_query($conexion, $sql_total_users))['total'] ?? 0;
 
@@ -184,6 +205,7 @@ if ($cargo_usuario === 'preventista' || $cargo_usuario === 'ventas') {
     $metrica_secundaria_titulo = "Alertas de Cámara de Frío";
     $metrica_secundaria_valor = $stock_critico . " Críticos";
 } else {
+    // MÉTRICAS POR DEFECTO[cite: 1]
     $metrica_primaria_titulo = "Asignación de Ruta";
     $metrica_primaria_valor = "Maracaibo Activo";
     $metrica_secundaria_titulo = "Estado Contable";
