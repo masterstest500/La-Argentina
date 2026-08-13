@@ -31,13 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ruta                = mysqli_real_escape_string($conexion, $_POST['ruta'] ?? '');
     $frecuencia          = mysqli_real_escape_string($conexion, $_POST['frecuencia'] ?? '');
     $nombre_cliente      = mysqli_real_escape_string($conexion, $_POST['nombre_cliente'] ?? '');
+    $rif_cliente         = mysqli_real_escape_string($conexion, $_POST['rif_cliente'] ?? '');
     $posicion_itinerario = mysqli_real_escape_string($conexion, $_POST['posicion_itinerario'] ?? '');
     $comentarios         = mysqli_real_escape_string($conexion, $_POST['comentarios'] ?? '');
     $instalacion_nevera  = mysqli_real_escape_string($conexion, $_POST['instalacion_nevera'] ?? 'NO');
     $vendedor            = mysqli_real_escape_string($conexion, $_SESSION['user'] ?? 'Desconocido');
 
     // Validación básica de campos obligatorios
-    if (empty($fecha_visita) || empty($ruta) || empty($frecuencia) || empty($nombre_cliente)) {
+    if (empty($fecha_visita) || empty($ruta) || empty($frecuencia) || empty($nombre_cliente) || empty($rif_cliente)) {
         $mensaje_alerta = "<div class='alert alert-danger'>Error: Hay campos obligatorios de planificación o cliente sin completar.</div>";
     } else {
         // Carpeta destino para archivos adjuntos
@@ -85,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
                 // 1. Insertar la cabecera de la captación
-                $sql_captacion = "INSERT INTO captaciones (fecha_visita, ruta, frecuencia, nombre_cliente, posicion_itinerario, comentarios, instalacion_nevera, vendedor, formato_path, acta_path, rif_path, cedula_path, recibo_path, fachada_path, firma_path) 
-                                  VALUES ('$fecha_visita', '$ruta', '$frecuencia', '$nombre_cliente', '$posicion_itinerario', '$comentarios', '$instalacion_nevera', '$vendedor', 
+                $sql_captacion = "INSERT INTO captaciones (fecha_visita, ruta, frecuencia, nombre_cliente, rif_cliente, posicion_itinerario, comentarios, instalacion_nevera, vendedor, formato_path, acta_path, rif_path, cedula_path, recibo_path, fachada_path, firma_path) 
+                                  VALUES ('$fecha_visita', '$ruta', '$frecuencia', '$nombre_cliente', '$rif_cliente', '$posicion_itinerario', '$comentarios', '$instalacion_nevera', '$vendedor', 
                                   '{$archivos_adjuntos['archivo_formato']}', '{$archivos_adjuntos['archivo_acta']}', '{$archivos_adjuntos['archivo_rif']}', '{$archivos_adjuntos['archivo_cedula']}', '{$archivos_adjuntos['archivo_recibo']}', '{$archivos_adjuntos['archivo_fachada']}', '{$archivos_adjuntos['archivo_firma']}')";
                 
                 if (!mysqli_query($conexion, $sql_captacion)) {
@@ -332,6 +333,10 @@ $cargo_display = ucfirst($cargo_usuario);
                         <div class="col-md-12">
                             <label for="nombre_cliente" class="form-label form-label-custom">Nombre del Cliente </label>
                             <input type="text" class="form-control form-control-custom" id="nombre_cliente" name="nombre_cliente" placeholder="Ej. Inversiones San José C.A." required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="rif_cliente" class="form-label form-label-custom">RIF del Cliente </label>
+                            <input type="text" class="form-control form-control-custom" id="rif_cliente" name="rif_cliente" placeholder="Ej. J-12345678-9" required>
                         </div>
                         <div class="col-md-12">
                             <label for="posicion_itinerario" class="form-label form-label-custom">Posición en el itinerario </label>

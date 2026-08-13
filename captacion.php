@@ -238,15 +238,19 @@ $cargo_display = ucfirst($cargo_usuario);
                     <div class="row g-4">
                         <div class="col-md-12">
                             <label for="nombre_cliente" class="form-label form-label-custom">Nombre del Cliente </label>
-                            <input type="text" class="form-control form-control-custom" id="nombre_cliente" name="nombre_cliente" placeholder="Ej. Inversiones San José C.A.">
+                            <input type="text" class="form-control form-control-custom" id="nombre_cliente" name="nombre_cliente" placeholder="Ej. Inversiones San José C.A." autocomplete="off" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="rif_cliente" class="form-label form-label-custom">RIF del Cliente </label>
+                            <input type="text" class="form-control form-control-custom" id="rif_cliente" name="rif_cliente" placeholder="Ej. J-12345678-9" autocomplete="off" required>
                         </div>
                         <div class="col-md-12">
                             <label for="posicion_itinerario" class="form-label form-label-custom">Posición en el itinerario </label>
-                            <input type="text" class="form-control form-control-custom" id="posicion_itinerario" name="posicion_itinerario" placeholder="Ej: Debajo del cliente XXXXX">
+                            <input type="text" class="form-control form-control-custom" id="posicion_itinerario" name="posicion_itinerario" placeholder="Ej: Debajo del cliente XXXXX" autocomplete="off">
                         </div>
                         <div class="col-md-12">
                             <label for="comentarios" class="form-label form-label-custom">Comentarios Adicionales</label>
-                            <textarea class="form-control form-control-custom" id="comentarios" name="comentarios" rows="3" placeholder="Observaciones sobre la captación..."></textarea>
+                            <textarea class="form-control form-control-custom" id="comentarios" name="comentarios" rows="3" placeholder="Observaciones sobre la captación..." autocomplete="off"></textarea>
                         </div>
                     </div>
                 </div>

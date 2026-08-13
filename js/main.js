@@ -133,6 +133,7 @@ function controlarEstadoUsuarioNavbar() {
             { texto: "Creación de clientes", url: "clientes.php" },
             { texto: "Editar Catálogo", url: "editar-catalogo.php" },
             { texto: "Cambio de precio y tasa", url: "precio_tasa.php" },
+            { texto: "Documentación de captados", url: "ventas_descargas.php" },
             { texto: "Disponibilidad", url: "disponibilidad.php" }
         ],
     };
