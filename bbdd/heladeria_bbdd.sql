@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-08-2026 a las 22:12:12
+-- Tiempo de generación: 13-08-2026 a las 23:23:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -33,6 +33,7 @@ CREATE TABLE `captaciones` (
   `ruta` varchar(100) NOT NULL,
   `frecuencia` varchar(50) NOT NULL,
   `nombre_cliente` varchar(150) NOT NULL,
+  `rif_cliente` varchar(20) DEFAULT NULL,
   `posicion_itinerario` varchar(100) DEFAULT NULL,
   `comentarios` text DEFAULT NULL,
   `instalacion_nevera` varchar(10) DEFAULT 'NO',
@@ -117,7 +118,7 @@ CREATE TABLE `configuracion` (
 --
 
 INSERT INTO `configuracion` (`id`, `clave`, `valor`, `fecha_actualizacion`) VALUES
-(1, 'tasa_bcv', 756.70, '2026-08-07 15:57:16');
+(1, 'tasa_bcv', 755.90, '2026-08-06 14:06:55');
 
 -- --------------------------------------------------------
 
@@ -208,6 +209,37 @@ CREATE TABLE `disponibilidad_inventario` (
 --
 
 INSERT INTO `disponibilidad_inventario` (`id`, `codigo`, `producto`, `categoria`, `cantidad`, `dias_venta`, `pen_liberar`, `fecha_actualizacion`) VALUES
+(2, '280190', 'PINTALENGUA 56cm3 X 20 UND', 'INDIVIDUAL', 3, 4, 0, '2026-08-04 20:15:55'),
+(3, '280069', 'TROMPO LOCO UVA 120cm3X20', 'INDIVIDUAL', 0, 0, 0, '2026-08-06 19:05:45'),
+(4, '280220', 'MAXI CREAM 65 cm3 X 20 UND', 'INDIVIDUAL', 0, 0, 0, '2026-08-06 19:05:45'),
+(5, '280191', 'SUNNY CREAM 56cm3 X 20 UND', 'INDIVIDUAL', 0, 0, 0, '2026-08-06 19:05:45'),
+(6, '280461', 'MANTECADO/FRESA/CHOCOLATE 2 X1', 'HOGAR', 2013, 22, 0, '2026-08-04 20:15:55'),
+(7, '280451', 'CHOCOLATE TRADICIONAL 700cm3', 'HOGAR', 3131, 19, 0, '2026-08-04 20:15:55'),
+(8, '280448', 'FRESA TRADICIONAL  700cm3', 'HOGAR', 1809, 20, 0, '2026-08-04 20:15:55'),
+(9, '280447', 'MANTECADO TRADICIONAL 700cm3', 'HOGAR', 3074, 19, 0, '2026-08-04 20:15:55'),
+(10, '280465', 'FANTOCHE CHOCOLATE 700cm3', 'HOGAR', 2575, 18, 0, '2026-08-04 20:15:55'),
+(11, '280463', 'FANTOCHE FRESA 700cm3', 'HOGAR', 1479, 19, 0, '2026-08-04 20:15:55'),
+(12, '280464', 'FANTOCHE MANTECADO 700cm3', 'HOGAR', 1994, 17, 0, '2026-08-04 20:15:55'),
+(13, '280503', 'COOKIES AND CREAM 700cm3', 'HOGAR', 1076, 9, 2532, '2026-08-04 20:15:55'),
+(14, '280483', 'TRAMONTANA 700cm3', 'HOGAR', 1190, 32, 2246, '2026-08-04 20:15:55'),
+(15, '280487', 'RON PASAS 700cm3', 'HOGAR', 3375, 64, 0, '2026-08-04 20:15:55'),
+(16, '280482', 'CREMA FANTASIA 700cm3', 'HOGAR', 654, 20, 0, '2026-08-04 20:15:55'),
+(17, '280485', 'PISTACHO 700cm3', 'HOGAR', 2212, 33, 1529, '2026-08-04 20:15:55'),
+(18, '280004', 'CHANTILLY FRESA 4,4L', 'COPA', 0, 0, 0, '2026-08-06 19:05:45'),
+(19, '280008', 'CHOCOLATE 4,4L', 'COPA', 243, 27, 0, '2026-08-04 20:15:55'),
+(20, '280017', 'COOKIES & CREAM 4,4L', 'COPA', 396, 40, 266, '2026-08-04 20:15:55'),
+(21, '280018', 'CREMA FANTASIA 4,4L', 'COPA', 196, 59, 0, '2026-08-04 20:15:55'),
+(22, '280034', 'FRESA 4,4L', 'COPA', 0, 0, 0, '2026-08-06 19:05:45'),
+(23, '280044', 'MANTECADO 4,4L', 'COPA', 952, 25, 0, '2026-08-04 20:15:55'),
+(24, '280053', 'MARMOLADO 4,4L', 'COPA', 79, 33, 0, '2026-08-04 20:15:55'),
+(25, '280060', 'PISTACHO 4,4L', 'COPA', 22, 4, 352, '2026-08-04 20:15:55'),
+(26, '280062', 'RON PASAS 4,4L', 'COPA', 96, 43, 133, '2026-08-04 20:15:55'),
+(27, '280068', 'TRAMONTANA 4,4L', 'COPA', 24, 4, 224, '2026-08-04 20:15:55'),
+(28, '280134', 'SIROP DE CHOCOLATE 4,5 kg', 'COPA', 57, 28, 0, '2026-08-04 20:15:55'),
+(29, '280135', 'SIROP DE FRESA 4,5 kg', 'COPA', 0, 0, 0, '2026-08-06 19:05:45'),
+(30, '280452', 'VAINILLA SOFT 4K X1', 'COPA', 4773, 5, 2371, '2026-08-04 20:15:55'),
+(31, '280454', 'CHOCOLATE SOFT 4K X1', 'COPA', 38, 1, 807, '2026-08-04 20:15:55'),
+(32, '280455', 'DULCE DE LECHE SOFT 4K X1', 'COPA', 323, 2, 0, '2026-08-04 20:15:55'),
 (35, '280190', 'PINTALENGUA 56cm3 X 20 UND', 'INDIVIDUAL', 3, 4, 0, '2026-08-07 16:31:44'),
 (36, '280069', 'TROMPO LOCO UVA 120cm3X20', 'INDIVIDUAL', 0, 0, 0, '2026-08-07 16:49:31'),
 (37, '280220', 'MAXI CREAM 65 cm3 X 20 UND', 'INDIVIDUAL', 0, 0, 0, '2026-08-07 16:49:31'),
@@ -298,9 +330,9 @@ INSERT INTO `productos` (`id`, `codigo`, `sabor`, `precio`, `fecha_actualizacion
 (21, '280034', 'FRESA 4,4L', 5.00, '2026-08-07 14:48:13'),
 (22, '280044', 'MANTECADO 4,4L', 5.00, '2026-08-07 14:48:13'),
 (23, '280053', 'MARMOLADO 4,4L', 5.00, '2026-08-07 14:48:13'),
-(24, '280060', 'PISTACHO 4,4L', 5.50, '2026-08-07 15:58:03'),
+(24, '280060', 'PISTACHO 4,4L', 5.00, '2026-08-07 14:48:13'),
 (25, '280062', 'RON PASAS 4,4L', 5.00, '2026-08-07 14:48:13'),
-(49, '280068', 'TRAMONTANA 4,4L', 5.50, '2026-08-07 15:58:03'),
+(49, '280068', 'TRAMONTANA 4,4L', 5.00, '2026-08-07 14:34:04'),
 (50, '280134', 'SIROP DE CHOCOLATE 4,5 kg', 5.00, '2026-08-07 14:34:04'),
 (51, '280135', 'SIROP DE FRESA 4,5 kg', 5.00, '2026-08-07 14:34:04'),
 (52, '280452', 'VAINILLA SOFT 4K X1', 5.00, '2026-08-07 14:34:04'),
@@ -478,13 +510,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `captaciones`
 --
 ALTER TABLE `captaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `captacion_neveras`
 --
 ALTER TABLE `captacion_neveras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
